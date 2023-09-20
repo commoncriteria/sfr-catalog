@@ -1,0 +1,25 @@
+stages:
+  - build
+  - deploy
+
+build:
+  image: node:latest
+  stage: build
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+
+pages:
+  image: alpine:latest
+  stage: deploy
+  variables:
+    GIT_STRATEGY: none        # Do not clone git repo
+  script:
+    # Rename the CRA `dist` folder to `public`
+    - mv dist public
+  artifacts:
+    paths:
+      - public
