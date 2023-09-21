@@ -41,16 +41,16 @@ function Tabs() {
                 onClick={() => handleTabClick(tabType)}
                 active={activeTab === tabType}
                 color={"secondary"}
-                className={"text-xl"}
+                className={"text-lg lg:text-lg"}
                 disabled={disabled}
-            >{title}
+                >{title}
             </TETabsItem>
         )
     }
 
     // Return Function
     return (
-        <div className="mb-3">
+        <div className="mb-3 w-full">
             {/* Tabs */}
             <TETabs>
                 {/* Threats Tab */}
@@ -60,19 +60,21 @@ function Tabs() {
                 {/* SFRs Tab */}
                 { tabItem("SFRs", "sfr_tab", false) }
                 {/* PPs Tab */}
-                { tabItem("PPs", "pp_tab", true) }
+                { tabItem("PPs", "pp_tab", false) }
             </TETabs>
             {/* Tab Content */}
-            <TETabsContent>
-                {/* Threats Tab Content */}
-                <Threats activeTab={activeTab}/>
-                {/* Objectives Tab Content */}
-                <Objectives activeTab={activeTab}/>
-                {/* SFRs Tab Content */}
-                <SFRs activeTab={activeTab}/>
-                {/* PPs Tab Content */}
-                <PPs activeTab={activeTab}/>
-            </TETabsContent>
+            <div className={"flex justify-center items-center mx-3 text-lg"}>
+                <TETabsContent>
+                    {/* Threats Tab Content */}
+                    <Threats activeTab={activeTab}/>
+                    {/* Objectives Tab Content */}
+                    <Objectives activeTab={activeTab}/>
+                    {/* SFRs Tab Content */}
+                    <SFRs activeTab={activeTab}/>
+                    {/* PPs Tab Content */}
+                    <PPs activeTab={activeTab}/>
+                </TETabsContent>
+            </div>
         </div>
     );
 }

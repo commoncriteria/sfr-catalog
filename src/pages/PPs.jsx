@@ -26,12 +26,10 @@ function PPs(props) {
 
     // Return Function
     return (
-        <div className="mb-3">
-            <TETabsPane
-                show={activeTab === "pp_tab"}
-                >PP content
-            </TETabsPane>
-        </div>
+        <TETabsPane
+            show={activeTab === "pp_tab"}
+            >PP content
+        </TETabsPane>
     )
 }
 

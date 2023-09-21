@@ -26,12 +26,10 @@ function SFRs(props) {
 
     // Return Function
     return (
-        <div className="mb-3">
-            <TETabsPane
-                show={activeTab === "sfr_tab"}
-                >SFR content
-            </TETabsPane>
-        </div>
+        <TETabsPane
+            show={activeTab === "sfr_tab"}
+            >SFR content
+        </TETabsPane>
     )
 }
 

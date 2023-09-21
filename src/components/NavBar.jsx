@@ -7,7 +7,7 @@ function NavBar() {
     // Return Function
     return (
         <nav className="navbar flex fixed w-screen bg-neutral text-neutral-content sticky top-0 z-30 py-4">
-            <div className="font-title font-bold flex-auto flex justify-end text-lg md:text-4xl text-accent">Catalog</div>
+            <div className="font-title font-bold flex-auto flex justify-end text-lg md:text-4xl text-accent pl-8">Catalog</div>
             <div className="flex-1 flex justify-end pr-3">
                 <form className="max-w-sm px-4">
                     <div className="relative">

@@ -26,12 +26,10 @@ function Threats(props) {
 
     // Return Function
     return (
-        <div className="mb-3">
-            <TETabsPane
-                show={activeTab === "threat_tab"}
-                >Threat content
-            </TETabsPane>
-        </div>
+        <TETabsPane
+            show={activeTab === "threat_tab"}
+            >Threat content
+        </TETabsPane>
     )
 }
 

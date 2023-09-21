@@ -26,12 +26,10 @@ function Objectives(props) {
 
     // Return Function
     return (
-        <div className="mb-3">
-            <TETabsPane
-                show={activeTab === "objective_tab"}
-                >Objective content
-            </TETabsPane>
-        </div>
+        <TETabsPane
+            show={activeTab === "objective_tab"}
+            >Objective content
+        </TETabsPane>
     )
 }
 
