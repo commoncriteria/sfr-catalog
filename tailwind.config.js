@@ -1,15 +1,18 @@
 import daisyui from "daisyui";
+import tw_elements_react from "tw-elements-react/dist/plugin.cjs";
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/tw-elements-react/dist/js/**/*.js"
   ],
   theme: {
     extend: {},
   },
-  plugins: [daisyui],
+  darkMode: "class",
+  plugins: [daisyui, tw_elements_react],
   // daisyUI config (optional - here are the default values)
   daisyui: {
     themes: true, // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
