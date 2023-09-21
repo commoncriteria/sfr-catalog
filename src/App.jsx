@@ -1,7 +1,6 @@
-import './App.css'
-
 function App() {
 
+  // Return Function
   return (
       <div>
           <div>

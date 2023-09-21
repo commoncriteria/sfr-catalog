@@ -2,10 +2,10 @@ import daisyui from "daisyui";
 
 /** @type {import('tailwindcss').Config} */
 // eslint-disable-next-line no-undef
-module.exports = {
+export default {
   content: [
-      "./src/**/*.{html, js, ts, vue}",
-      "./src/**/*"
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {},
