@@ -19,7 +19,7 @@ function App() {
           </div>
 
           {/* The Tabs */}
-          <div className="tabs flex-1 flex mt-3 ml-3">
+          <div className="tabs flex-1 flex mt-0.5 ml-3">
               <Tabs/>
           </div>
       </div>
