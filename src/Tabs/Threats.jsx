@@ -1,5 +1,4 @@
 // Imports
-import {useEffect, useState} from "react";
 import {TETabsPane} from "tw-elements-react";
 import PropTypes from 'prop-types';
 
@@ -10,25 +9,17 @@ import PropTypes from 'prop-types';
  * @constructor             passes in props to the class
  */
 function Threats(props) {
-    // Constants
-    // The currently active tab string value
-    const [activeTab, setActiveTab] = useState(props.activeTab);
-
-    // Prop Validation
+   // Prop Validation
     Threats.propTypes = {
         activeTab: PropTypes.string.isRequired,
     };
 
-    // Use Effects
-    useEffect(() => {
-        setActiveTab(props.activeTab)
-    }, [props])
-
     // Return Function
     return (
         <TETabsPane
-            show={activeTab === "threat_tab"}
-            >Threat content
+            show={props.activeTab === "threat_tab"}
+            className="w-full"
+        >Threats content
         </TETabsPane>
     )
 }
