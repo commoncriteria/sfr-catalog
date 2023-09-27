@@ -1,8 +1,8 @@
 // Imports
 import {useState} from "react";
-import FilterPane from "./Filtering/FilterPane.jsx";
-import NavBar from "./Navigation/NavBar.jsx";
-import TabContent from "./Tabs/TabContent.jsx";
+import FilterPane from "./Components/FilterPane.jsx";
+import NavBar from "./Components/NavBar.jsx";
+import TabContent from "./Components/TabContent.jsx";
 import "tw-elements-react/dist/css/tw-elements-react.min.css";
 import "./index.css"
 
@@ -31,19 +31,21 @@ function App() {
 
   // Return Function
   return (
-      <div className="w-screen">
-          {/* The Navigation Bar */}
-          <div className="bg-base-300">
-              <NavBar handleTabClick={handleTabClick.bind(this)} activeTab={activeTab}/>
-          </div>
-          <div className="grid grid-cols-4">
-              {/* The Filer Pane Content*/}
-              <div className="col-span-1 ... bg-base-100 h-screen">
-                  <FilterPane/>
+      <div className="w-full">
+          <div className="p-1">
+              {/* The Navigation Bar */}
+              <div className="bg-base-300 w-full p-1 pt-0" >
+                  <NavBar handleTabClick={handleTabClick.bind(this)} activeTab={activeTab}/>
               </div>
-              {/* The Tab Content */}
-              <div className="col-span-3 ... h-screen">
-                  <TabContent activeTab={activeTab}/>
+              <div className="grid grid-cols-4 w-full h-full p-1 bg-base-200">
+                  {/* The Filter Pane Content */}
+                  <div className="col-span-1 ... bg-base-200 border-2 border-gray-500 rounded-lg pb-4">
+                      <FilterPane/>
+                  </div>
+                  {/* The Tab Content */}
+                  <div className="col-span-3 ... bg-base-200 border-2 border-gray-500 rounded-lg pb-4 ml-1 h-full w-full">
+                      <TabContent activeTab={activeTab}/>
+                  </div>
               </div>
           </div>
       </div>

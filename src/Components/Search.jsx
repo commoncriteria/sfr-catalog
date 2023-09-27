@@ -6,13 +6,13 @@
 function Search() {
     // Return Function
     return (
-        <div className="flex-1 flex my-8">
+        <div className="w-full border-2 border-white rounded-full">
             <form className="max-w-sm">
                 <div className="relative">
                     <button>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3"
+                            className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-600 left-3"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor">
@@ -27,7 +27,7 @@ function Search() {
                     <input
                         type="text"
                         placeholder="Search"
-                        className="w-full py-3 pl-12 pr-4 input input-bordered input-accent rounded-full bg-neutral"
+                        className="w-full py-3 pl-12 pr-4 input input-bordered input-white border-2 text-gray-600 rounded-3xl bg-gray-200"
                     />
                 </div>
             </form>

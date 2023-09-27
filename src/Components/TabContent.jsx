@@ -1,0 +1,83 @@
+// Imports
+import { TETabsPane } from "tw-elements-react";
+import Threats from "../Tabs/Threats.jsx";
+import Objectives from "../Tabs/Objectives.jsx";
+import SFRs from "../Tabs/SFRs.jsx";
+import PPs from "../Tabs/PPs.jsx";
+import Results from "../Tabs/Results.jsx";
+import PropTypes from "prop-types";
+
+/**
+ * The Tabs class that displays the tab content on click
+ * @param props             the input props
+ * @returns {JSX.Element}   the tabs element
+ * @constructor             passes in props to the class
+ */
+function TabContent(props) {
+    // Prop Validation
+    TabContent.propTypes = {
+        activeTab: PropTypes.string.isRequired,
+    };
+
+    // Functions
+    const showTabContent = () => {
+        let tab = props.activeTab
+        let title = "Invalid"
+        let content = null;
+
+        // Gather tab title and content using the currently active tab
+        switch (tab) {
+            // All Results Tab Content
+            case "results_tab":
+                title = "Results";
+                content = (<Results activeTab={props.activeTab}/>)
+                break;
+            // Threats Tab Content
+            case "threat_tab":
+                title = "Threats";
+                content = (<Threats activeTab={props.activeTab}/>)
+                break;
+            // Objectives Tab Content
+            case "objective_tab":
+                title = "Objectives";
+                content = (<Objectives activeTab={props.activeTab}/>)
+                break;
+            // SFRs Tab Content
+            case "sfr_tab":
+                title = "SFRs";
+                content = (<SFRs activeTab={props.activeTab}/>)
+                break;
+            // PPs Tab Content
+            case "pp_tab":
+                title = "PPs";
+                content = (<PPs activeTab={props.activeTab}/>)
+                break;
+            // Default
+            default:
+                break;
+        }
+
+        // Tab Content by Type
+        return (
+            <TETabsPane show={props.activeTab === tab} className="w-full h-full">
+                <div className="m-3 mt-1 mb-0 border-2 border-gray-400 rounded-lg p-3 bg-base-200 h-15 ...">
+                    <h1 className="text-3xl font-bold text-secondary flex justify-center">{title}</h1>
+                </div>
+                <div className="m-3 mb-0 border-2 border-gray-400 rounded-lg p-3 bg-gray-300 text-black h-full ...">
+                    {content}
+                </div>
+            </TETabsPane>
+        )
+    }
+
+    // Return Function
+    return (
+        // Tab Content
+        <div className="bg-neutral border-2 border-gray-500 rounded-lg m-2 pb-2 pt-2 h-full">
+            { showTabContent() }
+        </div>
+    );
+}
+
+// Export Class
+export default TabContent;

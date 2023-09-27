@@ -22,7 +22,7 @@ function Tabs(props) {
      * @returns {string}    The current tab style for the selected tab
      */
     const tabStyle = (tabType) => {
-        let style = "text-lg md:text-lg h-[65px] flex justify-center items-center"
+        let style = "text-[17px] font-bold h-[65px] flex justify-center items-center"
         if (props.activeTab === tabType) {
             style += " bg-base-100"
         }
@@ -50,7 +50,7 @@ function Tabs(props) {
 
     // Return Function
     return (
-        <div className="max-h-screen -mb-[25px] -mt-[9px]">
+        <div className="max-h-full -mb-[25px] -mt-[9px]">
             {/* Tabs */}
             <TETabs>
                 {/* All Results Tab */}
