@@ -33,19 +33,19 @@ function App() {
 
   // Return Function
   return (
-      <div className="w-full">
+      <div className="pb-5">
           <div className="p-1">
               {/* The Navigation Bar */}
-              <div className="bg-base-300 w-full p-1 pt-0" >
+              <div className="bg-base-300 w-full p-1 pt-2 sticky top-0 z-30 pb-2 rounded-sm">
                   <NavBar handleTabClick={handleTabClick.bind(this)} activeTab={activeTab}/>
               </div>
-              <div className="grid grid-cols-4 w-full h-full p-1 bg-base-200">
+              <div className="grid grid-cols-4 w-full h-full p-1 bg-base-200 rounded-xl z-10">
                   {/* The Filter Pane Content */}
-                  <div className="col-span-1 ... bg-base-200 border-2 border-gray-500 rounded-lg pb-4">
+                  <div className="col-span-1 ... bg-neutral border-2 border-gray-500 rounded-lg p-4 h-full">
                       <FilterPane/>
                   </div>
                   {/* The Tab Content */}
-                  <div className="col-span-3 ... bg-base-200 border-2 border-gray-500 rounded-lg pb-4 ml-1 h-full w-full">
+                  <div className="col-span-3 ... bg-neutral border-2 border-gray-500 rounded-lg p-4 ml-2 h-full">
                       <TabContent activeTab={activeTab}/>
                   </div>
               </div>

@@ -63,26 +63,26 @@ function FilterPane() {
 
     // Return Function
     return (
-        <div className="m-2 bg-neutral border-2 border-gray-500 rounded-lg h-full">
-            <div className="m-2.5 border-2 border-gray-400 rounded-xl p-3 bg-base-200 h-16">
+        <div className="h-full w-full rounded-lg">
+            <div className="border-2 border-gray-400 rounded-xl p-3 bg-base-200 h-16 flex justify-center items-center">
                 <h1 className="text-3xl font-bold text-accent">Filter</h1>
             </div>
             {/* Threat Filtering Card */}
-            <div className="m-3">
+            <div className="py-4">
                 {allThreats != null ? <ThreatCard searchFunction={handleSearch} allThreats={allThreats} name={"Threats"} selections={selectedThreats}/> : null}
             </div>
             {/* Objectives Filtering Card */}
-            <div className="m-3">
+            <div className="pb-4">
                 {allSecurityObjectives != null ? <ObjectivesCard searchFunction={handleSearch} allSecurityObjectives={allSecurityObjectives} name={"SecurityObjectives"} selections={selectedSecurityObjectives}/> : null}
             </div>
             {/* SFR Filtering Card */}
-            {/* <div className="m-3">
+            <div className="pb-4">
                 <SFRCard/>
-            </div> */}
+            </div>
             {/* PP Filtering Card */}
-            {/* <div className="m-3 -mb-1">
+            <div>
                 <PPCard/>
-            </div> */}
+            </div>
         </div>
     );
 }

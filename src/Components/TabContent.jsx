@@ -59,11 +59,11 @@ function TabContent(props) {
 
         // Tab Content by Type
         return (
-            <TETabsPane show={props.activeTab === tab} className="w-full h-full">
-                <div className="m-3 mt-1 mb-0 border-2 border-gray-400 rounded-lg p-3 bg-base-200 h-15 ...">
-                    <h1 className="text-3xl font-bold text-secondary flex justify-center">{title}</h1>
+            <TETabsPane show={props.activeTab === tab} className="rounded-lg h-full parent flex flex-col">
+                <div className="border-2 border-gray-400 rounded-xl p-3 bg-base-200 h-16">
+                    <h1 className="text-3xl font-bold text-secondary flex justify-center items-center">{title}</h1>
                 </div>
-                <div className="m-3 mb-0 border-2 border-gray-400 rounded-lg p-3 bg-gray-300 text-black h-full ...">
+                <div className="mt-4 mb-0 border-2 border-gray-400 rounded-lg p-3 bg-gray-300 text-black flex justify-center child flex-1 text-lg">
                     {content}
                 </div>
             </TETabsPane>
@@ -73,7 +73,7 @@ function TabContent(props) {
     // Return Function
     return (
         // Tab Content
-        <div className="bg-neutral border-2 border-gray-500 rounded-lg m-2 pb-2 pt-2 h-full">
+        <div className="h-full">
             { showTabContent() }
         </div>
     );
