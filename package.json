@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.16",
+    "jmespath": "^0.16.0",
     "postcss": "^8.4.30",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",

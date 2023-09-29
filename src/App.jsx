@@ -14,7 +14,9 @@ import "./index.css"
 function App() {
     // Constants
     // The currently active tab string value
-    const [activeTab, setActiveTab] = useState(sessionStorage.getItem("activeTab") ? sessionStorage.getItem("activeTab") : "results_tab")
+    const [activeTab, setActiveTab] = useState(sessionStorage.getItem("activeTab") ? sessionStorage.getItem("activeTab") : "results_tab");
+
+    
 
     // Functions
     /**

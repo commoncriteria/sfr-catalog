@@ -13,6 +13,7 @@ function FilterCard(props) {
     FilterCard.propTypes = {
         cardTitle: PropTypes.string.isRequired,
         cardContent: PropTypes.node.isRequired,
+        handleQuery: PropTypes.func.isRequired
     };
 
     // Return Function
@@ -24,7 +25,7 @@ function FilterCard(props) {
                 </div>
                 <div className="p-2 pt-3">
                     <div>
-                        <Search/>
+                        <Search handleQuery={props.handleQuery}/>
                     </div>
                     <div className="mb-4 mt-3 bg-gray-200 border-2 border-white rounded-xl">
                         {props.cardContent}

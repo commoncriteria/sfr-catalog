@@ -1,8 +1,12 @@
 // Imports
+import {useState, useEffect} from 'react';
 import ThreatCard from "../Filtering/ThreatCard.jsx";
 import ObjectivesCard from "../Filtering/ObjectivesCard.jsx";
 import SFRCard from "../Filtering/SFRCard.jsx";
 import PPCard from "../Filtering/PPCard.jsx";
+import SFRDatabase from '../assets/NIAPDocumentBundle.json';
+import * as query from '../utils/query';
+import React from 'react';
 
 /**
  * The FilterPane class that displays the filtering content sidebar
@@ -10,6 +14,53 @@ import PPCard from "../Filtering/PPCard.jsx";
  * @constructor             passes in props to the class
  */
 function FilterPane() {
+    // Threats
+    const [allThreats, setThreats] = useState(null);
+
+    // Security Objectives
+    const [allSecurityObjectives, setSecurityObjectives] = useState(null);
+
+    // Selected Threats
+    const [selectedThreats, setSelectedThreats] = useState([]);
+
+    // Selected Security Objectives
+    const [selectedSecurityObjectives, setSelectedSecurityObjectives] = useState([]);
+
+
+
+    useEffect(() =>  {
+        // console.log(query.getThreats(SFRDatabase));
+        // console.log(query.getSecurityObjectives(SFRDatabase));
+        setThreats(query.getThreats(SFRDatabase));
+        setSecurityObjectives(query.getSecurityObjectives(SFRDatabase));
+        console.log(allThreats);
+        console.log(allSecurityObjectives);
+      }, [SFRDatabase]);
+
+    // Functions
+    /**
+     * Handles the search for generic filter cards
+     * @param items items to search
+     * @param name name of FilterCard
+     * @param query 'substring' to perform search on
+     */
+    const handleSearch = (items, name, query) => {
+        console.log(items);
+        console.log(query);
+        var filteredItems = items;
+        switch(name) {
+            case "Threats":
+                filteredItems = items.filter((threat)=>threat.includes(query));
+                setSelectedThreats(filteredItems);
+                break;
+            case "SecurityObjectives":
+                filteredItems = items.filter((securityObjective)=>securityObjective.includes(query));
+                setSelectedSecurityObjectives(filteredItems);
+                break;
+        }
+
+    };
+
     // Return Function
     return (
         <div className="m-2 bg-neutral border-2 border-gray-500 rounded-lg h-full">
@@ -18,20 +69,20 @@ function FilterPane() {
             </div>
             {/* Threat Filtering Card */}
             <div className="m-3">
-                <ThreatCard/>
+                {allThreats != null ? <ThreatCard searchFunction={handleSearch} allThreats={allThreats} name={"Threats"} selections={selectedThreats}/> : null}
             </div>
             {/* Objectives Filtering Card */}
             <div className="m-3">
-                <ObjectivesCard/>
+                {allSecurityObjectives != null ? <ObjectivesCard searchFunction={handleSearch} allSecurityObjectives={allSecurityObjectives} name={"SecurityObjectives"} selections={selectedSecurityObjectives}/> : null}
             </div>
             {/* SFR Filtering Card */}
-            <div className="m-3">
+            {/* <div className="m-3">
                 <SFRCard/>
-            </div>
+            </div> */}
             {/* PP Filtering Card */}
-            <div className="m-3 -mb-1">
+            {/* <div className="m-3 -mb-1">
                 <PPCard/>
-            </div>
+            </div> */}
         </div>
     );
 }
