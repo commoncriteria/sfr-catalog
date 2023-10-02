@@ -18,14 +18,14 @@ function FilterCard(props) {
 
     // Return Function
     return (
-        <div className="w-full">
+        <div className="w-full mt-4">
             <div className="block rounded-lg bg-gray-300 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 border-accent-content border-2">
                 <div className="w-full border-b-2 border-gray-100 p-3 text-lg font-semibold leading-tight text-base-200 flex justify-center items-center">
                     {props.cardTitle}
                 </div>
                 <div className="p-3">
                     <div className="p-2 pb-0">
-                        <Search/>
+                        <Search handleQuery={props.handleQuery}/>
                     </div>
                     <div className="my-4 mx-1.5 bg-gray-200 border-2 border-white rounded-xl min-h-[100px]">
                         {props.cardContent}

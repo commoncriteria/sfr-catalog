@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import PropTypes from "prop-types";
 import FilterCard from "../Components/FilterCard.jsx";
 
@@ -10,10 +9,6 @@ import FilterCard from "../Components/FilterCard.jsx";
  * @constructor             passes in props to the class
  */
 function ObjectivesCard(props) {
-    // Constants
-    // state to keep track of query
-    // const [getQuery, setQuery] = useState('');
-
     // Prop Validation
     ObjectivesCard.propTypes = {
         allSecurityObjectives: PropTypes.array.isRequired,
@@ -27,8 +22,6 @@ function ObjectivesCard(props) {
      * @param value the tab name
      */
     const handleQuery = (query) => {
-        // setQuery(query.toUpperCase());
-        // props.searchFunction(props.allSecurityObjectives, "SecurityObjectives", getQuery);
         props.searchFunction(props.allSecurityObjectives, "SecurityObjectives", query.toUpperCase());
     };
 
@@ -41,14 +34,18 @@ function ObjectivesCard(props) {
                 <React.Fragment>
                     <h5 className="text-gray-600 dark:text-gray-600 p-4">Objective Selections: </h5>
                     <div className="form-control">
-                        {props.selections.map((item) => {
-                            return (
-                                <label key={item} className="cursor-pointer label justify-start">
-                                    <input type="checkbox" defaultChecked value={item} className="checkbox" />
-                                    <span className="text-left break-all label-text text-xs">{item}</span>
-                                </label>
-                            )
-                        })}
+                        {
+                            props.selections && Object.keys(props.selections).length !== 0 ?
+                            props.selections.map((item) => {
+                                return (
+                                    <label key={item} className="cursor-pointer label justify-start">
+                                        <input type="checkbox" defaultChecked value={item} className="checkbox"/>
+                                        <span className="text-left break-all label-text text-xs">{item}</span>
+                                    </label>
+                                )
+                            })
+                            : null
+                        }
                     </div>
                 </React.Fragment>
             }

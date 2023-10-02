@@ -1,41 +1,28 @@
 // Imports
-import {useState, useEffect} from 'react';
 import ThreatCard from "../Filtering/ThreatCard.jsx";
 import ObjectivesCard from "../Filtering/ObjectivesCard.jsx";
 import SFRCard from "../Filtering/SFRCard.jsx";
 import PPCard from "../Filtering/PPCard.jsx";
-import SFRDatabase from '../assets/NIAPDocumentBundle.json';
-import * as query from '../utils/query';
-import React from 'react';
+import PropTypes from "prop-types";
 
 /**
  * The FilterPane class that displays the filtering content sidebar
+ * @param props             the input props
  * @returns {JSX.Element}   the tabs element
  * @constructor             passes in props to the class
  */
-function FilterPane() {
-    // Threats
-    const [allThreats, setThreats] = useState(null);
-
-    // Security Objectives
-    const [allSecurityObjectives, setSecurityObjectives] = useState(null);
-
-    // Selected Threats
-    const [selectedThreats, setSelectedThreats] = useState([]);
-
-    // Selected Security Objectives
-    const [selectedSecurityObjectives, setSelectedSecurityObjectives] = useState([]);
-
-
-
-    useEffect(() =>  {
-        // console.log(query.getThreats(SFRDatabase));
-        // console.log(query.getSecurityObjectives(SFRDatabase));
-        setThreats(query.getThreats(SFRDatabase));
-        setSecurityObjectives(query.getSecurityObjectives(SFRDatabase));
-        console.log(allThreats);
-        console.log(allSecurityObjectives);
-      }, [SFRDatabase]);
+function FilterPane(props) {
+    // Prop Validation
+    FilterPane.propTypes = {
+        allThreats: PropTypes.array.isRequired,
+        allSecurityObjectives: PropTypes.array.isRequired,
+        selectedThreats: PropTypes.array.isRequired,
+        selectedSecurityObjectives: PropTypes.array.isRequired,
+        handleSetAllThreats: PropTypes.func.isRequired,
+        handleSetAllSecurityObjectives: PropTypes.func.isRequired,
+        handleSetSelectedThreats: PropTypes.func.isRequired,
+        handleSetSelectedSecurityObjectives: PropTypes.func.isRequired
+    };
 
     // Functions
     /**
@@ -47,15 +34,17 @@ function FilterPane() {
     const handleSearch = (items, name, query) => {
         console.log(items);
         console.log(query);
-        var filteredItems = items;
+        let filteredItems = items;
         switch(name) {
             case "Threats":
                 filteredItems = items.filter((threat)=>threat.includes(query));
-                setSelectedThreats(filteredItems);
+                props.handleSetSelectedThreats(filteredItems);
                 break;
             case "SecurityObjectives":
                 filteredItems = items.filter((securityObjective)=>securityObjective.includes(query));
-                setSelectedSecurityObjectives(filteredItems);
+                props.handleSetSelectedSecurityObjectives(filteredItems);
+                break;
+            default:
                 break;
         }
 
@@ -63,25 +52,45 @@ function FilterPane() {
 
     // Return Function
     return (
-        <div className="h-full w-full rounded-lg">
+        <div className="h-full w-full rounded-lg mb-4">
             <div className="border-2 border-gray-400 rounded-xl p-3 bg-base-200 h-16 flex justify-center items-center">
                 <h1 className="text-3xl font-bold text-accent">Filter</h1>
             </div>
             {/* Threat Filtering Card */}
-            <div className="py-4">
-                {allThreats != null ? <ThreatCard searchFunction={handleSearch} allThreats={allThreats} name={"Threats"} selections={selectedThreats}/> : null}
+            <div>
+                {
+                    props.allThreats != null ?
+                    <ThreatCard
+                        name={"Threats"}
+                        allThreats={props.allThreats}
+                        selections={props.selectedThreats}
+                        searchFunction={handleSearch}
+                        handleSelectedThreats={props.handleSetSelectedThreats}
+                    />
+                    : null
+                }
             </div>
             {/* Objectives Filtering Card */}
-            <div className="pb-4">
-                {allSecurityObjectives != null ? <ObjectivesCard searchFunction={handleSearch} allSecurityObjectives={allSecurityObjectives} name={"SecurityObjectives"} selections={selectedSecurityObjectives}/> : null}
+            <div>
+                {
+                    props.allSecurityObjectives != null ?
+                        <ObjectivesCard
+                            name={"SecurityObjectives"}
+                            allSecurityObjectives={props.allSecurityObjectives}
+                            selections={props.selectedSecurityObjectives}
+                            handleSelectedThreats={props.handleSetSelectedSecurityObjectives}
+                            searchFunction={handleSearch}
+                        />
+                        : null
+                }
             </div>
             {/* SFR Filtering Card */}
-            <div className="pb-4">
-                <SFRCard/>
+            <div>
+                <SFRCard searchFunction={handleSearch}/>
             </div>
             {/* PP Filtering Card */}
             <div>
-                <PPCard/>
+                <PPCard searchFunction={handleSearch}/>
             </div>
         </div>
     );

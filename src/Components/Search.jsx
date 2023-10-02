@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import PropTypes from "prop-types";
 /**
  * The Search class that allows for user search form input
