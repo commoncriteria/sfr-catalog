@@ -10,9 +10,11 @@ import React from 'react';
  * @constructor             passes in props to the class
  */
 function ThreatCard(props) {
+
     // Prop Validation
     ThreatCard.propTypes = {
         allThreats: PropTypes.array.isRequired,
+        filters: PropTypes.array.isRequired,
         selections: PropTypes.array.isRequired,
         searchFunction: PropTypes.func.isRequired,
     };
@@ -34,14 +36,18 @@ function ThreatCard(props) {
                 cardTitle={"Threats"}
                 cardContent={
                     <React.Fragment>
-                        <h5 className="text-gray-600 dark:text-gray-600 p-4">Threat Options: {props.selections.length} </h5>
+                        <h5 className="text-gray-600 dark:text-gray-600 p-4">Threat Options: {props.filters.length} </h5>
                         <div className="form-control">
                             {
-                                (props.selections && Object.keys(props.selections).length !== 0) ?
-                                props.selections.map((item) => {
+                                (props.filters && Object.keys(props.filters).length !== 0) ?
+                                props.filters.map((item) => {
                                     return (
                                         <label key={item} className="cursor-pointer label justify-start p-4">
-                                            <input type="checkbox" defaultChecked value={item} className="checkbox checkbox-accent checkbox-xs"/>
+                                            <input type="checkbox"
+                                                   className="checkbox checkbox-accent checkbox-xs"
+                                                   defaultChecked={false}
+                                                   value={item}
+                                            />
                                             <span className="flex justify-left text-gray-600 text-xs pl-2 break-all">{item}</span>
                                         </label>
                                     )

@@ -24,31 +24,33 @@ function FilterCard(props) {
                     {props.cardTitle}
                 </div>
                 <div className="p-3">
-                    <div className="p-2 pb-0">
-                        <Search handleQuery={props.handleQuery}/>
-                    </div>
-                    <div className="my-4 mx-1.5 bg-gray-200 border-2 border-white rounded-xl min-h-[100px]">
-                        {props.cardContent}
-                    </div>
-                    <div className="flex justify-center items-center mb-2">
-                        <button
-                            type="button"
-                            href="#"
-                            className="inline-block rounded bg-accent px-6 pb-2 pt-2.5 text-xs font-medium uppercase
-                               leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150
-                               ease-in-out hover:bg-secondary
-                               hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-                               focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-                               focus:outline-none focus:ring-0 active:bg-secondary focus:bg-secondary
-                               active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-                               dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]
-                               dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]
-                               dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]
-                               dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)]"
-                            data-te-ripple-init
-                            data-te-ripple-color="light">
-                            Apply
-                        </button>
+                    <div className="border-2 border-white rounded-xl bg-gray-200">
+                        <div className="p-3 pb-0">
+                            <Search handleQuery={props.handleQuery}/>
+                        </div>
+                        <div className="my-4 mx-3 bg-gray-200 border-2 border-white rounded-xl min-h-[100px]">
+                            {props.cardContent}
+                        </div>
+                        <div className="flex justify-center items-center mb-2">
+                            <button
+                                type="button"
+                                href="#"
+                                className="inline-block rounded bg-accent px-6 pb-2 pt-2.5 text-xs font-medium uppercase
+                                           leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150
+                                           ease-in-out hover:bg-secondary
+                                           hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+                                           focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+                                           focus:outline-none focus:ring-0 active:bg-secondary focus:bg-secondary
+                                           active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+                                           dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]
+                                           dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]
+                                           dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]
+                                           dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)]"
+                                data-te-ripple-init
+                                data-te-ripple-color="light">
+                                Add
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

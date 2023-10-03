@@ -1,4 +1,6 @@
+// Imports
 import PropTypes from "prop-types";
+
 /**
  * The Search class that allows for user search form input
  * @returns {JSX.Element}   the search bar content/form
