@@ -29,7 +29,7 @@ function SFRCard(props) {
     return (
         <div>
             <Card
-                cardTitle={"SFR"}
+                cardTitle={"SFRs"}
                 cardContent={
                     <Dropdown
                         label={"SFR"}
