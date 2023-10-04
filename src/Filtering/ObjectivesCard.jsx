@@ -12,6 +12,7 @@ function ObjectivesCard(props) {
     // Prop Validation
     ObjectivesCard.propTypes = {
         allSecurityObjectives: PropTypes.array.isRequired,
+        filters: PropTypes.array.isRequired,
         selections: PropTypes.array.isRequired,
         searchFunction: PropTypes.func.isRequired,
     };
@@ -32,19 +33,23 @@ function ObjectivesCard(props) {
             cardTitle={"Objectives"}
             cardContent={
                 <React.Fragment>
-                    <h5 className="text-gray-600 dark:text-gray-600 p-4">Objective Selections: </h5>
+                    <h5 className="text-gray-600 dark:text-gray-600 p-4">Objective Options: {props.filters.length} </h5>
                     <div className="form-control">
                         {
-                            props.selections && Object.keys(props.selections).length !== 0 ?
-                            props.selections.map((item) => {
-                                return (
-                                    <label key={item} className="cursor-pointer label justify-start">
-                                        <input type="checkbox" defaultChecked value={item} className="checkbox"/>
-                                        <span className="text-left break-all label-text text-xs">{item}</span>
-                                    </label>
-                                )
-                            })
-                            : null
+                            (props.filters && Object.keys(props.filters).length !== 0) ?
+                                props.filters.map((item) => {
+                                    return (
+                                        <label key={item} className="cursor-pointer label justify-start p-4">
+                                            <input type="checkbox"
+                                                className="checkbox checkbox-accent checkbox-xs"
+                                                defaultChecked={false}
+                                                value={item}
+                                            />
+                                            <span className="flex justify-left text-gray-600 text-xs pl-2 break-all">{item}</span>
+                                        </label>
+                                    )
+                                })
+                                : null
                         }
                     </div>
                 </React.Fragment>

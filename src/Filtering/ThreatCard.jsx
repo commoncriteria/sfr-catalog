@@ -40,19 +40,19 @@ function ThreatCard(props) {
                         <div className="form-control">
                             {
                                 (props.filters && Object.keys(props.filters).length !== 0) ?
-                                props.filters.map((item) => {
-                                    return (
-                                        <label key={item} className="cursor-pointer label justify-start p-4">
-                                            <input type="checkbox"
-                                                   className="checkbox checkbox-accent checkbox-xs"
-                                                   defaultChecked={false}
-                                                   value={item}
-                                            />
-                                            <span className="flex justify-left text-gray-600 text-xs pl-2 break-all">{item}</span>
-                                        </label>
-                                    )
-                                })
-                                : null
+                                    props.filters.map((item) => {
+                                        return (
+                                            <label key={item} className="cursor-pointer label justify-start p-4">
+                                                <input type="checkbox"
+                                                    className="checkbox checkbox-accent checkbox-xs"
+                                                    defaultChecked={false}
+                                                    value={item}
+                                                />
+                                                <span className="flex justify-left text-gray-600 text-xs pl-2 break-all">{item}</span>
+                                            </label>
+                                        )
+                                    })
+                                    : null
                             }
                         </div>
                     </React.Fragment>

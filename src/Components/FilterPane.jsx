@@ -4,7 +4,7 @@ import ObjectivesCard from "../Filtering/ObjectivesCard.jsx";
 import SFRCard from "../Filtering/SFRCard.jsx";
 import PPCard from "../Filtering/PPCard.jsx";
 import PropTypes from "prop-types";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import * as query from "../utils/query.js";
 import SFRDatabase from "../assets/NIAPDocumentBundle.json";
 
@@ -19,7 +19,7 @@ function FilterPane(props) {
     // Threats
     const [allThreats, setThreats] = useState(sessionStorage.getItem("allThreats") ? JSON.parse(sessionStorage.getItem("allThreats")) : null);
     // Security Objectives
-    const [allSecurityObjectives, setSecurityObjectives] = useState(sessionStorage.getItem("allSecurityObjectives") ?  JSON.parse(sessionStorage.getItem("allSecurityObjectives")) : null);
+    const [allSecurityObjectives, setSecurityObjectives] = useState(sessionStorage.getItem("allSecurityObjectives") ? JSON.parse(sessionStorage.getItem("allSecurityObjectives")) : null);
     // Filtered Threats
     const [filteredThreats, setFilteredThreats] = useState([]);
     // Filtered Security Objectives
@@ -37,11 +37,12 @@ function FilterPane(props) {
     /**
      * Use Effect to initialize the queries for the SFRDatabase
      */
-    useEffect(() =>  {
+    useEffect(() => {
         handleSetAllThreats(query.getThreats(SFRDatabase));
         handleSetAllSecurityObjectives(query.getSecurityObjectives(SFRDatabase));
-        console.log(allThreats);
-        console.log(allSecurityObjectives);
+        // set threats and objectives to show all possible options by default
+        handleSetFilteredThreats(query.getThreats(SFRDatabase));
+        handleSetFilteredSecurityObjectives(query.getSecurityObjectives(SFRDatabase))
     }, [SFRDatabase]);
 
     // Functions
@@ -78,6 +79,7 @@ function FilterPane(props) {
     const handleSetFilteredSecurityObjectives = (value) => {
         setFilteredSecurityObjectives(value)
     }
+
     /**
      * Handles the search for generic filter cards
      * @param items items to search
@@ -85,16 +87,14 @@ function FilterPane(props) {
      * @param query 'substring' to perform search on
      */
     const handleSearch = (items, name, query) => {
-        console.log(items);
-        console.log(query);
         let filteredItems = items;
-        switch(name) {
+        switch (name) {
             case "Threats":
-                filteredItems = items.filter((threat)=>threat.includes(query));
+                filteredItems = items.filter((threat) => threat.includes(query));
                 handleSetFilteredThreats(filteredItems);
                 break;
             case "SecurityObjectives":
-                filteredItems = items.filter((securityObjective)=>securityObjective.includes(query));
+                filteredItems = items.filter((securityObjective) => securityObjective.includes(query));
                 handleSetFilteredSecurityObjectives(filteredItems);
                 break;
             default:
@@ -113,16 +113,16 @@ function FilterPane(props) {
             <div>
                 {
                     allThreats != null ?
-                    <ThreatCard
-                        name={"Threats"}
-                        allThreats={allThreats}
-                        filters={filteredThreats}
-                        selections={props.selectedThreats}
-                        searchFunction={handleSearch}
-                        handleSetFilteredThreats={handleSetFilteredThreats}
-                        handleSelectedThreats={props.handleSetSelectedThreats}
-                    />
-                    : null
+                        <ThreatCard
+                            name={"Threats"}
+                            allThreats={allThreats}
+                            filters={filteredThreats}
+                            selections={props.selectedThreats}
+                            searchFunction={handleSearch}
+                            handleSetFilteredThreats={handleSetFilteredThreats}
+                            handleSelectedThreats={props.handleSetSelectedThreats}
+                        />
+                        : null
                 }
             </div>
             {/* Objectives Filtering Card */}
@@ -136,18 +136,18 @@ function FilterPane(props) {
                             selections={props.selectedSecurityObjectives}
                             searchFunction={handleSearch}
                             handleSetFilteredSecurityObjectives={handleSetFilteredSecurityObjectives}
-                            handleSelectedThreats={props.handleSetSelectedSecurityObjectives}
+                            handleSetSelectedSecurityObjectives={props.handleSetSelectedSecurityObjectives}
                         />
                         : null
                 }
             </div>
             {/* SFR Filtering Card */}
             <div>
-                <SFRCard searchFunction={handleSearch}/>
+                <SFRCard searchFunction={handleSearch} />
             </div>
             {/* PP Filtering Card */}
             <div>
-                <PPCard searchFunction={handleSearch}/>
+                <PPCard searchFunction={handleSearch} />
             </div>
         </div>
     );
