@@ -20,17 +20,21 @@ function FilterPane(props) {
     const [allThreats, setThreats] = useState(sessionStorage.getItem("allThreats") ? JSON.parse(sessionStorage.getItem("allThreats")) : null);
     // Security Objectives
     const [allSecurityObjectives, setSecurityObjectives] = useState(sessionStorage.getItem("allSecurityObjectives") ?  JSON.parse(sessionStorage.getItem("allSecurityObjectives")) : null);
-    // Filtered Threats
-    const [filteredThreats, setFilteredThreats] = useState([]);
-    // Filtered Security Objectives
-    const [filteredSecurityObjectives, setFilteredSecurityObjectives] = useState([]);
+    // SFRs
+    const [allSfrs, setSfrs] = useState(sessionStorage.getItem("allSfrs") ? JSON.parse(sessionStorage.getItem("allSfrs")) : null);
+    // PPs
+    const [allPps, setPps] = useState(sessionStorage.getItem("allPps") ? JSON.parse(sessionStorage.getItem("allPps")) : null);
 
     // Prop Validation
     FilterPane.propTypes = {
         selectedThreats: PropTypes.array.isRequired,
         selectedSecurityObjectives: PropTypes.array.isRequired,
+        selectedSfrs: PropTypes.array.isRequired,
+        selectedPps: PropTypes.array.isRequired,
         handleSetSelectedThreats: PropTypes.func.isRequired,
-        handleSetSelectedSecurityObjectives: PropTypes.func.isRequired
+        handleSetSelectedSecurityObjectives: PropTypes.func.isRequired,
+        handleSetSelectedSfrs: PropTypes.func.isRequired,
+        handleSetSelectedPps: PropTypes.func.isRequired,
     };
 
     // Use Effects
@@ -38,10 +42,15 @@ function FilterPane(props) {
      * Use Effect to initialize the queries for the SFRDatabase
      */
     useEffect(() =>  {
-        handleSetAllThreats(query.getThreats(SFRDatabase));
-        handleSetAllSecurityObjectives(query.getSecurityObjectives(SFRDatabase));
-        console.log(allThreats);
-        console.log(allSecurityObjectives);
+        try {
+            handleSetAllThreats(query.getThreats(SFRDatabase).sort());
+            handleSetAllSecurityObjectives(query.getSecurityObjectives(SFRDatabase).sort());
+            // Add Queries
+            handleSetAllSfrs(query.getSfrs(SFRDatabase).sort())
+            handleSetAllPps(null)
+        } catch (e) {
+            console.log(e)
+        }
     }, [SFRDatabase]);
 
     // Functions
@@ -64,44 +73,22 @@ function FilterPane(props) {
     }
 
     /**
-     * Handles setting the filtered threats
-     * @param value The filtered threats value
+     * Handles setting the sfrs
+     * @param value The sfr value
      */
-    const handleSetFilteredThreats = (value) => {
-        setFilteredThreats(value)
+    const handleSetAllSfrs = (value) => {
+        setSfrs(value)
+        sessionStorage.setItem("allSfrs", JSON.stringify(value))
     }
 
     /**
-     * Handles setting the filtered security objectives
-     * @param value The filtered security objectives value
+     * Handles setting the pps
+     * @param value The pp value
      */
-    const handleSetFilteredSecurityObjectives = (value) => {
-        setFilteredSecurityObjectives(value)
+    const handleSetAllPps = (value) => {
+        setPps(value)
+        sessionStorage.setItem("allPps", JSON.stringify(value))
     }
-    /**
-     * Handles the search for generic filter cards
-     * @param items items to search
-     * @param name name of FilterCard
-     * @param query 'substring' to perform search on
-     */
-    const handleSearch = (items, name, query) => {
-        console.log(items);
-        console.log(query);
-        let filteredItems = items;
-        switch(name) {
-            case "Threats":
-                filteredItems = items.filter((threat)=>threat.includes(query));
-                handleSetFilteredThreats(filteredItems);
-                break;
-            case "SecurityObjectives":
-                filteredItems = items.filter((securityObjective)=>securityObjective.includes(query));
-                handleSetFilteredSecurityObjectives(filteredItems);
-                break;
-            default:
-                break;
-        }
-
-    };
 
     // Return Function
     return (
@@ -113,15 +100,12 @@ function FilterPane(props) {
             <div>
                 {
                     allThreats != null ?
-                    <ThreatCard
-                        name={"Threats"}
-                        allThreats={allThreats}
-                        filters={filteredThreats}
-                        selections={props.selectedThreats}
-                        searchFunction={handleSearch}
-                        handleSetFilteredThreats={handleSetFilteredThreats}
-                        handleSelectedThreats={props.handleSetSelectedThreats}
-                    />
+                        <ThreatCard
+                            name={"Threats"}
+                            allThreats={allThreats}
+                            selections={props.selectedThreats}
+                            handleSetSelectedThreats={props.handleSetSelectedThreats}
+                        />
                     : null
                 }
             </div>
@@ -132,22 +116,37 @@ function FilterPane(props) {
                         <ObjectivesCard
                             name={"SecurityObjectives"}
                             allSecurityObjectives={allSecurityObjectives}
-                            filters={filteredSecurityObjectives}
                             selections={props.selectedSecurityObjectives}
-                            searchFunction={handleSearch}
-                            handleSetFilteredSecurityObjectives={handleSetFilteredSecurityObjectives}
-                            handleSelectedThreats={props.handleSetSelectedSecurityObjectives}
+                            handleSetSelectedSecurityObjectives={props.handleSetSelectedSecurityObjectives}
                         />
-                        : null
+                    : null
                 }
             </div>
             {/* SFR Filtering Card */}
             <div>
-                <SFRCard searchFunction={handleSearch}/>
+                {
+                    allSfrs != null ?
+                        <SFRCard
+                            name={"SFRs"}
+                            allSfrs={allSfrs}
+                            selections={props.selectedSfrs}
+                            handleSetSelectedSfrs={props.handleSetSelectedSfrs}
+                        />
+                    : null
+                }
             </div>
             {/* PP Filtering Card */}
             <div>
-                <PPCard searchFunction={handleSearch}/>
+                {
+                    allPps != null ?
+                        <PPCard
+                            name={"PPs"}
+                            allSfrs={allPps}
+                            selections={props.selectedPps}
+                            handleSetSelectedPps={props.handleSetSelectedPps}
+                        />
+                    : null
+                }
             </div>
         </div>
     );

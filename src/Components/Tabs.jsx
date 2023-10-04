@@ -22,7 +22,7 @@ function Tabs(props) {
      * @returns {string}    The current tab style for the selected tab
      */
     const tabStyle = (tabType) => {
-        let style = "text-[18px] font-bold h-[65px] flex justify-center items-center"
+        let style = "font-size-[36px] font-bold h-[65px] flex justify-center items-center"
         if (props.activeTab === tabType) {
             style += " bg-base-100"
         }

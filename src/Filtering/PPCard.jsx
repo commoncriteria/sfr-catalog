@@ -1,6 +1,7 @@
 // Imports
-import FilterCard from "../Components/FilterCard.jsx";
+import Card from "../Components/Card.jsx";
 import PropTypes from "prop-types";
+import Dropdown from "../Components/Dropdown.jsx";
 
 /**
  * The PPCard class that displays the PPCard tab content
@@ -11,16 +12,34 @@ import PropTypes from "prop-types";
 function PPCard(props) {
     // Prop Validation
     PPCard.propTypes = {
-        searchFunction: PropTypes.func.isRequired,
+        allPps: PropTypes.array.isRequired,
+        selections: PropTypes.array.isRequired,
+        handleSetSelectedPps: PropTypes.func.isRequired
+    };
+
+    /**
+     * Handles the dropdown select for pps
+     * @param event the event handler
+     */
+    const handleDropdownSelect = (event, values) => {
+        props.handleSetSelectedPps(values)
     };
 
     // Return Function
     return (
-        <FilterCard
-            cardTitle={"PPs"}
-            cardContent={ <h5 className="text-gray-600 dark:text-gray-600 p-4">PP Selections</h5> }
-            handleQuery={props.searchFunction}
-        />
+        <div>
+            <Card
+                cardTitle={"PP"}
+                cardContent={
+                    <Dropdown
+                        label={"PP"}
+                        options={props.allPps}
+                        selections={props.selections}
+                        handleDropdownSelect={handleDropdownSelect}
+                    />
+                }
+            />
+        </div>
     )
 }
 

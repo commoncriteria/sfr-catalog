@@ -1,7 +1,7 @@
 // Imports
 import PropTypes from "prop-types";
-import FilterCard from "../Components/FilterCard.jsx";
-import React from 'react';
+import Card from "../Components/Card.jsx";
+import Dropdown from "../Components/Dropdown.jsx";
 
 /**
  * The ThreatCard class that displays the ThreatCard filtering content
@@ -10,52 +10,33 @@ import React from 'react';
  * @constructor             passes in props to the class
  */
 function ThreatCard(props) {
-
     // Prop Validation
     ThreatCard.propTypes = {
         allThreats: PropTypes.array.isRequired,
-        filters: PropTypes.array.isRequired,
         selections: PropTypes.array.isRequired,
-        searchFunction: PropTypes.func.isRequired,
+        handleSetSelectedThreats: PropTypes.func.isRequired
     };
 
-    // Functions
     /**
-     * Handles the query and stores the latest
-     * @param value the tab name
+     * Handles the dropdown select for threats
+     * @param event the event handler
      */
-    const handleQuery = (query) => {
-        props.searchFunction(props.allThreats, "Threats", query.toUpperCase());
+    const handleDropdownSelect = (event, values) => {
+        props.handleSetSelectedThreats(values)
     };
 
     // Return Function
     return (
         <div>
-            <FilterCard
-                handleQuery={handleQuery}
+            <Card
                 cardTitle={"Threats"}
                 cardContent={
-                    <React.Fragment>
-                        <h5 className="text-gray-600 dark:text-gray-600 p-4">Threat Options: {props.filters.length} </h5>
-                        <div className="form-control">
-                            {
-                                (props.filters && Object.keys(props.filters).length !== 0) ?
-                                props.filters.map((item) => {
-                                    return (
-                                        <label key={item} className="cursor-pointer label justify-start p-4">
-                                            <input type="checkbox"
-                                                   className="checkbox checkbox-accent checkbox-xs"
-                                                   defaultChecked={false}
-                                                   value={item}
-                                            />
-                                            <span className="flex justify-left text-gray-600 text-xs pl-2 break-all">{item}</span>
-                                        </label>
-                                    )
-                                })
-                                : null
-                            }
-                        </div>
-                    </React.Fragment>
+                    <Dropdown
+                        label={"Threat"}
+                        options={props.allThreats}
+                        selections={props.selections}
+                        handleDropdownSelect={handleDropdownSelect}
+                    />
                 }
             />
         </div>

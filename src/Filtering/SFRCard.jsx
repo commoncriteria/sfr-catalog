@@ -1,6 +1,7 @@
 // Imports
-import FilterCard from "../Components/FilterCard.jsx";
+import Card from "../Components/Card.jsx";
 import PropTypes from "prop-types";
+import Dropdown from "../Components/Dropdown.jsx";
 
 /**
  * The SFRCard class that displays the SFRCard filtering content
@@ -11,16 +12,34 @@ import PropTypes from "prop-types";
 function SFRCard(props) {
     // Prop Validation
     SFRCard.propTypes = {
-        searchFunction: PropTypes.func.isRequired,
+        allSfrs: PropTypes.array.isRequired,
+        selections: PropTypes.array.isRequired,
+        handleSetSelectedSfrs: PropTypes.func.isRequired
+    };
+
+    /**
+     * Handles the dropdown select for sfrs
+     * @param event the event handler
+     */
+    const handleDropdownSelect = (event, values) => {
+        props.handleSetSelectedSfrs(values)
     };
 
     // Return Function
     return (
-        <FilterCard
-            cardTitle={"SFRs"}
-            cardContent={ <h5 className="text-gray-600 dark:text-gray-600 p-4">SFR Selections</h5> }
-            handleQuery={props.searchFunction}
-        />
+        <div>
+            <Card
+                cardTitle={"SFR"}
+                cardContent={
+                    <Dropdown
+                        label={"SFR"}
+                        options={props.allSfrs}
+                        selections={props.selections}
+                        handleDropdownSelect={handleDropdownSelect}
+                    />
+                }
+            />
+        </div>
     )
 }
 

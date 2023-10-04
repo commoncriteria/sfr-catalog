@@ -1,6 +1,6 @@
-import React from 'react';
 import PropTypes from "prop-types";
-import FilterCard from "../Components/FilterCard.jsx";
+import Card from "../Components/Card.jsx";
+import Dropdown from "../Components/Dropdown.jsx";
 
 /**
  * The ObjectivesCard class that displays the ObjectivesCard filtering content
@@ -13,41 +13,28 @@ function ObjectivesCard(props) {
     ObjectivesCard.propTypes = {
         allSecurityObjectives: PropTypes.array.isRequired,
         selections: PropTypes.array.isRequired,
-        searchFunction: PropTypes.func.isRequired,
+        handleSetSelectedSecurityObjectives: PropTypes.func.isRequired
     };
 
-    // Functions
     /**
-     * Handles the query and stores the latest
-     * @param value the tab name
+     * Handles the dropdown select for objectives
+     * @param event the event handler
      */
-    const handleQuery = (query) => {
-        props.searchFunction(props.allSecurityObjectives, "SecurityObjectives", query.toUpperCase());
+    const handleDropdownSelect = (event, values) => {
+        props.handleSetSelectedSecurityObjectives(values)
     };
 
     // Return Function
     return (
-        <FilterCard
-            handleQuery={handleQuery}
+        <Card
             cardTitle={"Objectives"}
             cardContent={
-                <React.Fragment>
-                    <h5 className="text-gray-600 dark:text-gray-600 p-4">Objective Selections: </h5>
-                    <div className="form-control">
-                        {
-                            props.selections && Object.keys(props.selections).length !== 0 ?
-                            props.selections.map((item) => {
-                                return (
-                                    <label key={item} className="cursor-pointer label justify-start">
-                                        <input type="checkbox" defaultChecked value={item} className="checkbox"/>
-                                        <span className="text-left break-all label-text text-xs">{item}</span>
-                                    </label>
-                                )
-                            })
-                            : null
-                        }
-                    </div>
-                </React.Fragment>
+                <Dropdown
+                    label={"Objective"}
+                    options={props.allSecurityObjectives}
+                    selections={props.selections}
+                    handleDropdownSelect={handleDropdownSelect}
+                />
             }
         />
     )
