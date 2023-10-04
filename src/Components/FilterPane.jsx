@@ -4,7 +4,7 @@ import ObjectivesCard from "../Filtering/ObjectivesCard.jsx";
 import SFRCard from "../Filtering/SFRCard.jsx";
 import PPCard from "../Filtering/PPCard.jsx";
 import PropTypes from "prop-types";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import * as query from "../utils/query.js";
 import SFRDatabase from "../assets/NIAPDocumentBundle.json";
 
