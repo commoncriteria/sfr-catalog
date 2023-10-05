@@ -43,42 +43,86 @@ function FilterPane(props) {
      */
     useEffect(() => {
         try {
-            handleSetAllThreats(query.getThreats(SFRDatabase).sort());
-            handleSetAllSecurityObjectives(query.getSecurityObjectives(SFRDatabase).sort());
-            handleSetAllSfrs(query.getSfrs(SFRDatabase).sort())
-            handleSetAllPps(null)
+            // Load in all data for filters if nothing has been selected
+            if (!props.selectedThreats && !props.selectedSecurityObjectives && !props.selectedSfrs && !props.selectedPps) {
+                handleSetAllThreats(query.getThreats(SFRDatabase).sort());
+                handleSetAllSecurityObjectives(query.getSecurityObjectives(SFRDatabase).sort());
+                handleSetAllSfrs(query.getSfrs(SFRDatabase).sort())
+                handleSetAllPps(null)
+            }
         } catch (e) {
             console.log(e)
         }
     }, [SFRDatabase]);
 
+    /**
+     * Use Effect for updating other filter types based on selected threat update
+     */
+    useEffect(() => {
+        // Update threats to select value automatically if the allThreats array has one entry
+        isOnlyOneOptionAvailable("Threats", allThreats, props.selectedThreats)
+
+        // Update objectives when threats are updated
+        updatedObjectivesForThreatSelection(props.selectedThreats)
+    }, [props.selectedThreats])
 
     /**
-    * Handles filtering the objectives based on the threat selected
-    * @param value The selected threats value
-    */
-    const updatedObjectives = () => {
-        if (props.selectedThreats) {
-            return query.ThreatToSecurityObjective(SFRDatabase, props.selectedThreats[0]);
-        } else {
-            return null;
+     * Use Effect for updating other filter types based on selected objective update
+     */
+    useEffect(() => {
+        // Update objectives to select value automatically if the allSecurityObjectives array has one entry
+        isOnlyOneOptionAvailable("Objective", allSecurityObjectives, props.selectedSecurityObjectives)
+    }, [props.selectedSecurityObjectives])
+
+    /**
+     * Use Effect for updating other filter types based on selected sfr update
+     */
+    useEffect(() => {
+        // Update sfrs to select value automatically if the allSfrs array has one entry
+        isOnlyOneOptionAvailable("SFR", allSfrs, props.selectedSfrs)
+    }, [props.selectedSfrs])
+
+    // Functions
+    /**
+     * Handles filtering the objectives based on the threat selected
+     * @param threats   The selected threats value
+     */
+    const updatedObjectivesForThreatSelection = (threats) => {
+        // If threats are not empty, update query to be threat specific
+        // Otherwise, get all security objectives
+        let updatedObjectives = threats ? query.ThreatToSecurityObjective(SFRDatabase, threats[0]) : query.getSecurityObjectives(SFRDatabase).sort();
+        // Initialize updated selections to null
+        let updatedSelections = null
+
+        // Set security objectives to the newly updated objectives
+        handleSetAllSecurityObjectives(updatedObjectives);
+
+        // If the previously selected security objectives are not empty, adjust the selected objective if it is
+        // still in the updated objectives array
+        if (threats && updatedObjectives && props.selectedSecurityObjectives) {
+            // Work through the selected objectives array and add selections if they are still in the array
+            if (Object.keys(props.selectedSecurityObjectives).length !== 0) {
+                props.selectedSecurityObjectives.map((objective) => {
+                    // If the updatedObjectives includes the previously selected objective, add to array
+                    if (updatedObjectives.includes(objective)) {
+                        // If the updated selections was previously null, initialize new empty array to add to
+                        if (!updatedSelections) {
+                            updatedSelections = []
+                        }
+                        // Push objective to updated selections array
+                        updatedSelections.push(objective)
+                    }
+                })
+            }
+        }
+
+        // If the security objectives array only has one item and the selected objectives is null, automatically select item
+        if (!isOnlyOneOptionAvailable("Objective", updatedObjectives, updatedSelections)) {
+            props.handleSetSelectedSecurityObjectives(updatedSelections)
         }
     }
 
-
-    useEffect(() => {
-        if (props.selectedThreats) {
-            let updated_Objectives = updatedObjectives()
-            if (updated_Objectives) {
-                handleSetAllSecurityObjectives(updated_Objectives);
-            }
-            
-        }
-    }, [props.selectedThreats])
-
-
-
-    // Functions
+    // Helper Functions
     /**
      * Handles setting the threats
      * @param value The threat value
@@ -113,6 +157,36 @@ function FilterPane(props) {
     const handleSetAllPps = (value) => {
         setPps(value)
         sessionStorage.setItem("allPps", JSON.stringify(value))
+    }
+
+    /**
+     * Update selected drop down to automatically select option if there is only one available in the array
+     * @param type              The type of array to update ("Threat", "Objective", "SFR")
+     * @param currentOptions    Current list of all options
+     * @param selected          The currently selected options
+     */
+    const isOnlyOneOptionAvailable = (type, currentOptions, selected) => {
+        // If current array only has one item, automatically select that item in the array
+        if (currentOptions && Object.keys(currentOptions).length === 1 && !selected) {
+            switch(type) {
+                case "Threat":
+                    props.handleSetSelectedThreats(currentOptions.valueOf())
+                    break;
+                case "Objective":
+                    props.handleSetSelectedSecurityObjectives(currentOptions.valueOf())
+                    break;
+                case "SFR":
+                    props.handleSetSelectedSfrs(currentOptions.valueOf())
+                    break;
+                default:
+                    break;
+            }
+            // Return true if the array was updated with one selection
+            return true
+        } else {
+            // Return false if the array was not updated
+            return false
+        }
     }
 
     // Return Function

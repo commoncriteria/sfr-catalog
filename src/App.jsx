@@ -16,13 +16,13 @@ function App() {
     // The currently active tab string value
     const [activeTab, setActiveTab] = useState(sessionStorage.getItem("activeTab") ? sessionStorage.getItem("activeTab") : "results_tab");
     // Selected Threats
-    const [selectedThreats, setSelectedThreats] = useState(sessionStorage.getItem("selectedThreats") ?  sessionStorage.getItem("selectedThreats") : null);
+    const [selectedThreats, setSelectedThreats] = useState(sessionStorage.getItem("selectedThreats") ?  JSON.parse(sessionStorage.getItem("selectedThreats")) : null);
     // Selected Security Objectives
-    const [selectedSecurityObjectives, setSelectedSecurityObjectives] = useState(sessionStorage.getItem("selectedSecurityObjectives") ?  sessionStorage.getItem("selectedSecurityObjectives") : null);
+    const [selectedSecurityObjectives, setSelectedSecurityObjectives] = useState(sessionStorage.getItem("selectedSecurityObjectives") ? JSON.parse(sessionStorage.getItem("selectedSecurityObjectives")) : null);
     // Selected SFRs
-    const [selectedSfrs, setSelectedSfrs] = useState(sessionStorage.getItem("selectedSfrs") ?  sessionStorage.getItem("selectedSfrs") : null);
+    const [selectedSfrs, setSelectedSfrs] = useState(sessionStorage.getItem("selectedSfrs") ?  JSON.parse(sessionStorage.getItem("selectedSfrs")) : null);
     // Selected Security Objectives
-    const [selectedPps, setSelectedPps] = useState(sessionStorage.getItem("selectedPps") ?  sessionStorage.getItem("selectedPps") : null);
+    const [selectedPps, setSelectedPps] = useState(sessionStorage.getItem("selectedPps") ?  JSON.parse(sessionStorage.getItem("selectedPps")) : null);
 
 
     // Functions
@@ -45,7 +45,7 @@ function App() {
      */
     const handleSetSelectedThreats = (value) => {
         setSelectedThreats(value)
-        sessionStorage.setItem("selectedThreats", value)
+        sessionStorage.setItem("selectedThreats", JSON.stringify(value))
     }
 
     /**
@@ -54,7 +54,7 @@ function App() {
      */
     const handleSetSelectedSecurityObjectives = (value) => {
         setSelectedSecurityObjectives(value)
-        sessionStorage.setItem("selectedSecurityObjectives", value)
+        sessionStorage.setItem("selectedSecurityObjectives", JSON.stringify(value))
     }
 
     /**
@@ -63,7 +63,7 @@ function App() {
      */
     const handleSetSelectedSfrs = (value) => {
         setSelectedSfrs(value)
-        sessionStorage.setItem("selectedSfrs", value)
+        sessionStorage.setItem("selectedSfrs", JSON.stringify(value))
     }
 
     /**
@@ -72,7 +72,7 @@ function App() {
      */
     const handleSetSelectedPps = (value) => {
         setSelectedPps(value)
-        sessionStorage.setItem("selectedPps", value)
+        sessionStorage.setItem("selectedPps", JSON.stringify(value))
     }
 
     // Return Function
