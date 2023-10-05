@@ -13,7 +13,7 @@ function ThreatCard(props) {
     // Prop Validation
     ThreatCard.propTypes = {
         allThreats: PropTypes.array.isRequired,
-        selections: PropTypes.string,
+        selections: PropTypes.array,
         handleSetSelectedThreats: PropTypes.func.isRequired
     };
 

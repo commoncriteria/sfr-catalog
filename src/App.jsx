@@ -5,7 +5,6 @@ import NavBar from "./Components/NavBar.jsx";
 import TabContent from "./Components/TabContent.jsx";
 import "tw-elements-react/dist/css/tw-elements-react.min.css";
 import "./index.css"
-// import { ThreatToSecurityObjective } from "./utils/query.js";
 
 /**
  * The App class that runs the Catalog project
@@ -17,13 +16,13 @@ function App() {
     // The currently active tab string value
     const [activeTab, setActiveTab] = useState(sessionStorage.getItem("activeTab") ? sessionStorage.getItem("activeTab") : "results_tab");
     // Selected Threats
-    const [selectedThreats, setSelectedThreats] = useState(sessionStorage.getItem("selectedThreats") ? JSON.parse(sessionStorage.getItem("selectedThreats")) : null);
+    const [selectedThreats, setSelectedThreats] = useState(sessionStorage.getItem("selectedThreats") ?  sessionStorage.getItem("selectedThreats") : null);
     // Selected Security Objectives
-    const [selectedSecurityObjectives, setSelectedSecurityObjectives] = useState(sessionStorage.getItem("selectedSecurityObjectives") ? JSON.parse(sessionStorage.getItem("selectedSecurityObjectives")) : null);
+    const [selectedSecurityObjectives, setSelectedSecurityObjectives] = useState(sessionStorage.getItem("selectedSecurityObjectives") ?  sessionStorage.getItem("selectedSecurityObjectives") : null);
     // Selected SFRs
-    const [selectedSfrs, setSelectedSfrs] = useState(sessionStorage.getItem("selectedSfrs") ? JSON.parse(sessionStorage.getItem("selectedSfrs")) : null);
+    const [selectedSfrs, setSelectedSfrs] = useState(sessionStorage.getItem("selectedSfrs") ?  sessionStorage.getItem("selectedSfrs") : null);
     // Selected Security Objectives
-    const [selectedPps, setSelectedPps] = useState(sessionStorage.getItem("selectedPps") ? JSON.parse(sessionStorage.getItem("selectedPps")) : null);
+    const [selectedPps, setSelectedPps] = useState(sessionStorage.getItem("selectedPps") ?  sessionStorage.getItem("selectedPps") : null);
 
 
     // Functions

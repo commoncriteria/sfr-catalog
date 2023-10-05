@@ -17,8 +17,6 @@ export function getThreats(sfrDB) {
  * @returns {*} The Objectives based on filtered Threat(s)
  */
 export function ThreatToSecurityObjective(sfrDB, threat) {
-    console.log(threat);
-    console.log(jmespath.search(sfrDB, `Threats[?Name == '${threat}'].SecurityObjectives[]`));
     return jmespath.search(sfrDB, `Threats[?Name == '${threat}'].SecurityObjectives[]`);
 }
 

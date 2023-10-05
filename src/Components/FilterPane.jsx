@@ -54,11 +54,10 @@ function FilterPane(props) {
 
 
     /**
-    * Handles setting the selected threats
+    * Handles filtering the objectives based on the threat selected
     * @param value The selected threats value
     */
     const updatedObjectives = () => {
-        console.log(props.selectedThreats);
         if (props.selectedThreats) {
             return query.ThreatToSecurityObjective(SFRDatabase, props.selectedThreats[0]);
         } else {
