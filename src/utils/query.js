@@ -12,12 +12,22 @@ export function getThreats(sfrDB) {
 
 /**
  * Gets the filtered Objectives
- * @param sfrDB The SFRDatabase
- * @param threat The Threat to filter on
- * @returns {*} The Objectives based on filtered Threat(s)
+ * @param sfrDB     The SFRDatabase
+ * @param threat    The Threat to filter on
+ * @returns {*}     The Objectives based on filtered Threat(s)
  */
 export function ThreatToSecurityObjective(sfrDB, threat) {
     return jmespath.search(sfrDB, `Threats[?Name == '${threat}'].SecurityObjectives[]`);
+}
+
+/**
+ * Gets the filtered SFRs
+ * @param sfrDB     The SFRDatabase
+ * @param threat    The Objective to filter on
+ * @returns {*}     The SFRs based on filtered Objectives(s)
+ */
+export function ObjectiveToSFR(sfrDB, objective) {
+    return jmespath.search(sfrDB, `SecurityObjectives[?Name == '${objective}'].SFRs[]`);
 }
 
 /**

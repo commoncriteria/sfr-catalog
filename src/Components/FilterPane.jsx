@@ -63,7 +63,10 @@ function FilterPane(props) {
         isOnlyOneOptionAvailable("Threats", allThreats, props.selectedThreats)
 
         // Update objectives when threats are updated
-        updatedObjectivesForThreatSelection(props.selectedThreats)
+        let updatedObjectives = updatedObjectivesForThreatSelection(props.selectedThreats)
+
+        // Update sfrs after threats/objectives are updated
+        updatedSfrsForObjectiveSelection(updatedObjectives)
     }, [props.selectedThreats])
 
     /**
@@ -72,6 +75,9 @@ function FilterPane(props) {
     useEffect(() => {
         // Update objectives to select value automatically if the allSecurityObjectives array has one entry
         isOnlyOneOptionAvailable("Objective", allSecurityObjectives, props.selectedSecurityObjectives)
+
+        // Update sfrs after objectives are updated
+        updatedSfrsForObjectiveSelection(allSecurityObjectives)
     }, [props.selectedSecurityObjectives])
 
     /**
@@ -90,7 +96,7 @@ function FilterPane(props) {
     const updatedObjectivesForThreatSelection = (threats) => {
         // If threats are not empty, update query to be threat specific
         // Otherwise, get all security objectives
-        let updatedObjectives = threats ? query.ThreatToSecurityObjective(SFRDatabase, threats[0]) : query.getSecurityObjectives(SFRDatabase).sort();
+        let updatedObjectives = threats ? query.ThreatToSecurityObjective(SFRDatabase, threats[0]).sort() : query.getSecurityObjectives(SFRDatabase).sort();
         // Initialize updated selections to null
         let updatedSelections = null
 
@@ -116,9 +122,118 @@ function FilterPane(props) {
             }
         }
 
+        // Sort lists if they are not empty
+        if (updatedObjectives) {
+            updatedObjectives.sort()
+        }
+        if (updatedSelections) {
+            updatedSelections.sort()
+        }
+
         // If the security objectives array only has one item and the selected objectives is null, automatically select item
         if (!isOnlyOneOptionAvailable("Objective", updatedObjectives, updatedSelections)) {
             props.handleSetSelectedSecurityObjectives(updatedSelections)
+        }
+
+        // Return updated objectives to pass on to sfrs later
+        return updatedObjectives;
+    }
+
+    /**
+     * Handles filtering the sfrs based on the objectives
+     * @param objectives    The objectives full dropdown list
+     */
+    const updatedSfrsForObjectiveSelection = (objectives) => {
+        // Initialize values as null
+        let updatedSfrs = null
+        let updatedSelections = null
+
+        // Update SFRs based on objectives dropdown list if the no objectives are selected
+        if (props.selectedSecurityObjectives) {
+            // If objectives are empty, query all sfrs
+            if (!objectives) {
+                updatedSfrs = query.getSfrs(SFRDatabase).sort()
+            }
+            // Otherwise update sfr based on the selected objective only
+            else {
+                updatedSfrs = query.ObjectiveToSFR(SFRDatabase, props.selectedSecurityObjectives).sort()
+            }
+        }
+        // Otherwise update sfrs based on the objective options available in the dropdown
+        else {
+            // If the objectives exist and are not empty
+            if (objectives && Object.keys(objectives).length !== 0) {
+                // Map through the objectives to get the appropriate sfrs
+                objectives.map((objective) => {
+                    // Query sfrs based on current objective
+                    let sfrs = query.ObjectiveToSFR(SFRDatabase, objective.toString())
+                    // if the sfrs are not empty add to updatedSfrs array
+                    if (sfrs && Object.keys(sfrs).length !== 0) {
+                        // If the updated sfrs are empty, intialize new array
+                        if (!updatedSfrs) {
+                            updatedSfrs = []
+                        }
+                        // Map through sfrs
+                        sfrs.map((sfr) => {
+                            // If the sfr does not already exist in the updatedSfrs array, add to array
+                            if (!updatedSfrs.includes(sfr)) {
+                                updatedSfrs.push(sfr)
+                            }
+                        })
+                    }
+                })
+            }
+            // Otherwise query all sfrs
+            else {
+                updatedSfrs = query.getSfrs(SFRDatabase).sort()
+            }
+        }
+
+        // If the previously selected sfrs are not empty, adjust the selected sfr if it is
+        // still in the updated sfrs array
+        if (updatedSfrs && props.selectedSfrs) {
+            // Work through the selected sfrs array and add selections if they are still in the array
+            if (Object.keys(props.selectedSfrs).length !== 0) {
+                props.selectedSfrs.map((sfr) => {
+                    // If the updatedObjectives includes the previously selected objective, add to array
+                    if (updatedSfrs.includes(sfr)) {
+                        // If the updated selections was previously null, initialize new empty array to add to
+                        if (!updatedSelections) {
+                            updatedSelections = []
+                        }
+                        // Push sfr to updated selections array
+                        updatedSelections.push(sfr)
+                    }
+                })
+            }
+        }
+
+        // Sort lists if they are not empty
+        if (updatedSfrs) {
+            updatedSfrs.sort()
+        }
+        if (updatedSelections) {
+            updatedSelections.sort()
+        }
+
+        // Update Sfrs
+        if (updatedSfrs && Object.keys(updatedSfrs).length !== 0) {
+            handleSetAllSfrs(updatedSfrs)
+            // If the sfr array only has one item and the selected sfrs is null, automatically select item
+            if (!isOnlyOneOptionAvailable("SFR", updatedSfrs, updatedSelections)) {
+                props.handleSetSelectedSfrs(updatedSelections)
+            }
+
+            // Return updated objectives to pass on to sfrs later
+            return updatedSfrs;
+        }
+
+        // Set all sfrs to null if none were generated, this will allow the pane to not be visible and no selections for
+        // sfrs will be available as expected
+        else {
+            handleSetAllSfrs(null)
+            props.handleSetSelectedSfrs(null)
+            return null;
         }
     }
 
