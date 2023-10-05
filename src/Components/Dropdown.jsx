@@ -13,7 +13,7 @@ function Dropdown(props) {
     Dropdown.propTypes = {
         label: PropTypes.string.isRequired,
         options: PropTypes.array.isRequired,
-        selections: PropTypes.array.isRequired,
+        selections: PropTypes.string,
         handleDropdownSelect: PropTypes.func.isRequired,
     };
 

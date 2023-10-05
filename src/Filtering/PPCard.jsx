@@ -13,7 +13,7 @@ function PPCard(props) {
     // Prop Validation
     PPCard.propTypes = {
         allPps: PropTypes.array.isRequired,
-        selections: PropTypes.array.isRequired,
+        selections: PropTypes.string,
         handleSetSelectedPps: PropTypes.func.isRequired
     };
 

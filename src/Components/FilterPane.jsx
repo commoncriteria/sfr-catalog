@@ -27,10 +27,10 @@ function FilterPane(props) {
 
     // Prop Validation
     FilterPane.propTypes = {
-        selectedThreats: PropTypes.array.isRequired,
-        selectedSecurityObjectives: PropTypes.array.isRequired,
-        selectedSfrs: PropTypes.array.isRequired,
-        selectedPps: PropTypes.array.isRequired,
+        selectedThreats: PropTypes.string,
+        selectedSecurityObjectives: PropTypes.string,
+        selectedSfrs: PropTypes.string,
+        selectedPps: PropTypes.string,
         handleSetSelectedThreats: PropTypes.func.isRequired,
         handleSetSelectedSecurityObjectives: PropTypes.func.isRequired,
         handleSetSelectedSfrs: PropTypes.func.isRequired,
@@ -45,7 +45,6 @@ function FilterPane(props) {
         try {
             handleSetAllThreats(query.getThreats(SFRDatabase).sort());
             handleSetAllSecurityObjectives(query.getSecurityObjectives(SFRDatabase).sort());
-            // Add Queries
             handleSetAllSfrs(query.getSfrs(SFRDatabase).sort())
             handleSetAllPps(null)
         } catch (e) {

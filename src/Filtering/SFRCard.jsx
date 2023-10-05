@@ -13,7 +13,7 @@ function SFRCard(props) {
     // Prop Validation
     SFRCard.propTypes = {
         allSfrs: PropTypes.array.isRequired,
-        selections: PropTypes.array.isRequired,
+        selections: PropTypes.string,
         handleSetSelectedSfrs: PropTypes.func.isRequired
     };
 

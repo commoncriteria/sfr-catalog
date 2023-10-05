@@ -12,7 +12,7 @@ function ObjectivesCard(props) {
     // Prop Validation
     ObjectivesCard.propTypes = {
         allSecurityObjectives: PropTypes.array.isRequired,
-        selections: PropTypes.array.isRequired,
+        selections: PropTypes.string,
         handleSetSelectedSecurityObjectives: PropTypes.func.isRequired
     };
 
