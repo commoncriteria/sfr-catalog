@@ -13,7 +13,7 @@ function SFRCard(props) {
     // Prop Validation
     SFRCard.propTypes = {
         allSfrs: PropTypes.array.isRequired,
-        selections: PropTypes.array.isRequired,
+        selections: PropTypes.array,
         handleSetSelectedSfrs: PropTypes.func.isRequired
     };
 
@@ -22,7 +22,11 @@ function SFRCard(props) {
      * @param event the event handler
      */
     const handleDropdownSelect = (event, values) => {
-        props.handleSetSelectedSfrs(values)
+        if (typeof values == "string") {
+            props.handleSetSelectedSfrs([values])
+        } else {
+            props.handleSetSelectedSfrs(values)
+        }
     };
 
     // Return Function

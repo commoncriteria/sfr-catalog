@@ -13,7 +13,7 @@ function Dropdown(props) {
     Dropdown.propTypes = {
         label: PropTypes.string.isRequired,
         options: PropTypes.array.isRequired,
-        selections: PropTypes.array.isRequired,
+        selections: PropTypes.array,
         handleDropdownSelect: PropTypes.func.isRequired,
     };
 
@@ -26,7 +26,8 @@ function Dropdown(props) {
                 id={props.label}
                 options={props.options}
                 value={props.selections}
-                getOptionLabel={(option) => option}
+                getOptionLabel={(option) => option.toString()}
+                isOptionEqualToValue={(option, value) => option == value[0]}
                 onChange={props.handleDropdownSelect}
                 className={"m-2"}
                 sx={{

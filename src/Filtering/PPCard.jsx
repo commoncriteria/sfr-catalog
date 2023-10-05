@@ -13,7 +13,7 @@ function PPCard(props) {
     // Prop Validation
     PPCard.propTypes = {
         allPps: PropTypes.array.isRequired,
-        selections: PropTypes.array.isRequired,
+        selections: PropTypes.array,
         handleSetSelectedPps: PropTypes.func.isRequired
     };
 
@@ -22,7 +22,11 @@ function PPCard(props) {
      * @param event the event handler
      */
     const handleDropdownSelect = (event, values) => {
-        props.handleSetSelectedPps(values)
+        if (typeof values == "string") {
+            props.handleSetSelectedPps([values])
+        } else {
+            props.handleSetSelectedPps(values)
+        }
     };
 
     // Return Function

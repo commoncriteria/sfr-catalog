@@ -19,7 +19,7 @@ function FilterPane(props) {
     // Threats
     const [allThreats, setThreats] = useState(sessionStorage.getItem("allThreats") ? JSON.parse(sessionStorage.getItem("allThreats")) : null);
     // Security Objectives
-    const [allSecurityObjectives, setSecurityObjectives] = useState(sessionStorage.getItem("allSecurityObjectives") ?  JSON.parse(sessionStorage.getItem("allSecurityObjectives")) : null);
+    const [allSecurityObjectives, setSecurityObjectives] = useState(sessionStorage.getItem("allSecurityObjectives") ? JSON.parse(sessionStorage.getItem("allSecurityObjectives")) : null);
     // SFRs
     const [allSfrs, setSfrs] = useState(sessionStorage.getItem("allSfrs") ? JSON.parse(sessionStorage.getItem("allSfrs")) : null);
     // PPs
@@ -27,10 +27,10 @@ function FilterPane(props) {
 
     // Prop Validation
     FilterPane.propTypes = {
-        selectedThreats: PropTypes.array.isRequired,
-        selectedSecurityObjectives: PropTypes.array.isRequired,
-        selectedSfrs: PropTypes.array.isRequired,
-        selectedPps: PropTypes.array.isRequired,
+        selectedThreats: PropTypes.array,
+        selectedSecurityObjectives: PropTypes.array,
+        selectedSfrs: PropTypes.array,
+        selectedPps: PropTypes.array,
         handleSetSelectedThreats: PropTypes.func.isRequired,
         handleSetSelectedSecurityObjectives: PropTypes.func.isRequired,
         handleSetSelectedSfrs: PropTypes.func.isRequired,
@@ -41,7 +41,7 @@ function FilterPane(props) {
     /**
      * Use Effect to initialize the queries for the SFRDatabase
      */
-    useEffect(() =>  {
+    useEffect(() => {
         try {
             handleSetAllThreats(query.getThreats(SFRDatabase).sort());
             handleSetAllSecurityObjectives(query.getSecurityObjectives(SFRDatabase).sort());
@@ -52,6 +52,33 @@ function FilterPane(props) {
             console.log(e)
         }
     }, [SFRDatabase]);
+
+
+    /**
+    * Handles setting the selected threats
+    * @param value The selected threats value
+    */
+    const updatedObjectives = () => {
+        console.log(props.selectedThreats);
+        if (props.selectedThreats) {
+            return query.ThreatToSecurityObjective(SFRDatabase, props.selectedThreats[0]);
+        } else {
+            return null;
+        }
+    }
+
+
+    useEffect(() => {
+        if (props.selectedThreats) {
+            let updated_Objectives = updatedObjectives()
+            if (updated_Objectives) {
+                handleSetAllSecurityObjectives(updated_Objectives);
+            }
+            
+        }
+    }, [props.selectedThreats])
+
+
 
     // Functions
     /**
@@ -106,7 +133,7 @@ function FilterPane(props) {
                             selections={props.selectedThreats}
                             handleSetSelectedThreats={props.handleSetSelectedThreats}
                         />
-                    : null
+                        : null
                 }
             </div>
             {/* Objectives Filtering Card */}
@@ -119,7 +146,7 @@ function FilterPane(props) {
                             selections={props.selectedSecurityObjectives}
                             handleSetSelectedSecurityObjectives={props.handleSetSelectedSecurityObjectives}
                         />
-                    : null
+                        : null
                 }
             </div>
             {/* SFR Filtering Card */}
@@ -132,7 +159,7 @@ function FilterPane(props) {
                             selections={props.selectedSfrs}
                             handleSetSelectedSfrs={props.handleSetSelectedSfrs}
                         />
-                    : null
+                        : null
                 }
             </div>
             {/* PP Filtering Card */}
@@ -145,7 +172,7 @@ function FilterPane(props) {
                             selections={props.selectedPps}
                             handleSetSelectedPps={props.handleSetSelectedPps}
                         />
-                    : null
+                        : null
                 }
             </div>
         </div>

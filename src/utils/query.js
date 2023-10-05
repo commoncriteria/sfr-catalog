@@ -11,6 +11,18 @@ export function getThreats(sfrDB) {
 }
 
 /**
+ * Gets the filtered Objectives
+ * @param sfrDB The SFRDatabase
+ * @param threat The Threat to filter on
+ * @returns {*} The Objectives based on filtered Threat(s)
+ */
+export function ThreatToSecurityObjective(sfrDB, threat) {
+    console.log(threat);
+    console.log(jmespath.search(sfrDB, `Threats[?Name == '${threat}'].SecurityObjectives[]`));
+    return jmespath.search(sfrDB, `Threats[?Name == '${threat}'].SecurityObjectives[]`);
+}
+
+/**
  * Gets the Security Objectives from the SFRDatabase
  * @param sfrDB The SFRDatabase
  * @returns {*} The Security Objectives

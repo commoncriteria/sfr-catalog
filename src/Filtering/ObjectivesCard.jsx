@@ -12,7 +12,7 @@ function ObjectivesCard(props) {
     // Prop Validation
     ObjectivesCard.propTypes = {
         allSecurityObjectives: PropTypes.array.isRequired,
-        selections: PropTypes.array.isRequired,
+        selections: PropTypes.array,
         handleSetSelectedSecurityObjectives: PropTypes.func.isRequired
     };
 
@@ -21,7 +21,11 @@ function ObjectivesCard(props) {
      * @param event the event handler
      */
     const handleDropdownSelect = (event, values) => {
-        props.handleSetSelectedSecurityObjectives(values)
+        if (typeof values == "string") {
+            props.handleSetSelectedSecurityObjectives([values])
+        } else {
+            props.handleSetSelectedSecurityObjectives(values)
+        }
     };
 
     // Return Function

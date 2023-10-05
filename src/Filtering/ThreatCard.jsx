@@ -22,7 +22,11 @@ function ThreatCard(props) {
      * @param event the event handler
      */
     const handleDropdownSelect = (event, values) => {
-        props.handleSetSelectedThreats(values)
+        if (typeof values == "string") {
+            props.handleSetSelectedThreats([values])
+        } else {
+            props.handleSetSelectedThreats(values)
+        }
     };
 
     // Return Function

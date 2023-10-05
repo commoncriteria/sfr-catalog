@@ -1,10 +1,11 @@
 // Imports
-import {useState} from "react";
+import { useState } from "react";
 import FilterPane from "./Components/FilterPane.jsx";
 import NavBar from "./Components/NavBar.jsx";
 import TabContent from "./Components/TabContent.jsx";
 import "tw-elements-react/dist/css/tw-elements-react.min.css";
 import "./index.css"
+// import { ThreatToSecurityObjective } from "./utils/query.js";
 
 /**
  * The App class that runs the Catalog project
@@ -16,13 +17,14 @@ function App() {
     // The currently active tab string value
     const [activeTab, setActiveTab] = useState(sessionStorage.getItem("activeTab") ? sessionStorage.getItem("activeTab") : "results_tab");
     // Selected Threats
-    const [selectedThreats, setSelectedThreats] = useState(sessionStorage.getItem("selectedThreats") ?  JSON.parse(sessionStorage.getItem("selectedThreats")) : null);
+    const [selectedThreats, setSelectedThreats] = useState(sessionStorage.getItem("selectedThreats") ? JSON.parse(sessionStorage.getItem("selectedThreats")) : null);
     // Selected Security Objectives
-    const [selectedSecurityObjectives, setSelectedSecurityObjectives] = useState(sessionStorage.getItem("selectedSecurityObjectives") ?  JSON.parse(sessionStorage.getItem("selectedSecurityObjectives")) : null);
+    const [selectedSecurityObjectives, setSelectedSecurityObjectives] = useState(sessionStorage.getItem("selectedSecurityObjectives") ? JSON.parse(sessionStorage.getItem("selectedSecurityObjectives")) : null);
     // Selected SFRs
-    const [selectedSfrs, setSelectedSfrs] = useState(sessionStorage.getItem("selectedSfrs") ?  JSON.parse(sessionStorage.getItem("selectedSfrs")) : null);
+    const [selectedSfrs, setSelectedSfrs] = useState(sessionStorage.getItem("selectedSfrs") ? JSON.parse(sessionStorage.getItem("selectedSfrs")) : null);
     // Selected Security Objectives
-    const [selectedPps, setSelectedPps] = useState(sessionStorage.getItem("selectedPps") ?  JSON.parse(sessionStorage.getItem("selectedPps")) : null);
+    const [selectedPps, setSelectedPps] = useState(sessionStorage.getItem("selectedPps") ? JSON.parse(sessionStorage.getItem("selectedPps")) : null);
+
 
     // Functions
     /**
@@ -36,6 +38,7 @@ function App() {
         setActiveTab(value);
         sessionStorage.setItem("activeTab", value)
     };
+
 
     /**
      * Handles setting the selected threats
@@ -79,7 +82,7 @@ function App() {
             <div className="p-1">
                 {/* The Navigation Bar */}
                 <div className="bg-base-300 w-full p-1 pt-2 sticky top-0 z-30 pb-2 rounded-sm">
-                    <NavBar handleTabClick={handleTabClick.bind(this)} activeTab={activeTab}/>
+                    <NavBar handleTabClick={handleTabClick.bind(this)} activeTab={activeTab} />
                 </div>
                 <div className="grid grid-cols-4 w-full h-full p-1 bg-base-200 rounded-xl z-10 min-h-screen">
                     {/* The Filter Pane Content */}
@@ -97,7 +100,7 @@ function App() {
                     </div>
                     {/* The Tab Content */}
                     <div className="col-span-3 ... bg-neutral border-2 border-gray-500 rounded-lg p-4 ml-2 h-full">
-                        <TabContent activeTab={activeTab}/>
+                        <TabContent activeTab={activeTab} />
                     </div>
                 </div>
             </div>
