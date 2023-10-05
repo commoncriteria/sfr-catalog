@@ -45,7 +45,6 @@ function FilterPane(props) {
         try {
             handleSetAllThreats(query.getThreats(SFRDatabase).sort());
             handleSetAllSecurityObjectives(query.getSecurityObjectives(SFRDatabase).sort());
-            // Add Queries
             handleSetAllSfrs(query.getSfrs(SFRDatabase).sort())
             handleSetAllPps(null)
         } catch (e) {

@@ -46,7 +46,7 @@ function App() {
      */
     const handleSetSelectedThreats = (value) => {
         setSelectedThreats(value)
-        sessionStorage.setItem("selectedThreats", JSON.stringify(value))
+        sessionStorage.setItem("selectedThreats", value)
     }
 
     /**
@@ -55,7 +55,7 @@ function App() {
      */
     const handleSetSelectedSecurityObjectives = (value) => {
         setSelectedSecurityObjectives(value)
-        sessionStorage.setItem("selectedSecurityObjectives", JSON.stringify(value))
+        sessionStorage.setItem("selectedSecurityObjectives", value)
     }
 
     /**
@@ -64,7 +64,7 @@ function App() {
      */
     const handleSetSelectedSfrs = (value) => {
         setSelectedSfrs(value)
-        sessionStorage.setItem("selectedSfrs", JSON.stringify(value))
+        sessionStorage.setItem("selectedSfrs", value)
     }
 
     /**
@@ -73,7 +73,7 @@ function App() {
      */
     const handleSetSelectedPps = (value) => {
         setSelectedPps(value)
-        sessionStorage.setItem("selectedPps", JSON.stringify(value))
+        sessionStorage.setItem("selectedPps", value)
     }
 
     // Return Function
