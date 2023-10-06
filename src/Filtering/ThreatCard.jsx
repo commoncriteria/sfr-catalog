@@ -37,6 +37,7 @@ function ThreatCard(props) {
                 cardContent={
                     <Dropdown
                         label={"Threat"}
+                        multiselect={false}
                         options={props.allThreats}
                         selections={props.selections}
                         handleDropdownSelect={handleDropdownSelect}

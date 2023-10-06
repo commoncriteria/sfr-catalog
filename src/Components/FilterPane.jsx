@@ -44,11 +44,13 @@ function FilterPane(props) {
     useEffect(() => {
         try {
             // Load in all data for filters if nothing has been selected
-            if (!props.selectedThreats && !props.selectedSecurityObjectives && !props.selectedSfrs && !props.selectedPps) {
+            if (!props.selectedThreats && !props.selectedSecurityObjectives && !props.selectedSfrs) {
                 handleSetAllThreats(query.getThreats(SFRDatabase).sort());
                 handleSetAllSecurityObjectives(query.getSecurityObjectives(SFRDatabase).sort());
-                handleSetAllSfrs(query.getSfrs(SFRDatabase).sort())
+                handleSetAllSfrs(query.getSfrs(SFRDatabase).sort());
+                // Set PPs to null if no threats, objectives or sfrs are selected
                 handleSetAllPps(null)
+                props.handleSetSelectedPps(null)
             }
         } catch (e) {
             console.log(e)
@@ -86,6 +88,9 @@ function FilterPane(props) {
     useEffect(() => {
         // Update sfrs to select value automatically if the allSfrs array has one entry
         isOnlyOneOptionAvailable("SFR", allSfrs, props.selectedSfrs)
+
+        // Update objectives after sfrs are updated
+        let objectives = updatedObjectivesForSFRSelection(props.selectedSfrs)
     }, [props.selectedSfrs])
 
     // Functions
@@ -219,20 +224,116 @@ function FilterPane(props) {
         // Update Sfrs
         if (updatedSfrs && Object.keys(updatedSfrs).length !== 0) {
             handleSetAllSfrs(updatedSfrs)
+
             // If the sfr array only has one item and the selected sfrs is null, automatically select item
             if (!isOnlyOneOptionAvailable("SFR", updatedSfrs, updatedSelections)) {
                 props.handleSetSelectedSfrs(updatedSelections)
             }
 
-            // Return updated objectives to pass on to sfrs later
+            // Return updated sfrs to pass on to threats later
             return updatedSfrs;
         }
 
         // Set all sfrs to null if none were generated, this will allow the pane to not be visible and no selections for
         // sfrs will be available as expected
         else {
-            handleSetAllSfrs(null)
-            props.handleSetSelectedSfrs(null)
+            if (updatedSfrs) {
+                handleSetAllSfrs(null)
+            }
+            if (updatedSelections) {
+                props.handleSetSelectedSfrs(null)
+            }
+            return null;
+        }
+    }
+
+    /**
+     * Handles filtering the objectives based on the sfr selected
+     * @param sfrs  The selected sfrs value
+     */
+    const updatedObjectivesForSFRSelection = (sfrs) => {
+        // Initialize values as null
+        let updatedObjectives = null
+        let updatedSelections = null
+
+        // Query all objectives
+        let queriedObjectives = query.getSecurityObjectives(SFRDatabase)
+
+        // If sfrs are selected
+        if (!sfrs) {
+            // If objective is selected, keep it selected
+            // Otherwise, set selected objective to null
+            updatedSelections = props.selectedSecurityObjectives ? props.selectedSecurityObjectives : null;
+
+            // Set objectives to all objectives
+            updatedObjectives = queriedObjectives
+        }
+        // Otherwise, if sfrs are selected
+        else {
+            // Filter down objectives
+            if (sfrs && Object.keys(sfrs).length !== 0) {
+                sfrs.map((sfr) => {
+                    if (queriedObjectives && Object.keys(queriedObjectives).length !== 0) {
+                        queriedObjectives.map((objective) => {
+                            let selectionExists = query.SFRToObjective(SFRDatabase, sfr, objective)
+                            if (selectionExists) {
+                                // Initialize array for filteredObjectives if it is null
+                                if (!updatedObjectives) {
+                                    updatedObjectives = []
+                                }
+                                // Add to filtered objective
+                                updatedObjectives.push(objective)
+                                // If the previously selected security objective is not null and contains the objective add to updatedSelections
+                                if (props.selectedSecurityObjectives && props.selectedSecurityObjectives.includes(objective)) {
+                                    // Initialize array for updatedSelections if it is null
+                                    if (!updatedSelections) {
+                                        updatedSelections = []
+                                    }
+                                    // Add objective to selected objectives
+                                    updatedSelections.push(objective)
+                                }
+                            }
+                        })
+                    }
+                })
+            }
+
+            // If objective is not selected, set objective selection to null
+            if (!props.selectedSecurityObjectives) {
+                updatedSelections = null
+            }
+        }
+
+        // Sort lists if they are not empty
+        if (updatedObjectives) {
+            updatedObjectives.sort()
+        }
+        if (updatedSelections) {
+            updatedSelections.sort()
+        }
+
+        // Update Objectives if they have changed
+        if (updatedObjectives && Object.keys(updatedObjectives).length !== 0) {
+            handleSetAllSecurityObjectives(updatedObjectives)
+
+            // If the objective array only has one item and the selected objectives is null, automatically select item
+            if (!isOnlyOneOptionAvailable("Objective", updatedObjectives, updatedSelections)) {
+                props.handleSetSelectedSecurityObjectives(updatedSelections)
+            }
+
+            // Return updated objectives to pass on to threats later
+            return updatedObjectives;
+        }
+
+        // Set all objectives to null if none were generated, this will allow the pane to not be visible and no selections for
+        // objectives will be available as expected
+        else {
+            if (updatedSelections) {
+                props.handleSetSelectedSecurityObjectives(null)
+            }
+            if (updatedObjectives) {
+                handleSetAllSecurityObjectives(null)
+            }
             return null;
         }
     }
@@ -243,8 +344,11 @@ function FilterPane(props) {
      * @param value The threat value
      */
     const handleSetAllThreats = (value) => {
-        setThreats(value)
-        sessionStorage.setItem("allThreats", JSON.stringify(value))
+        // If threats were updated, set state
+        if (JSON.stringify(allThreats) !== JSON.stringify(value)) {
+            setThreats(value)
+            sessionStorage.setItem("allThreats", JSON.stringify(value))
+        }
     }
 
     /**
@@ -252,8 +356,11 @@ function FilterPane(props) {
      * @param value The security objectives value
      */
     const handleSetAllSecurityObjectives = (value) => {
-        setSecurityObjectives(value)
-        sessionStorage.setItem("allSecurityObjectives", JSON.stringify(value))
+        // If objectives were updated, set state
+        if (JSON.stringify(allSecurityObjectives) !== JSON.stringify(value)) {
+            setSecurityObjectives(value)
+            sessionStorage.setItem("allSecurityObjectives", JSON.stringify(value))
+        }
     }
 
     /**
@@ -261,8 +368,11 @@ function FilterPane(props) {
      * @param value The sfr value
      */
     const handleSetAllSfrs = (value) => {
-        setSfrs(value)
-        sessionStorage.setItem("allSfrs", JSON.stringify(value))
+        // If sfrs were updated, set state
+        if (JSON.stringify(allSfrs) !== JSON.stringify(value)) {
+            setSfrs(value)
+            sessionStorage.setItem("allSfrs", JSON.stringify(value))
+        }
     }
 
     /**
@@ -270,8 +380,11 @@ function FilterPane(props) {
      * @param value The pp value
      */
     const handleSetAllPps = (value) => {
-        setPps(value)
-        sessionStorage.setItem("allPps", JSON.stringify(value))
+        // If pps were updated, set state
+        if (JSON.stringify(allPps) !== JSON.stringify(value)) {
+            setPps(value)
+            sessionStorage.setItem("allPps", JSON.stringify(value))
+        }
     }
 
     /**

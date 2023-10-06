@@ -35,6 +35,7 @@ function ObjectivesCard(props) {
             cardContent={
                 <Dropdown
                     label={"Objective"}
+                    multiselect={false}
                     options={props.allSecurityObjectives}
                     selections={props.selections}
                     handleDropdownSelect={handleDropdownSelect}

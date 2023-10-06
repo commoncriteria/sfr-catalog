@@ -37,6 +37,7 @@ function PPCard(props) {
                 cardContent={
                     <Dropdown
                         label={"PP"}
+                        multiselect={true}
                         options={props.allPps}
                         selections={props.selections}
                         handleDropdownSelect={handleDropdownSelect}

@@ -37,6 +37,7 @@ function SFRCard(props) {
                 cardContent={
                     <Dropdown
                         label={"SFR"}
+                        multiselect={false}
                         options={props.allSfrs}
                         selections={props.selections}
                         handleDropdownSelect={handleDropdownSelect}

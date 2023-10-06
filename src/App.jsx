@@ -44,8 +44,11 @@ function App() {
      * @param value The selected threats value
      */
     const handleSetSelectedThreats = (value) => {
-        setSelectedThreats(value)
-        sessionStorage.setItem("selectedThreats", JSON.stringify(value))
+        // If selected threats were updated, set state
+        if (JSON.stringify(selectedThreats) !== JSON.stringify(value)) {
+            setSelectedThreats(value)
+            sessionStorage.setItem("selectedThreats", JSON.stringify(value))
+        }
     }
 
     /**
@@ -53,8 +56,11 @@ function App() {
      * @param value The selected security objectives value
      */
     const handleSetSelectedSecurityObjectives = (value) => {
-        setSelectedSecurityObjectives(value)
-        sessionStorage.setItem("selectedSecurityObjectives", JSON.stringify(value))
+        // If selected objectives were updated, set state
+        if (JSON.stringify(selectedSecurityObjectives) !== JSON.stringify(value)) {
+            setSelectedSecurityObjectives(value)
+            sessionStorage.setItem("selectedSecurityObjectives", JSON.stringify(value))
+        }
     }
 
     /**
@@ -62,8 +68,11 @@ function App() {
      * @param value The selected sfrs value
      */
     const handleSetSelectedSfrs = (value) => {
-        setSelectedSfrs(value)
-        sessionStorage.setItem("selectedSfrs", JSON.stringify(value))
+        // If selected sfrs were updated, set state
+        if (JSON.stringify(selectedSfrs) !== JSON.stringify(value)) {
+            setSelectedSfrs(value)
+            sessionStorage.setItem("selectedSfrs", JSON.stringify(value))
+        }
     }
 
     /**
@@ -71,8 +80,11 @@ function App() {
      * @param value The selected pps value
      */
     const handleSetSelectedPps = (value) => {
-        setSelectedPps(value)
-        sessionStorage.setItem("selectedPps", JSON.stringify(value))
+        // If selected pps were updated, set state
+        if (JSON.stringify(selectedPps) !== JSON.stringify(value)) {
+            setSelectedPps(value)
+            sessionStorage.setItem("selectedPps", JSON.stringify(value))
+        }
     }
 
     // Return Function

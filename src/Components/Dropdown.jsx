@@ -12,6 +12,7 @@ function Dropdown(props) {
     // Prop Validation
     Dropdown.propTypes = {
         label: PropTypes.string.isRequired,
+        multiselect: PropTypes.bool.isRequired,
         options: PropTypes.array.isRequired,
         selections: PropTypes.array,
         handleDropdownSelect: PropTypes.func.isRequired,
@@ -21,11 +22,10 @@ function Dropdown(props) {
     return (
         <div className="form-control">
             <Autocomplete
-                // Add in later, makes it multi select
-                // multiple
+                multiple={props.multiselect}
                 id={props.label}
                 options={props.options}
-                value={props.selections}
+                value={props.selections ? props.selections : []}
                 getOptionLabel={(option) => option.toString()}
                 isOptionEqualToValue={(option, value) => option == value[0]}
                 onChange={props.handleDropdownSelect}
