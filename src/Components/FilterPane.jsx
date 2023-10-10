@@ -46,12 +46,7 @@ function FilterPane(props) {
         try {
             // Load in all data for filters if nothing has been selected
             if (!props.selectedThreats && !props.selectedSecurityObjectives && !props.selectedSfrs) {
-                handleSetAllThreats(query.getThreats(SFRDatabase).sort());
-                handleSetAllSecurityObjectives(query.getSecurityObjectives(SFRDatabase).sort());
-                handleSetAllSfrs(query.getSfrs(SFRDatabase).sort());
-                // Set PPs to null if no threats, objectives or sfrs are selected
-                handleSetAllPps(null)
-                props.handleSetSelectedPps(null)
+                handleClearAllFilters();
             }
         } catch (e) {
             console.log(e)
@@ -118,14 +113,16 @@ function FilterPane(props) {
                         let oneSelected = isOnlyOneOptionAvailable(type, allValues, newSelections)
                         if (oneSelected) {
                             props.handleSetSelectedSfrs(oneSelected)
+                        } else {
+                            fromSFRs(newSelections, allValues)
                         }
-                        // else {
-                        //     fromSFRs(newSelections, allValues)
-                        // }
                     }
                     break;
                 default:
                     break;
+            }
+            if (!props.selectedThreats && !props.selectedSecurityObjectives && !props.selectedSfrs) {
+                handleClearAllFilters()
             }
         } catch (e) {
             console.log(e)
@@ -182,6 +179,31 @@ function FilterPane(props) {
         handleSetAllThreats(newThreats)
     }
 
+    /**
+     * Filtering down based on SFRs
+     * @param newSFRs    The SFRs selections
+     * @param fullSFRs   The full SFRs dropdown list
+     */
+    const fromSFRs = (newSFRs, fullSFRs) => {
+        // Filter down objectives
+        let sfrToObjective = genericFilter("SFR", "Objective", newSFRs, fullSFRs)
+        let selectedObjectives = sfrToObjective[0]
+        let newObjectives = sfrToObjective[1]
+
+        // Filter down threats
+        let objectiveToThreat = genericFilter("Objective", "Threat", selectedObjectives, newObjectives)
+        let selectedThreats = objectiveToThreat[0]
+        let newThreats = objectiveToThreat[1]
+
+        // Update objective dropdowns
+        props.handleSetSelectedSecurityObjectives(selectedObjectives)
+        handleSetAllSecurityObjectives(newObjectives)
+
+        // Update threat dropdowns
+        props.handleSetSelectedThreats(selectedThreats)
+        handleSetAllThreats(newThreats)
+    }
+
     // Helper Functions
     /**
      * The generic filter class that can filter down any original list to its associated list
@@ -218,20 +240,24 @@ function FilterPane(props) {
 
         // Update dropdown
         if (originalSelections && Object.keys(originalSelections).length !== 0) {
-            if (originalType === "Objective" && updateType === "Threat") {
+            // If type is objectiveToThreat or sfrToObjective, pass in full queriedList
+            if ((originalType === "Objective" && updateType === "Threat")
+                || (originalType === "SFR" && updateType === "Objective")) {
                 newFullOptionsList = runFilterByType(originalType, updateType, originalSelections, queriedList)
             } else {
                 newFullOptionsList = runFilterByType(originalType, updateType, originalSelections, newFullOptionsList)
             }
         } else {
             if (originalFullOptionsList && Object.keys(originalFullOptionsList).length !== 0) {
-                if (originalType === "Objective" && updateType === "Threat") {
+                // If type is objectiveToThreat or sfrToObjective, pass in full queriedList
+                if ((originalType === "Objective" && updateType === "Threat")
+                    || (originalType === "SFR" && updateType === "Objective")) {
                     newFullOptionsList = runFilterByType(originalType, updateType, originalFullOptionsList, queriedList)
                 } else {
                     newFullOptionsList = runFilterByType(originalType, updateType, originalFullOptionsList, newFullOptionsList)
                 }
             } else {
-                newFullOptionsList = queriedList.valueOf()
+                newFullOptionsList = queriedList
             }
         }
 
@@ -284,14 +310,10 @@ function FilterPane(props) {
                     return currentOptions.valueOf();
                 case "SFR":
                     return currentOptions.valueOf();
-                default:
-                    return null;
             }
         }
         // Return null if the array options are greater than one
-        else {
-            return null;
-        }
+        return null;
     }
 
     /**
@@ -309,10 +331,9 @@ function FilterPane(props) {
             return objectiveToSfrFilter(oldValue, newValue)
         } else if (originalType === "Objective" && updateType === "Threat") {
             return objectiveToThreatFilter(oldValue, newValue)
-        }
-        // else if (originalType === "SFR" && updateType === "Objective") {
-        //     console.log()
-        else {
+        } else if (originalType === "SFR" && updateType === "Objective") {
+            return sfrToObjectiveFilter(oldValue, newValue)
+        } else {
             return null;
         }
     }
@@ -343,31 +364,6 @@ function FilterPane(props) {
     }
 
     /**
-     * The objective to sfr filter
-     * @param objectives    The input objectives
-     * @param newSFRs       The new SFRs to be updated
-     * @returns {*}         The new SFRs array
-     */
-    const objectiveToSfrFilter = (objectives, newSFRs) => {
-        if (objectives && Object.keys(objectives) !== 0) {
-            objectives.map((objective) => {
-                let sfrs = query.SecurityObjectiveToSFR(SFRDatabase, objective).sort()
-                if (sfrs && Object.keys(sfrs).length !== 0) {
-                    sfrs.map((sfr) => {
-                        if (!newSFRs) {
-                            newSFRs = []
-                        }
-                        if (!newSFRs.includes(sfr.toString())) {
-                            newSFRs.push(sfr.valueOf())
-                        }
-                    })
-                }
-            })
-        }
-        return newSFRs;
-    }
-
-    /**
      * The objective to threat filter
      * @param objectives    The input objectives
      * @param threatList    The original queried threats list
@@ -395,25 +391,75 @@ function FilterPane(props) {
         return newThreats;
     }
 
+    /**
+     * The objective to sfr filter
+     * @param objectives    The input objectives
+     * @param newSFRs       The new SFRs to be updated
+     * @returns {*}         The new SFRs array
+     */
+    const objectiveToSfrFilter = (objectives, newSFRs) => {
+        if (objectives && Object.keys(objectives) !== 0) {
+            objectives.map((objective) => {
+                let sfrs = query.SecurityObjectiveToSFR(SFRDatabase, objective).sort()
+                if (sfrs && Object.keys(sfrs).length !== 0) {
+                    sfrs.map((sfr) => {
+                        if (!newSFRs) {
+                            newSFRs = []
+                        }
+                        if (!newSFRs.includes(sfr.toString())) {
+                            newSFRs.push(sfr.valueOf())
+                        }
+                    })
+                }
+            })
+        }
+        return newSFRs;
+    }
+
+    /**
+     * The sfr to objective filter
+     * @param sfrs          The input sfrs
+     * @param objectiveList The original queried objectives list
+     * @returns {*}         The new objectives array
+     */
+    const sfrToObjectiveFilter = (sfrs, objectiveList) => {
+        let newObjectives = null
+        if (objectiveList && Object.keys(objectiveList) !== 0) {
+            objectiveList.map((objective) => {
+                if (sfrs && Object.keys(sfrs).length !== 0) {
+                    sfrs.map((sfr) => {
+                        let objectivesExist = query.SFRToSecurityObjective(SFRDatabase, sfr, objective)
+                        if (objectivesExist !== false) {
+                            if (!newObjectives) {
+                                newObjectives = []
+                            }
+                            if (!newObjectives.includes(objective.toString())) {
+                                newObjectives.push(objective.valueOf())
+                            }
+                        }
+                    })
+                }
+            })
+        }
+        return newObjectives;
+    }
+
     // Handler Functions
     /**
-     * Handles the button click for clearing all filters
+     * Handles clearing all filters
      */
-    const handleClearAllFiltersButton = () => {
-        // If the filters are not already empty clear them on button press
-        if (props.selectedThreats || props.selectedSecurityObjectives || props.selectedSfrs) {
-            // Reset filters to default values for dropdowns
-            handleSetAllThreats(query.getThreats(SFRDatabase).sort());
-            handleSetAllSecurityObjectives(query.getSecurityObjectives(SFRDatabase).sort());
-            handleSetAllSfrs(query.getSfrs(SFRDatabase).sort());
-            handleSetAllPps(null)
+    const handleClearAllFilters = () => {
+        // Reset filters to default values for dropdowns
+        handleSetAllThreats(query.getThreats(SFRDatabase).sort());
+        handleSetAllSecurityObjectives(query.getSecurityObjectives(SFRDatabase).sort());
+        handleSetAllSfrs(query.getSfrs(SFRDatabase).sort());
+        handleSetAllPps(null)
 
-            // Reset selections to default
-            props.handleSetSelectedThreats(null)
-            props.handleSetSelectedSecurityObjectives(null)
-            props.handleSetSelectedSfrs(null)
-            props.handleSetSelectedPps(null)
-        }
+        // Reset selections to default
+        props.handleSetSelectedThreats(null)
+        props.handleSetSelectedSecurityObjectives(null)
+        props.handleSetSelectedSfrs(null)
+        props.handleSetSelectedPps(null)
     }
 
     /**
@@ -527,7 +573,7 @@ function FilterPane(props) {
                 <Button
                     ripple={true}
                     className={"bg-accent text-sm rounded-xl"}
-                    onClick={handleClearAllFiltersButton}>
+                    onClick={handleClearAllFilters}>
                     Clear All Filters
                 </Button>
             </div>
