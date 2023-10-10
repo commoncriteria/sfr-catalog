@@ -1,10 +1,11 @@
 // Imports
+import { useEffect, useState } from "react";
+import { Button } from "@material-tailwind/react";
 import ThreatCard from "../Filtering/ThreatCard.jsx";
 import ObjectivesCard from "../Filtering/ObjectivesCard.jsx";
 import SFRCard from "../Filtering/SFRCard.jsx";
 import PPCard from "../Filtering/PPCard.jsx";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
 import * as query from "../utils/query.js";
 import SFRDatabase from "../assets/NIAPDocumentBundle.json";
 
@@ -107,10 +108,9 @@ function FilterPane(props) {
                         let oneSelected = isOnlyOneOptionAvailable(type, allValues, newSelections)
                         if (oneSelected) {
                             props.handleSetSelectedSecurityObjectives(oneSelected)
+                        } else {
+                            fromObjectives(newSelections, allValues)
                         }
-                        // else {
-                        //     fromObjectives(newSelections, allValues)
-                        // }
                     }
                     break;
                 case "SFR":
@@ -157,6 +157,30 @@ function FilterPane(props) {
         handleSetAllSfrs(newSfrs)
     }
 
+    /**
+     * Filtering down based on objectives
+     * @param newObjectives    The objective selections
+     * @param fullObjectives   The full objective dropdown list
+     */
+    const fromObjectives = (newObjectives, fullObjectives) => {
+        // Filter down SFRs
+        let objectiveToSfr = genericFilter("Objective", "SFR", newObjectives, fullObjectives)
+        let selectedSfrs = objectiveToSfr[0]
+        let newSfrs = objectiveToSfr[1]
+
+        // Filter down threats
+        let objectiveToThreat = genericFilter("Objective", "Threat", newObjectives, fullObjectives)
+        let selectedThreats = objectiveToThreat[0]
+        let newThreats = objectiveToThreat[1]
+
+        // Update sfr dropdowns
+        props.handleSetSelectedSfrs(selectedSfrs)
+        handleSetAllSfrs(newSfrs)
+
+        // Update threat dropdowns
+        props.handleSetSelectedThreats(selectedThreats)
+        handleSetAllThreats(newThreats)
+    }
 
     // Helper Functions
     /**
@@ -175,31 +199,39 @@ function FilterPane(props) {
         let newSelections = null;
 
         // Get full queried list based on new type
-        let queriedObjectives = null;
+        let queriedList = null;
         let originalSelectionsForNewType = null
         switch (updateType) {
             case "Threat":
-                queriedObjectives = query.getThreats(SFRDatabase).sort()
+                queriedList = query.getThreats(SFRDatabase).sort()
                 originalSelectionsForNewType = props.selectedThreats
                 break;
             case "Objective":
-                queriedObjectives = query.getSecurityObjectives(SFRDatabase).sort()
+                queriedList = query.getSecurityObjectives(SFRDatabase).sort()
                 originalSelectionsForNewType = props.selectedSecurityObjectives
                 break;
             case "SFR":
-                queriedObjectives = query.getSfrs(SFRDatabase).sort()
+                queriedList = query.getSfrs(SFRDatabase).sort()
                 originalSelectionsForNewType = props.selectedSfrs
                 break;
         }
 
         // Update dropdown
         if (originalSelections && Object.keys(originalSelections).length !== 0) {
-            newFullOptionsList = runFilterByType(originalType, updateType, originalSelections, newFullOptionsList)
+            if (originalType === "Objective" && updateType === "Threat") {
+                newFullOptionsList = runFilterByType(originalType, updateType, originalSelections, queriedList)
+            } else {
+                newFullOptionsList = runFilterByType(originalType, updateType, originalSelections, newFullOptionsList)
+            }
         } else {
             if (originalFullOptionsList && Object.keys(originalFullOptionsList).length !== 0) {
-                newFullOptionsList = runFilterByType(originalType, updateType, originalFullOptionsList, newFullOptionsList)
+                if (originalType === "Objective" && updateType === "Threat") {
+                    newFullOptionsList = runFilterByType(originalType, updateType, originalFullOptionsList, queriedList)
+                } else {
+                    newFullOptionsList = runFilterByType(originalType, updateType, originalFullOptionsList, newFullOptionsList)
+                }
             } else {
-                newFullOptionsList = queriedObjectives.valueOf()
+                newFullOptionsList = queriedList.valueOf()
             }
         }
 
@@ -275,12 +307,11 @@ function FilterPane(props) {
             return threatToObjectiveFilter(oldValue, newValue)
         } else if (originalType === "Objective" && updateType === "SFR") {
             return objectiveToSfrFilter(oldValue, newValue)
+        } else if (originalType === "Objective" && updateType === "Threat") {
+            return objectiveToThreatFilter(oldValue, newValue)
         }
-            // else if (originalType === "SFR" && updateType === "Objective") {
-            //     console.log()
-            // } else if (originalType === "Objective" && updateType === "SFR") {
-            //     console.log()
-        // }
+        // else if (originalType === "SFR" && updateType === "Objective") {
+        //     console.log()
         else {
             return null;
         }
@@ -336,7 +367,55 @@ function FilterPane(props) {
         return newSFRs;
     }
 
+    /**
+     * The objective to threat filter
+     * @param objectives    The input objectives
+     * @param threatList    The original queried threats list
+     * @returns {*}         The new threats array
+     */
+    const objectiveToThreatFilter = (objectives, threatList) => {
+        let newThreats = null
+        if (threatList && Object.keys(threatList) !== 0) {
+            threatList.map((threat) => {
+                if (objectives && Object.keys(objectives).length !== 0) {
+                    objectives.map((objective) => {
+                        let objectivesExist = query.SecurityObjectiveToThreat(SFRDatabase, objective, threat)
+                        if (objectivesExist !== false) {
+                            if (!newThreats) {
+                                newThreats = []
+                            }
+                            if (!newThreats.includes(threat.toString())) {
+                                newThreats.push(threat.valueOf())
+                            }
+                        }
+                    })
+                }
+            })
+        }
+        return newThreats;
+    }
+
     // Handler Functions
+    /**
+     * Handles the button click for clearing all filters
+     */
+    const handleClearAllFiltersButton = () => {
+        // If the filters are not already empty clear them on button press
+        if (props.selectedThreats || props.selectedSecurityObjectives || props.selectedSfrs) {
+            // Reset filters to default values for dropdowns
+            handleSetAllThreats(query.getThreats(SFRDatabase).sort());
+            handleSetAllSecurityObjectives(query.getSecurityObjectives(SFRDatabase).sort());
+            handleSetAllSfrs(query.getSfrs(SFRDatabase).sort());
+            handleSetAllPps(null)
+
+            // Reset selections to default
+            props.handleSetSelectedThreats(null)
+            props.handleSetSelectedSecurityObjectives(null)
+            props.handleSetSelectedSfrs(null)
+            props.handleSetSelectedPps(null)
+        }
+    }
+
     /**
      * Handles setting the threats
      * @param value The threat value
@@ -442,6 +521,15 @@ function FilterPane(props) {
                         />
                         : null
                 }
+            </div>
+            {/* Clear all filters button */}
+            <div className={"flex justify-center items-center pb-2 mt-6"}>
+                <Button
+                    ripple={true}
+                    className={"bg-accent text-sm rounded-xl"}
+                    onClick={handleClearAllFiltersButton}>
+                    Clear All Filters
+                </Button>
             </div>
         </div>
     );
