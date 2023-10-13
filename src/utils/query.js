@@ -126,3 +126,31 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
     // Return the list of PPs and sort if it not null/empty
     return (returnPPs && Object.keys(returnPPs).length !== 0) ? returnPPs.sort() : returnPPs
 }
+
+
+/**
+ * Gets the SFR content from the SFRDatabase
+ * @param sfrDB The SFRDatabase
+ * @returns {*} The SFR(s) content
+ */
+export function getSfrContent(sfrDB, sfr) {
+    return jmespath.search(sfrDB, `SFRs[?Name == '${sfr}'].PP_Specific_Implementations`);
+}
+
+/**
+ * Gets the Threat content from the SFRDatabase
+ * @param sfrDB The SFRDatabase
+ * @returns {*} The Threat(s) content
+ */
+export function getThreatContent(sfrDB, threat) {
+    return jmespath.search(sfrDB, `Threats[?Name == '${threat}'].Threat_Implementations`);
+}
+
+/**
+ * Gets the SecurityObjectives content from the SFRDatabase
+ * @param sfrDB The SFRDatabase
+ * @returns {*} The SecurityObjectives(s) content
+ */
+export function getSecurityObjectiveContent(sfrDB, objective) {
+    return jmespath.search(sfrDB, `SecurityObjectives[?Name == '${objective}'].PP_Specific_Implementations`);
+}
