@@ -3701,7 +3701,7 @@
     {
       "Name": "O.INTEGRITY",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Application Software": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">Conformant TOEs ensure the integrity\n\t\t\t\t\tof their installation and update packages, and also leverage\n\t\t\t\t\texecution environment-based mitigations. Software is seldom, if ever,\n\t\t\t\t\tshipped without errors. The ability to deploy patches and updates\n\t\t\t\t\tto fielded software with integrity is critical to enterprise network\n\t\t\t\t\tsecurity. Processor manufacturers, compiler developers, execution\n\t\t\t\t\tenvironment vendors, and operating system vendors have developed\n\t\t\t\t\texecution environment-based mitigations that increase the cost to\n\t\t\t\t\tattackers by adding complexity to the task of compromising systems.\n\t\t\t\t\tApplication software can often take advantage of these mechanisms by\n\t\t\t\t\tusing APIs provided by the runtime environment or by\n\t\t\t\t\tenabling the mechanism through compiler or linker\n\t\t\t\t\toptions.</description>",
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> To ensure the integrity of the Mobile Device is maintained conformant TOEs\n            will perform self-tests to ensure the integrity of critical functionality,\n            software/firmware and data has been maintained. The user shall be notified of any\n            failure of these self-tests. This will protect against the threat T.PERSISTENT.\n            <htm:br xmlns:htm=\"http://www.w3.org/1999/xhtml\" /><htm:br xmlns:htm=\"http://www.w3.org/1999/xhtml\" /> To address the issue of an application containing malicious or flawed\n            code (T.MALICIOUS_APP), the integrity of downloaded updates to software/firmware will be\n            verified prior to installation/execution of the object on the Mobile Device. In\n            addition, the TOE will restrict applications to only have access to the system services\n            and data they are permitted to interact with. The TOE will further protect against\n            malicious applications from gaining access to data they are not authorized to access by\n            randomizing the memory layout. </description>",
         "General Purpose Operating System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">Conformant OSes ensure the integrity of their update\n          packages. OSes are seldom if ever shipped without errors, and the\n          ability to deploy patches and updates with integrity is critical to enterprise network\n          security. Conformant OSes provide execution environment-based\n          mitigations that increase the cost to attackers by adding complexity to the task of\n          compromising systems. </description>"
@@ -3779,7 +3779,7 @@
     {
       "Name": "O.QUALITY",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Application Software": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">To ensure quality of implementation, conformant TOEs\n\t\t\t\t\tleverage services and APIs provided by the runtime environment rather\n\t\t\t\t\tthan implementing their own versions of these services and APIs. This is especially\n\t\t\t\t\timportant for cryptographic services and other complex operations such as file and media\n\t\t\t\t\tparsing. Leveraging this platform behavior relies upon using only documented and supported APIs.\n\t\t\t\t</description>"
       },
       "SFRs": [
@@ -3804,7 +3804,7 @@
     {
       "Name": "O.MANAGEMENT",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Application Software": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">To facilitate management by users and the enterprise, conformant TOEs\n\t\t\t\t\tprovide consistent and supported interfaces for their\n\t\t\t\t\tsecurity-relevant configuration and maintenance. This includes the deployment of\n\t\t\t\t\tapplications and application updates through the use of platform-supported deployment\n\t\t\t\t\tmechanisms and formats, as well as providing mechanisms for configuration.  This also\n\t\t\t\t\tincludes providing control to the user regarding disclosure of any PII.</description>",
         "General Purpose Operating System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> To facilitate management by users and the enterprise, conformant OSes\n\t    provide consistent and supported interfaces for their\n            security-relevant configuration and maintenance. This includes the deployment of\n            applications and application updates through the use of platform-supported deployment\n            mechanisms and formats, as well as providing mechanisms for configuration and\n            application execution control. </description>"
       },
@@ -3829,7 +3829,7 @@
     {
       "Name": "O.PROTECTED_STORAGE",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Application Software": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\n\t\t\t\t\tTo address the issue of loss of confidentiality of user data in the event of \n\t\t\t\t\tloss of physical control of the storage medium, conformant TOEs will \n\t\t\t\t\tuse data-at-rest protection. This involves encrypting data and keys stored by the \n\t\t\t\t\tTOE in order to prevent unauthorized access to this data.  This also\n\t\t\t\t\tincludes unnecessary network communications whose consequence may be the loss of data.\n\t\t\t\t</description>",
         "General Purpose Operating System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\nTo address the issue of loss of confidentiality of credentials in the event of\nloss of physical control of the storage medium, conformant OSes\nprovide data-at-rest protection for credentials.\nConformant OSes also provide access controls which allow users to keep their files private from other\nusers of the same system.\n          </description>"
       },
@@ -3854,7 +3854,7 @@
     {
       "Name": "O.PROTECTED_COMMS",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Application Software": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> To address both passive (eavesdropping) and active (packet modification)\n\t\t\t\t\tnetwork attack threats, conformant TOEs will use a trusted channel for\n\t\t\t\t\tsensitive data. Sensitive data includes cryptographic keys, passwords, and any other\n\t\t\t\t\tdata specific to the application that should not be exposed outside of the application. \n\t\t\t\t</description>",
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> To address the network eavesdropping (T.NETWORK_EAVESDROP) and network attack\n            (T.NETWORK_ATTACK) threats described in <xref to=\"thr\" />, concerning wireless\n            transmission of Enterprise and user data and configuration data between the TOE and\n            remote network entities, conformant TOEs will use a trusted communication path. The TOE\n            must be capable of communicating using mutually authenticated TLS, EAP-TLS, HTTPS, 802.1X, and 802.11-2012. The TOE may optionally communicate using these standard protocols: IPsec,\n            mutually-authenticated DTLS, or Bluetooth. These protocols are specified by RFCs that offer a variety\n            of implementation choices. Requirements have been imposed on some of these choices\n            (particularly those for cryptographic primitives) to provide interoperability and\n            resistance to cryptographic attack. <htm:br xmlns:htm=\"http://www.w3.org/1999/xhtml\" /><htm:br xmlns:htm=\"http://www.w3.org/1999/xhtml\" /> \n            While conformant TOEs must\n            support all of the choices specified in the ST including any optional SFRs defined in\n            this PP, they may support additional algorithms and protocols. If such additional\n            mechanisms are not evaluated, guidance must be given to the administrator to make clear\n            the fact that they were not evaluated. </description>",
         "General Purpose Operating System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> To address both passive (eavesdropping) and active (packet modification)\n            network attack threats, conformant OSes provide mechanisms to create\n            trusted channels for CSP and sensitive data. Both CSP and sensitive data\n          should not be exposed outside of the platform. </description>"
@@ -3926,7 +3926,7 @@
     {
       "Name": "OE.PLATFORM",
       "Type": "SOE",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Application Software": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE relies upon a trustworthy computing platform for\n\t\t\t\t\tits execution. This includes the underlying operating system and any discrete execution \n\t\t\t\t\tenvironment provided to the TOE.</description>",
         "General Purpose Operating System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The OS relies on being installed on trusted\n            hardware.</description>"
       },
@@ -3935,7 +3935,7 @@
     {
       "Name": "OE.PROPER_USER",
       "Type": "SOE",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Application Software": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The user of the application software is not willfully negligent or hostile,\n\t\t\t\t\tand uses the software within compliance of the applied enterprise security\n\t\t\t\t\tpolicy.</description>",
         "General Purpose Operating System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> The user of the OS is not willfully negligent or hostile,\n            and uses the software within compliance of the applied enterprise security policy.\n            Standard user accounts are provisioned in accordance with the least privilege model.\n            Users requiring higher levels of access should have a separate account dedicated for\n            that use. </description>"
       },
@@ -3944,7 +3944,7 @@
     {
       "Name": "OE.PROPER_ADMIN",
       "Type": "SOE",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Application Software": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The administrator of the application software is not careless, willfully\n\t\t\t\t\tnegligent or hostile, and administers the software within compliance of the applied\n\t\t\t\t\tenterprise security policy.</description>",
         "General Purpose Operating System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> The administrator of the OS is not careless, willfully\n            negligent or hostile, and administers the OS within compliance of the applied enterprise\n            security policy. </description>"
       },
@@ -3953,7 +3953,7 @@
     {
       "Name": "O.STORAGE",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> To address the issue of loss of confidentiality of user data in the event of\n            loss of a Mobile Device (T.PHYSICAL_ACCESS), conformant TOEs will use data-at-rest protection.\n            The TOE will be capable of encrypting data and keys stored on the device and will\n            prevent unauthorized access to encrypted data. </description>"
       },
       "SFRs": [
@@ -4005,7 +4005,7 @@
     {
       "Name": "O.CONFIG",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> To ensure a Mobile Device protects user and enterprise data that it may\n            store or process, conformant TOEs will provide the capability to configure and apply\n            security policies defined by the user and the Enterprise Administrator. If Enterprise\n            security policies are configured these must be applied in precedence of user specified\n            security policies. </description>"
       },
       "SFRs": [
@@ -4019,7 +4019,7 @@
     {
       "Name": "O.AUTH",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> To address the issue of loss of confidentiality of user data in the event of\n            loss of a Mobile Device (T.PHYSICAL_ACCESS), users are required to enter an authentication\n            factor to the device prior to accessing protected functionality and data. Some\n            non-sensitive functionality (e.g., emergency calling, text notification) can be accessed\n            prior to entering the authentication factor. The device will automatically lock\n            following a configured period of inactivity in an attempt to ensure authorization will\n            be required in the event of the device being lost or stolen.<htm:br xmlns:htm=\"http://www.w3.org/1999/xhtml\" /><htm:br xmlns:htm=\"http://www.w3.org/1999/xhtml\" />\n\t\t\t  \n            Authentication of the endpoints of a trusted communication path is required for network\n            access to ensure attacks are unable to establish unauthorized network connections to\n            undermine the integrity of the device. <htm:br xmlns:htm=\"http://www.w3.org/1999/xhtml\" /><htm:br xmlns:htm=\"http://www.w3.org/1999/xhtml\" />\n\t\t\t\n\t\t\tRepeated attempts by a user to\n            authorize to the TSF will be limited or throttled to enforce a delay between\n            unsuccessful attempts.\n          </description>"
       },
       "SFRs": [
@@ -4051,7 +4051,7 @@
     {
       "Name": "O.PRIVACY",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> In a BYOD environment (use cases 3 and 4), a personally-owned mobile device\n            is used for both personal activities and enterprise data. Enterprise management\n            solutions may have the technical capability to monitor and enforce security policies on\n            the device. However, the privacy of the personal activities and data must be ensured. In\n            addition, since there are limited controls that the enterprise can enforce on the\n            personal side, separation of personal and enterprise data is needed. This will protect\n            against the T.MALICIOUS_APP and T.PERSISTENT_PRESENCE threats. </description>"
       },
       "SFRs": [
@@ -4066,7 +4066,7 @@
     {
       "Name": "OE.CONFIG",
       "Type": "SOE",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">TOE administrators will configure the Mobile Device security functions\n            correctly to create the intended security policy</description>",
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">TOE administrators will configure the VS correctly to create the intended security\n\t\t\t\t\t\tpolicy.\n                    </description>"
       },
@@ -4075,7 +4075,7 @@
     {
       "Name": "OE.NOTIFY",
       "Type": "SOE",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The Mobile User will immediately notify the administrator if the Mobile\n            Device is lost or stolen.</description>"
       },
       "SFRs": []
@@ -4083,7 +4083,7 @@
     {
       "Name": "OE.PRECAUTION",
       "Type": "SOE",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The mobile device user exercises precautions to reduce the risk of loss or theft of\n            the Mobile Device.</description>"
       },
       "SFRs": []
@@ -4091,7 +4091,7 @@
     {
       "Name": "OE.DATA_PROPER_USER",
       "Type": "SOE",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">Administrators take measures to ensure that mobile device users are adequately vetted against malicious intent and are made aware of the expectations for appropriate use of the device.</description>"
       },
       "SFRs": []
@@ -4099,7 +4099,7 @@
     {
       "Name": "O.PHYSICAL_INTEGRITY",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE must be able to protect the physical platform and interfaces from access by physical means such as\n\t\t\t\t\tprobing, physical manipulation, fault-injection, side-channel analysis, environmental stress, or \n\t\t\t\t\tactivating disabled features or pre-delivery services. This includes specification of:<h:ul xmlns:h=\"http://www.w3.org/1999/xhtml\"><h:li>Requirements for tamper detection</h:li><h:li>Requirements for disabling or protection of external debug interfaces</h:li><h:li>Requirements for updateability</h:li><h:li>Requirements for environmental shielding</h:li></h:ul>\n\t\t\t\t\tThis Objective applies only if the TOE implements a use case that addresses the threat T.PHYSICAL.\n\t\t\t\t</description>"
       },
       "SFRs": [
@@ -4132,7 +4132,7 @@
     {
       "Name": "O.ATTACK_DETECTION_AND_RESPONSE",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE must be capable of detecting attempts to compromise the physical or logical integrity\n\t\t\t\t\tof the TOE and respond by notifying a user or reporting the attempt to an enterprise security\n\t\t\t\t\tauthority. This includes specification of:<h:ul xmlns:h=\"http://www.w3.org/1999/xhtml\"><h:li>Requirements for responses to particular detected events. (resilience, secure state, etc.)</h:li><h:li>Requirements for basic auditing capabilities and protection of audit records.</h:li><h:li>Requirements for secure transmission of audit records (if applicable)</h:li></h:ul></description>"
       },
       "SFRs": [
@@ -4155,7 +4155,7 @@
     {
       "Name": "O.MITIGATE_FUNDAMENTAL_FLAWS",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE must have a capability for mitigating or fixing fundamental flaws through update \n\t\t\t\t\tor some other technical or operational means. This includes specifications of:<h:ul xmlns:h=\"http://www.w3.org/1999/xhtml\"><h:li>Requirements for updateability of TOE firmware.</h:li></h:ul></description>"
       },
       "SFRs": [
@@ -4178,7 +4178,7 @@
     {
       "Name": "O.PROTECTED_FIRMWARE",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">TOE must ensure that its firmware cannot be modified other than through \n\t\t\t\t\ta non-bypassable trusted update process. This ensures the integrity of firmware\n\t\t\t\t\tboth during the update process and while at rest. This includes\n\t\t\t\t\tspecification of:<h:ul xmlns:h=\"http://www.w3.org/1999/xhtml\"><h:li>Requirements for invocation of the trusted update process</h:li><h:li>Requirements for non-bypassability of the update process</h:li><h:li>Requirements for detection and reporting of attempts to modify TOE \n\t\t\t\t\t\tfirmware outside of the trusted update process.</h:li></h:ul></description>"
       },
       "SFRs": [
@@ -4206,7 +4206,7 @@
     {
       "Name": "O.UPDATE_INTEGRITY",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE must ensure that updates to TOE firmware are authorized, \n\t\t\t\t\tauthenticated, and properly validated prior\n\t\t\t\t\tto installation. This includes specification of:<h:ul xmlns:h=\"http://www.w3.org/1999/xhtml\"><h:li>Requirements for protection of updates</h:li><h:li>Requirements for authentication of update packages</h:li><h:li>Requirements for management of updates</h:li><h:li>Requirements for detection and reporting of update events, whether authorized or not.\n\t\t\t\t\t</h:li></h:ul></description>"
       },
       "SFRs": [
@@ -4232,7 +4232,7 @@
     {
       "Name": "O.STRONG_CRYPTOGRAPHY",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">Cryptography must meet the standards required for protection of National Security Systems data \n\t\t\t\t\t(in accordance with CNSSP 15, \"Use of Public Standards for Secure Information Sharing\"). This includes \n\t\t\t\t\tspecification of:<h:ul xmlns:h=\"http://www.w3.org/1999/xhtml\"><h:li>Requirements for use and configuration of cryptographic operations.</h:li><h:li>Requirements for key generation</h:li><h:li>Requirements for random bit generation support.</h:li></h:ul></description>"
       },
       "SFRs": [
@@ -4255,7 +4255,7 @@
     {
       "Name": "O.SECURITY_FUNCTIONALITY_INTEGRITY",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE should be able not be able to operate with failed or degraded\n\t\t\t\t\tsecurity functionality in such a way as might compromise the security or integrity of \n\t\t\t\t\tthe TOE or of TOE data.<h:ul xmlns:h=\"http://www.w3.org/1999/xhtml\"><h:li>Requirements for detection of degraded or failed security functionality.</h:li><h:li>Requirements for protection of platform credentials against compromise (secret keys,\n\t\t\t\t\t\tpasswords, etc.)</h:li><h:li>Requirements for secure destruction of platform credentials (if applicable)</h:li><h:li>Requirements for quality of credentials (password lengths and the like)</h:li></h:ul></description>"
       },
       "SFRs": [
@@ -4275,7 +4275,7 @@
     {
       "Name": "O.TENANT_SECURITY",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE should provide capabilities and security services to tenant software \n\t\t\t\t\tto help tenants help themselves. This includes specification of:<h:ul xmlns:h=\"http://www.w3.org/1999/xhtml\"><h:li>Requirements for providing cryptographic support to tenants (random bit generation,\n\t\t\t\t\t\tcrypto support instructions).</h:li><h:li>Requirements for support for separation of tenant workloads</h:li><h:li>Requirements for supporting secure storage of tenant credentials</h:li><h:li>Requirements for supporting secure boot of a tenant operating system</h:li></h:ul></description>"
       },
       "SFRs": [
@@ -4294,7 +4294,7 @@
     {
       "Name": "O.TRUSTED_CHANNELS",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE must protect certain network communications through guaranteed \n\t\t\t\t\tconfidentiality, integrity, and authenticity. Such traffic includes communications with remote \n\t\t\t\t\tadministrators, audit servers, update servers, and credential managers. This objective includes \n\t\t\t\t\tspecification of:<h:ul xmlns:h=\"http://www.w3.org/1999/xhtml\"><h:li>Requirements for the use of secure network protocols</h:li><h:li>Requirements for the use of public key certificates</h:li><h:li>Requirements for the authentication of endpoints</h:li></h:ul></description>"
       },
       "SFRs": [
@@ -4329,7 +4329,7 @@
     {
       "Name": "O.CONFIGURATION_INTEGRITY",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE should detect or prevent unauthorized users from being able to modify the system configuration.\n\t\t\t\t\tThis includes:<h:ul xmlns:h=\"http://www.w3.org/1999/xhtml\"><h:li>Requirements for authentication of Administrators before application of configuration modifications.</h:li><h:li>Requirements for detection and reporting of attempts to modify the TOE configuration.</h:li></h:ul></description>"
       },
       "SFRs": [
@@ -4343,7 +4343,7 @@
     {
       "Name": "O.AUTHORIZED_ADMINISTRATOR",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE must ensure that Administrative actions can be taken only by authorized Administrators. This includes \n\t\t\t\t\tspecification of:<h:ul xmlns:h=\"http://www.w3.org/1999/xhtml\"><h:li>Requirements specifying actions allowable for the Administrator role</h:li><h:li>Requirements for processes for authenticating Administrators</h:li><h:li>Requirements for protection of Administrator credentials</h:li><h:li>Requirements for setup and operation of a secure channel for remote administration</h:li><h:li>Requirements for management of administrator sessions.</h:li></h:ul></description>"
       },
       "SFRs": [
@@ -4373,7 +4373,7 @@
     {
       "Name": "OE.PHYSICAL_PROTECTION",
       "Type": "SOE",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">Platforms that operate within data centers or in other access-controlled environments are \n\t\t\t\texpected to receive a considerable degree of protection from these environments. In addition to physical \n\t\t\t\tprotection, these environments often provide malware-detection and behavior-monitoring services\n\t\t\t\tfor networked computing assets.</description>"
       },
       "SFRs": []
@@ -4381,7 +4381,7 @@
     {
       "Name": "OE.SUPPLY_CHAIN",
       "Type": "SOE",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The manufacturer is expected to implement processes to ensure that TOE hardware and\n\t\t\t\t\tfirmware is not compromised between time of TOE manufacture and delivery to its operational site. \n\t\t\t\t</description>"
       },
       "SFRs": []
@@ -4389,7 +4389,7 @@
     {
       "Name": "OE.TRUSTED_ADMIN",
       "Type": "SOE",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> The administrator of the GPCP is not careless, willfully\n\t\t\t\t\tnegligent or hostile, and administers the platform within compliance of enterprise\n\t\t\t\t\tsecurity policy. </description>",
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">TOE Administrators are trusted to follow and apply all administrator guidance in a trusted manner.\n                    </description>"
       },
@@ -4398,7 +4398,7 @@
     {
       "Name": "O.ACCOUNTABILITY",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "General Purpose Operating System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> Conformant OSes ensure that information exists that allows\n            administrators to discover unintentional issues with the configuration and operation of\n            the operating system and discover its cause.  Gathering event information and immediately\n            transmitting it to another system can also enable incident response in the event\n            of system compromise.</description>"
       },
       "SFRs": [
@@ -4410,7 +4410,7 @@
     {
       "Name": "O.VM_ISOLATION",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">VMs are the fundamental subject of the system. The VMM is \n                        responsible for applying the system security policy (SSP) to the VM and \n                        all resources. As basic functionality, the VMM must support a security policy that mandates \n                        no information transfer between VMs.<h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" />\n                        The VMM must support the necessary mechanisms to isolate the resources of all \n                        VMs. The VMM partitions a platform's physical resources for use by the \n                        supported virtual environments. Depending on customer requirements, a VM may need a completely \n                        isolated environment with exclusive access to system resources or share some of its resources with other \n                        VMs. It must be possible to enforce a security policy that prohibits the transfer of data \n                        between VMs through shared devices. When the platform security policy allows the sharing of \n                        resources across VM boundaries, the VMM must ensure that all access to \n                        those resources is consistent with the policy. The VMM may delegate the responsibility for \n                        the mediation of resource sharing to select Service VMs; however in doing so, \n                        it remains responsible for mediating access to the Service VMs, and each Service \n                        VM must mediate all access to any shared resource that has been delegated to it in \n                        accordance with the SSP.<h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" />\n                        Both virtual and physical devices are resources requiring access control. The VMM must \n                        enforce access control in accordance with system security policy. Physical devices are platform devices with \n                        access mediated via the VMM per the O.VMM_Integrity objective. Virtual devices may include \n                        virtual storage devices and virtual network devices. Some of the access control restrictions must be enforced\n                        internal to Service VMs, as may be the case for isolating virtual networks. \n                        VMMs may also expose purely virtual interfaces. These are VMM specific, \n                        and while they are not analogous to a physical device, they are also subject to access control.<h:br xmlns:h=\"http://www.w3.org/1999/xhtml\"></h:br><h:br xmlns:h=\"http://www.w3.org/1999/xhtml\" />\n                        The VMM must support the mechanisms to isolate all resources associated with virtual \n                        networks and to limit a VM's access to only those virtual networks for which it has been \n                        configured. The VMM must also support the mechanisms to control the configurations of \n                        virtual networks according to the SSP.\n                    </description>"
       },
       "SFRs": [
@@ -4442,7 +4442,7 @@
     {
       "Name": "O.VMM_INTEGRITY",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">Integrity is a core security objective for Virtualization Systems. To achieve system integrity, the \n                        integrity of each VMM component must be established and maintained. This objective concerns \n                        only the integrity of the VS—not the integrity of software running inside of Guest \n                        VMs or of the physical platform. The overall objective is to ensure the integrity of \n                        critical components of a VS.<h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" />\n                        Initial integrity of a VS can be established through mechanisms such as a digitally signed installation or \n                        update package, or through integrity measurements made at launch. Integrity is maintained in a running system \n                        by careful protection of the VMM from untrusted users and software. For example, it must not\n                        be possible for software running within a Guest VM to exploit a vulnerability in a device or\n                        hypercall interface and gain control of the VMM. The vendor must release patches for \n                        vulnerabilities as soon as practicable after discovery.\n                    </description>"
       },
       "SFRs": [
@@ -4476,7 +4476,7 @@
     {
       "Name": "O.PLATFORM_INTEGRITY",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The integrity of the VMM depends on the integrity of the hardware and software on \n                        which the VMM relies. Although the VS does not have complete control over the integrity of \n                        the platform, the VS should as much as possible try to ensure that no users or software hosted by the VS can \n                        undermine the integrity of the platform.\n                    </description>"
       },
       "SFRs": [
@@ -4506,7 +4506,7 @@
     {
       "Name": "O.DOMAIN_INTEGRITY",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">While the VS is not responsible for the contents or correct functioning of software that runs within \n                        Guest VMs, it is responsible for ensuring that the correct functioning of the software \n                        within a Guest VM is not interfered with by other VMs.\n                    </description>"
       },
       "SFRs": [
@@ -4540,7 +4540,7 @@
     {
       "Name": "O.MANAGEMENT_ACCESS",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">VMM management functions include VM configuration, virtualized \n                        network configuration, allocation of physical resources, and reporting. Only authorized users \n                        (administrators) may exercise management functions.<h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" />\n                        Because of the privileges exercised by the VMM management functions, it must not be possible \n                        for the VMM’s management components to be compromised without administrator notification. \n                        This means that unauthorized users cannot be permitted access to the management functions, and the management \n                        components must not be interfered with by Guest VMs or unprivileged users on other \n                        networks—including operational networks connected to the TOE.<h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" /> \n\t\t\tVMMs include a set of management functions that collectively allow administrators \n                        to configure and manage the VMM, as well as configure Guest VMs. These \n                        management functions are specific to the VS and are distinct from any other management functions \n                        that might exist for the internal management of any given Guest VM. These \n                        VMM management functions are privileged, with the security of the entire system relying on \n                        their proper use. The VMM management functions can be classified into different categories \n                        and the policy for their use and the impact to security may vary accordingly.<h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" />\n                        The management functions are distributed throughout the VMM (within the \n                        VMM and Service VMs). The VMM must support the necessary \n                        mechanisms to enable the control of all management functions according to the system security policy. When a \n                        management function is distributed among multiple Service VMs, the VMs \n                        must be protected using the security mechanisms of the Hypervisor and any Service VMs \n                        involved to ensure that the intent of the system security policy is not compromised. Additionally, since \n                        hypercalls permit Guest VMs to invoke the Hypervisor, and often allow the passing of data \n                        to the Hypervisor, it is important that the hypercall interface is well-guarded and that all parameters be \n                        validated.<h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" /> The VMM maintains configuration data for every \n                        VM on the system. This configuration data, whether of Service or Guest VMs,\n                        must be protected. The mechanisms used to establish, modify and verify configuration data are part of the VS \n                        management functions and must be protected as such. The proper internal configuration of Service \n                        VMs that provide critical security functions can also greatly impact VS security. These \n                        configurations must also be protected. Internal configuration of Guest VMs should not \n                        impact overall VS security. The overall goal is to ensure that the VMM, including the \n                        environments internal to Service VMs, is properly configured and that all Guest \n                        VM configurations are maintained consistent with the system security policy throughout \n                        their lifecycle.<h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" /> Virtualization Systems are often managed remotely. For \n                        example, an administrator can remotely update virtualization software, start and shut down \n                        VMs, and manage virtualized network connections. If a console is required, it could be \n                        run on a separate machine or it could itself run in a VM. When performing remote management, \n                        an administrator must communicate with a privileged management agent over a network. Communications with the \n                        management infrastructure must be protected from Guest VMs and operational networks.\n                    </description>"
       },
       "SFRs": [
@@ -4586,7 +4586,7 @@
     {
       "Name": "O.PATCHED_SOFTWARE",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The VS must be updated and patched when needed in order to prevent the potential \n                        compromise of the VMM, as well as the networks and VMs that it hosts. \n                        Identifying and applying needed updates must be a normal part of the operating procedure to ensure that \n                        patches are applied in a timely and thorough manner. In order to facilitate this, the VS must support \n                        standards and protocols that help enhance the manageability of the VS as an IT product, enabling it to be \n                        integrated as part of a manageable network (e.g., reporting current patch level and patchability).\n                    </description>"
       },
       "SFRs": [
@@ -4601,7 +4601,7 @@
     {
       "Name": "O.VM_ENTROPY",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">VMs must have access to good entropy sources to support security-related features \n                        that implement cryptographic algorithms. For example, in order to function as members of operational \n                        networks, VMs must be able to communicate securely with other network entities—whether \n                        virtual or physical. They must therefore have access to sources of good entropy to support that secure \n                        communication.\n                    </description>"
       },
       "SFRs": [
@@ -4614,7 +4614,7 @@
     {
       "Name": "O.AUDIT",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">An audit log must be created that captures accesses to the objects the TOE protects. The log \n\t\t\t    of these accesses, or audit events, must be protected from modification, unauthorized access,\n\t\t\t    and destruction. The audit log must be sufficiently detailed to indicate the date and time of\n\t\t\t    the event, the identify of the user, the type of event, and the success or failure of the event.\n                    </description>"
       },
       "SFRs": [
@@ -4634,7 +4634,7 @@
     {
       "Name": "O.CORRECTLY_APPLIED_CONFIGURATION",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE must not apply configurations that violate the current security policy.\n                        <h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" /> The TOE must correctly apply configurations and policies \n                        to a newly created Guest VM, as well as to existing Guest VMs when \n                        applicable configuration or policy changes are made. All changes to configuration and to policy must conform \n                        to the existing security policy. Similarly, changes made to the configuration of the TOE \n                        itself must not violate the existing security policy.\n                    </description>"
       },
       "SFRs": [
@@ -4647,7 +4647,7 @@
     {
       "Name": "O.RESOURCE_ALLOCATION",
       "Type": "SO",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE will provide mechanisms that enforce constraints on the allocation of \n                        system resources in accordance with existing security policy.\n                    </description>"
       },
       "SFRs": [
@@ -4660,7 +4660,7 @@
     {
       "Name": "OE.PHYSICAL",
       "Type": "SOE",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">Physical security, commensurate with the value of the TOE and the data it contains, is provided by \n\t\t\t\t\t\tthe environment.\n                    </description>"
       },
       "SFRs": []
@@ -4668,7 +4668,7 @@
     {
       "Name": "OE.NON_MALICIOUS_USER",
       "Type": "SOE",
-      "PP-Specific Implementations": {
+      "PP_Specific_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">Users are trusted to not be willfully negligent or hostile and use the VS in compliance with the\n\t\t\t\t\t\tapplied enterprise security policy and guidance.\n                    </description>"
       },
       "SFRs": []
@@ -4678,7 +4678,7 @@
     {
       "Name": "T.NETWORK_ATTACK",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Application Software": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">An attacker is positioned on a communications channel or elsewhere on the\n\t\t\t\t\tnetwork infrastructure. Attackers may engage in communications with the application\n\t\t\t\t\tsoftware or alter communications between the application software and other endpoints in\n\t\t\t\t\torder to compromise it.</description>",
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> An attacker is positioned on a wireless communications channel or elsewhere\n            on the network infrastructure. Attackers may initiate communications with the Mobile\n            Device or alter communications between the Mobile Device and other endpoints in order to\n            compromise the Mobile Device. These attacks include malicious software update of any\n            applications or system software on the device. These attacks also include malicious web\n            pages or email attachments, which are usually delivered to devices over the\n            network.</description>",
         "General Purpose Operating System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> An attacker is positioned on a communications channel or elsewhere on the\n            network infrastructure. Attackers may engage in communications with applications and\n            services running on or part of the OS with the intent of compromise. Engagement may\n            consist of altering existing legitimate communications.</description>"
@@ -4695,7 +4695,7 @@
     {
       "Name": "T.NETWORK_EAVESDROP",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Application Software": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">An attacker is positioned on a communications channel or elsewhere on the\n\t\t\t\t\tnetwork infrastructure. Attackers may monitor and gain access to data exchanged between\n\t\t\t\t\tthe application and other endpoints.</description>",
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> An attacker is positioned on a wireless communications channel or elsewhere\n            on the network infrastructure. Attackers may monitor and gain access to data exchanged\n            between the Mobile Device and other endpoints. </description>",
         "General Purpose Operating System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> An attacker is positioned on a communications channel or elsewhere on the\n            network infrastructure. Attackers may monitor and gain access to data exchanged between\n            applications and services that are running on or part of the OS. </description>"
@@ -4711,7 +4711,7 @@
     {
       "Name": "T.LOCAL_ATTACK",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Application Software": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">An attacker can act through unprivileged software on the same computing\n\t\t\t\t\tplatform on which the application executes. Attackers may provide maliciously formatted\n\t\t\t\t\tinput to the application in the form of files or other local\n\t\t\t\t\tcommunications.</description>",
         "General Purpose Operating System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> An attacker may compromise applications running on the OS. The\n            compromised application may provide maliciously formatted input to the OS through a\n            variety of channels including unprivileged system calls and messaging via the\n            file system. </description>"
       },
@@ -4724,7 +4724,7 @@
     {
       "Name": "T.PHYSICAL_ACCESS",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Application Software": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">An attacker may try to access sensitive data at rest.</description>",
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> An attacker, with physical access, may attempt to access user data on the\n            Mobile Device including credentials. These physical access threats may involve attacks,\n            which attempt to access the device through external hardware ports, impersonate the user\n            authentication mechanisms, through its user interface, and also through direct and\n            possibly destructive access to its storage media. Note: Defending against device re-use\n            after physical compromise is out of scope for this Protection Profile.</description>"
       },
@@ -4737,7 +4737,7 @@
     {
       "Name": "A.PLATFORM",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Application Software": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE relies upon a trustworthy computing platform with a reliable time clock for\n\t\t\t\t\tits execution. This includes the underlying platform and whatever runtime environment\n\t\t\t\t\tit provides to the TOE.</description>",
         "General Purpose Operating System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> The OS relies upon a trustworthy computing platform for\n            its execution. This underlying platform is out of scope of this PP. </description>"
       },
@@ -4748,7 +4748,7 @@
     {
       "Name": "A.PROPER_USER",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Application Software": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\n\t\t\t\t\tThe user of the application software is not willfully negligent or hostile,\n\t\t\t\t\tand uses the software in compliance with the applied enterprise security policy.\n\t\t\t\t</description>",
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> Mobile Device users are not willfully negligent or hostile, and use the\n            device within compliance of a reasonable Enterprise security policy. </description>",
         "General Purpose Operating System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> The user of the OS is not willfully negligent or hostile, and uses the\n            software in compliance with the applied enterprise security policy. At the same time,\n            malicious software could act <h:i xmlns:h=\"http://www.w3.org/1999/xhtml\">as</h:i> the user, so requirements which\n            confine malicious subjects are still in scope.</description>"
@@ -4761,7 +4761,7 @@
     {
       "Name": "A.PROPER_ADMIN",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Application Software": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The administrator of the application software is not careless, willfully\n\t\t\t\t\tnegligent or hostile, and administers the software in compliance with the applied\n\t\t\t\t\tenterprise security policy.</description>",
         "General Purpose Operating System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> The administrator of the OS is not careless, willfully negligent or hostile,\n            and administers the OS within compliance of the applied enterprise security policy. </description>"
       },
@@ -4772,7 +4772,7 @@
     {
       "Name": "T.MALICIOUS_APP",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> Applications loaded onto the Mobile Device may include malicious or\n            exploitable code. This code could be included intentionally or unknowingly by the\n            developer, perhaps as part of a software library. Malicious apps may attempt to\n            exfiltrate data to which they have access. They may also conduct attacks against the\n            platform’s system software, which will provide them with additional privileges and the\n            ability to conduct further malicious activities. Malicious applications may be able to\n            control the device's sensors (GPS, camera, microphone) to gather intelligence about the\n            user's surroundings even when those activities do not involve data resident or\n            transmitted from the device. Flawed applications may give an attacker access to perform\n            network-based or physical attacks that otherwise would have been prevented</description>"
       },
       "SecurityObjectives": [
@@ -4786,7 +4786,7 @@
     {
       "Name": "T.PERSISTENT_PRESENCE",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> Persistent presence on a device by an attacker implies that the device has\n            lost integrity and cannot regain it. The device has likely lost this integrity due to\n            some other threat vector, yet the continued access by an attacker constitutes an\n            on-going threat in itself. In this case, the device and its data may be controlled by an\n            adversary as well as by its legitimate owner.</description>"
       },
       "SecurityObjectives": [
@@ -4797,7 +4797,7 @@
     {
       "Name": "A.CONFIG",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">It is assumed that the TOE’s security functions are configured correctly in a\n            manner to ensure that the TOE security policies will be enforced on all applicable\n            network traffic flowing among the attached networks.</description>"
       },
       "SecurityObjectives": [
@@ -4807,7 +4807,7 @@
     {
       "Name": "A.NOTIFY",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">It is assumed that the mobile user will immediately notify the administrator\n            if the Mobile Device is lost or stolen.</description>"
       },
       "SecurityObjectives": [
@@ -4817,7 +4817,7 @@
     {
       "Name": "A.PRECAUTION",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Mobile Device": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">It is assumed that the mobile user exercises precautions to reduce the risk\n            of loss or theft of the Mobile Device.</description>"
       },
       "SecurityObjectives": [
@@ -4827,7 +4827,7 @@
     {
       "Name": "T.PHYSICAL",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">An attacker with physical access might be able to compromise TOE integrity, subvert\n\t\t\t\t\tTOE protections, or access tenant data through hardware attacks such as probing, physical\n\t\t\t\t\tmanipulation, fault-injection, side-channel analysis, environmental stress, or activating\n\t\t\t\t\tdisabled features or pre-delivery services. This threat is addressed by TOE Objectives \n\t\t\t\t\tO.PHYSICAL_SECURITY and O.ATTACK_DETECTION_AND_RESPONSE for the use cases listed below. \n\t\t\t\t\tFor other use cases, this threat is mitigated by Operational Environment Objective \n\t\t\t\t\tOE.PHYSICAL_PROTECTION as mapped to Assumption A.PHYSICAL_PROTECTION. \n\t\t\t\t\t<h:ul xmlns:h=\"http://www.w3.org/1999/xhtml\"><h:li>Server-Class Platform, Enhanced</h:li><h:li>Portable Clients (laptops, tablets), Enhanced</h:li><h:li>CSfC EUD</h:li><h:li>Tactical EUD</h:li><h:li>IoT Devices</h:li></h:ul></description>"
       },
       "SecurityObjectives": [
@@ -4838,7 +4838,7 @@
     {
       "Name": "T.SIDE_CHANNEL_LEAKAGE",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">An attacker running in a tenant context might be able to leverage physical\n\t\t\t\t\teffects caused by the operation of the TOE to derive sensitive information about\n\t\t\t\t\tother tenants or the TOE.</description>"
       },
       "SecurityObjectives": [
@@ -4848,7 +4848,7 @@
     {
       "Name": "T.PERSISTENCE",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">An attacker might be able to establish a permanent presence on the TOE in\n\t\t\t\t\tfirmware. This could result in permanent compromise of tenant information, as\n\t\t\t\t\twell as TOE updates. This threat does not encompass attacker presence in tenant\n\t\t\t\t\tsoftware, as tenant software is not part of the TOE. </description>"
       },
       "SecurityObjectives": [
@@ -4858,7 +4858,7 @@
     {
       "Name": "T.UPDATE_COMPROMISE",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">An attacker may attempt to provide a compromised update of TOE firmware. \n\t\t\t\t\tSuch updates can undermine the security functionality of the device if they are\n\t\t\t\t\tunauthorized, unauthenticated, or are improperly validated using non-secure or\n\t\t\t\t\tweak cryptography.</description>"
       },
       "SecurityObjectives": [
@@ -4870,7 +4870,7 @@
     {
       "Name": "T.SECURITY_FUNCTIONALITY_FAILURE",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">An attacker could leverage failed or compromised security functionality to \n\t\t\t\t\taccess, change, or modify tenant data, TOE data, or other security functionality\n\t\t\t\t\tof the device.</description>"
       },
       "SecurityObjectives": [
@@ -4880,7 +4880,7 @@
     {
       "Name": "T.TENANT_BASED_ATTACK",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">An attacker running software as a tenant can attempt to access or modify\n\t\t\t\t\tTOE firmware or functionality. Note that direct tenant attacks against other\n\t\t\t\t\ttenants are not encompassed by this threat as they are out of scope.</description>"
       },
       "SecurityObjectives": [
@@ -4890,7 +4890,7 @@
     {
       "Name": "T.NETWORK_BASED_ATTACK",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">An attacker from off the TOE can attempt to compromise the TOE\n\t\t\t\t\tthrough a network interface connected to an active TOE component, such\n\t\t\t\t\tas a management subsystem.</description>"
       },
       "SecurityObjectives": [
@@ -4900,7 +4900,7 @@
     {
       "Name": "T.UNAUTHORIZED_RECONFIGURATION",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">An attacker might be able to modify the configuration of the TOE and alter its \n\t\t\t\t\tfunctionality. This might include, activating dormant subsystems, disabling hardware assists,\n\t\t\t\t\tor altering boot-time behaviors.</description>"
       },
       "SecurityObjectives": [
@@ -4910,7 +4910,7 @@
     {
       "Name": "T.UNAUTHORIZED_PLATFORM_ADMINISTRATOR",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">An attacker might be able to attain platform administrator status by defeating or bypassing\n\t\t\t\t\tauthentication measures.</description>"
       },
       "SecurityObjectives": [
@@ -4920,7 +4920,7 @@
     {
       "Name": "A.PHYSICAL_PROTECTION",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE is assumed to be physically protected in its operational environment and\n\t\t\t\t\tthus is not subject to physical attacks that could compromise its security or its ability\n\t\t\t\t\tto support the security of tenant workloads. This assumption does not apply if the TOE\n\t\t\t\t\timplements any of the below, in which case physical protection from the \n\t\t\t\t\tOperational Environment is not assumed and the threat T.PHYSICAL and its\n\t\t\t\t\tassociated TOE Objectives apply:\n\t\t\t\t\t<h:ul xmlns:h=\"http://www.w3.org/1999/xhtml\"><h:li>Server-Class Platform, Enhanced</h:li><h:li>Portable Clients (laptops, tablets), Enhanced</h:li><h:li>CSfC EUD</h:li><h:li>Tactical EUD</h:li><h:li>IoT Devices</h:li></h:ul></description>"
       },
       "SecurityObjectives": [
@@ -4930,7 +4930,7 @@
     {
       "Name": "A.ROT_INTEGRITY",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE includes one or more Roots of Trust composed of TOE firmware, hardware, and\n\t\t\t\t\tpre-installed credentials. Roots of Trust are assumed to be free of malicious capabilities as\n\t\t\t\t\ttheir integrity cannot be verified. </description>"
       },
       "SecurityObjectives": [
@@ -4940,7 +4940,7 @@
     {
       "Name": "A.TRUSTED_ADMIN",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> TOE Security Administrator are assumed to be trusted and to act in the best interest\n\t\t\t\t\tof security for the organization. The TOE is not expected to be capable of defending against a \n\t\t\t\t\tmalicious Administrator that actively works to bypass or compromise the security of the platform.\n\t\t\t\t</description>",
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">TOE Administrators are trusted to follow and apply all administrator guidance.</description>"
       },
@@ -4951,7 +4951,7 @@
     {
       "Name": "A.MFR_ROT",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> The root signing credential of the manufacturer is assumed to be secure and has not been \n\t\t\t\t\tcompromised.\n\t\t\t\t</description>"
       },
       "SecurityObjectives": [
@@ -4961,7 +4961,7 @@
     {
       "Name": "A.TRUSTED_DEVELOPMENT_AND_BUILD_PROCESSES",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> The TOE cannot protect itself during its own development and build processes. Therefore\n\t\t\t\t\tit is assumed that the developers and participants in the build process are not hostile.\n\t\t\t\t</description>"
       },
       "SecurityObjectives": [
@@ -4971,7 +4971,7 @@
     {
       "Name": "A.SUPPLY_CHAIN_SECURITY",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The hardware components that comprise the TOE are assumed to be non-hostile and not\n\t\t\t\t\tcompromised at the time of TOE construction. Likewise, the TOE is assumed to retain its integrity\n\t\t\t\t\tthroughout transportation until delivery to its operational site.\n\t\t\t\t</description>"
       },
       "SecurityObjectives": [
@@ -4981,7 +4981,7 @@
     {
       "Name": "A.CORRECT_INITIAL_CONFIGURATION",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">It is assumed that the initial setup and configuration of the TOE at its operational \n\t\t\t\t\tsite is correct and in accordance with organizational security policy and operational use case.\n\t\t\t\t</description>"
       },
       "SecurityObjectives": [
@@ -4991,7 +4991,7 @@
     {
       "Name": "A.TRUSTED_USERS",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">Physically present non-administrative users of the TOE are assumed to be trusted as \n\t\t\t\t\tfar as they are assumed to not be actively trying to subvert the system. (Not for all use cases).\n\t\t\t\t</description>"
       },
       "SecurityObjectives": [
@@ -5001,7 +5001,7 @@
     {
       "Name": "A.REGULAR_UPDATES",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General-Purpose Computing Platforms": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">It is assumed that the manufacturer provides updates to TOE firmware in a timely manner\n\t\t\t\t\tin response to known vulnerabilities, and that Administrators apply these updates when they are\n\t\t\t\t\treceived.\n\t\t\t\t</description>"
       },
       "SecurityObjectives": [
@@ -5011,7 +5011,7 @@
     {
       "Name": "T.LIMITED_PHYSICAL_ACCESS",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "General Purpose Operating System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\"> An attacker may attempt to access data on the OS while having a limited\n            amount of time with the physical device. </description>"
       },
       "SecurityObjectives": [
@@ -5021,7 +5021,7 @@
     {
       "Name": "T.DATA_LEAKAGE",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\n                    It is a fundamental property of VMs that the domains encapsulated by different VMs remain separate unless \n\t\t\t\t\tdata sharing is permitted by policy. For this reason, all Virtualization Systems shall support a policy\n\t\t\t\t\tthat prohibits information transfer between VMs.<h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" />\n                        It shall be possible to configure VMs such that data cannot be moved between domains from VM to VM, or\n\t\t\t\t\tthrough virtual or physical network components under the control of the VS. When VMs are configured as\n\t\t\t\t\tsuch, it shall not be possible for data to leak between domains, neither by the express efforts of\n\t\t\t\t\tsoftware or users of a VM, nor because of vulnerabilities or errors in the implementation of the VMM or\n\t\t\t\t\tother VS components.<h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" />\n                        If it is possible for data to leak between domains when prohibited by policy, then an adversary on one domain \n\t\t\t\t\tor network can obtain data from another domain. Such cross-domain data leakage can, for example, cause\n\t\t\t\t\tclassified information, corporate proprietary information, or personally identifiable information to be\n\t\t\t\t\tmade accessible to unauthorized entities.\n                    </description>"
       },
       "SecurityObjectives": [
@@ -5032,7 +5032,7 @@
     {
       "Name": "T.UNAUTHORIZED_UPDATE",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\n                        It is common for attackers to target outdated versions of software containing known flaws. This means it is\n\t\t\t    extremely important to update VS software as soon as possible when updates are\n\t\t\t    available. But the source of the updates and the updates themselves must be trusted. If an attacker can\n\t\t\t    write their own update containing malicious code they can take control of the VS.\n                    </description>"
       },
       "SecurityObjectives": [
@@ -5042,7 +5042,7 @@
     {
       "Name": "T.UNAUTHORIZED_MODIFICATION",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\n                        System integrity is a core security objective for Virtualization Systems. To achieve system integrity, the\n\t\t\t    integrity of each VMM component must be established and maintained. Malware running on the platform must\n\t\t\t    not be able to undetectably modify VS components while the system is running or at \n\t\t\t    rest. Likewise, malicious code running within a virtual machine must not be able to modify Virtualization\n\t\t\t    System components.\n                    </description>"
       },
       "SecurityObjectives": [
@@ -5053,7 +5053,7 @@
     {
       "Name": "T.USER_ERROR",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\n                        If a Virtualization System is capable of simultaneously displaying VMs of different domains to the same user\n\t\t\t    at the same time, there is always the chance that the user will become confused and unintentionally leak\n\t\t\t    information between domains. This is especially likely if VMs belonging to different domains are \n\t\t\t    indistinguishable. Malicious code may also attempt to interfere with the user’s ability to distinguish\n\t\t\t    between domains. The VS must take measures to minimize the likelihood of such confusion.\n                    </description>"
       },
       "SecurityObjectives": [
@@ -5063,7 +5063,7 @@
     {
       "Name": "T.3P_SOFTWARE",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\n                        In some VS implementations, functions critical to the security of the TOE are by necessity performed by \n\t\t\t    software not produced by the virtualization vendor. Such software may include physical device drivers, \n\t\t\t    and even non-TOE entities such as Host Operating Systems. Since this software has the same or similar\n\t\t\t    privilege level as the VS, vulnerabilities can be exploited by an adversary to compromise the VS and VMs.\n\t\t\t    Where possible, the VS should mitigate the results of potential vulnerabilities or malicious content in\n\t\t\t    third-party code on which it relies. For example, physical device drivers (potentially the Host OS) could \n\t\t\t    be encapsulated within VMs in order to limit the effects of compromise. \n                    </description>"
       },
       "SecurityObjectives": [
@@ -5073,7 +5073,7 @@
     {
       "Name": "T.VMM_COMPROMISE",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\n                        The VS is designed to provide the appearance of exclusivity to the VMs and is designed\n\t\t\t    to separate or isolate their functions except where specifically shared. Failure of security mechanisms\n\t\t\t    could lead to unauthorized intrusion into or modification of the VMM, or bypass of the VMM altogether,\n\t\t\t    by non-TOE software, such as that running in Guest or Helper VMs or on the host platform. \n\t\t\t    This must be prevented to avoid compromising the VS.\n                    </description>"
       },
       "SecurityObjectives": [
@@ -5084,7 +5084,7 @@
     {
       "Name": "T.PLATFORM_COMPROMISE",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\n                        The VS must be capable of protecting the platform from threats that originate within VMs and operational\n\t\t\t    networks connected to the VS. The hosting of untrusted—even malicious—domains by the VS cannot be \n\t\t\t    permitted to compromise the security and integrity of the platform on which the VS executes. If an \n\t\t\t    attacker can access the underlying platform in a manner not controlled by the VMM, the attacker might \n\t\t\t    be able to modify system firmware or software—compromising both the VS and the \n\t\t\t    underlying platform.\n                    </description>"
       },
       "SecurityObjectives": [
@@ -5094,7 +5094,7 @@
     {
       "Name": "T.UNAUTHORIZED_ACCESS",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\n                        Functions performed by the management layer include VM configuration, virtualized network configuration, \n\t\t\t    allocation of physical resources, and reporting. Only certain authorized system users (administrators) \n\t\t\t    are allowed to exercise management functions or obtain sensitive information from the TOE.<h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" />\n                        Virtualization Systems are often managed remotely over communication networks. Members of these networks can\n\t\t\t    be both geographically and logically separated from each other, and pass through a variety of other \n\t\t\t    systems which may be under the control of an adversary, and offer the opportunity for communications to be\n\t\t\t    compromised. An adversary with access to an open management network could inject commands into the\n\t\t\t    management infrastructure or extract sensitive information. This would provide an adversary with administrator privilege on the platform,\n\t\t\t    and administrative control over the VMs and virtual network connections. The adversary could also gain\n\t\t\t    access to the management network by hijacking the management network channel.\n                    </description>"
       },
       "SecurityObjectives": [
@@ -5104,7 +5104,7 @@
     {
       "Name": "T.WEAK_CRYPTO",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\n                        To the extent that VMs appear isolated within the VS, a threat of weak cryptography may \n\t\t\t    arise if the VMM does not provide good entropy to support security-related features that depend on\n\t\t\t    entropy to implement cryptographic algorithms. For example, a random number generator keeps an estimate\n\t\t\t    of the number of bits of noise in the entropy pool. From this entropy pool random numbers are created.\n\t\t\t    Good random numbers are essential to implementing strong cryptography. Cryptography implemented using\n\t\t\t    poor random numbers can be defeated by a sophisticated adversary. Such defeat can result in the compromise\n\t\t\t    of Guest VM data and credentials, and of VS data and credentials, and can enable unauthorized access \n\t\t\t    to the VS or VMs.\n                    </description>"
       },
       "SecurityObjectives": [
@@ -5114,7 +5114,7 @@
     {
       "Name": "T.UNPATCHED_SOFTWARE",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\n                        Vulnerabilities in outdated or unpatched software can be exploited by adversaries to compromise the\n\t\t\t    VS or platform.\n                    </description>"
       },
       "SecurityObjectives": [
@@ -5124,7 +5124,7 @@
     {
       "Name": "T.MISCONFIGURATION",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\n                        The VS may be misconfigured, which could impact its functioning and security. This \n\t\t\t    misconfiguration could be due to an administrative error or the use of faulty configuration data.\n                    </description>"
       },
       "SecurityObjectives": [
@@ -5134,7 +5134,7 @@
     {
       "Name": "T.DENIAL_OF_SERVICE",
       "Type": "threat",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\n                        A VM may block others from system resources (e.g., system memory, persistent storage, and processing time)\n\t\t\t    via a resource exhaustion attack.\n                    </description>"
       },
       "SecurityObjectives": [
@@ -5144,7 +5144,7 @@
     {
       "Name": "A.PLATFORM_INTEGRITY",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The platform has not been compromised prior to installation of the VS.</description>"
       },
       "SecurityObjectives": [
@@ -5154,7 +5154,7 @@
     {
       "Name": "A.PHYSICAL",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">Physical security commensurate with the value of the TOE and the data it contains is assumed to \n\t\t\t    be provided by the environment.</description>"
       },
       "SecurityObjectives": [
@@ -5164,7 +5164,7 @@
     {
       "Name": "A.NON_MALICIOUS_USER",
       "Type": "assumption",
-      "Threat Implementations": {
+      "Threat_Implementations": {
         "Virtualization System": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The user of the VS is not willfully negligent or hostile, and uses the VS in compliance with the\n\t\t\t    applied enterprise security policy and guidance. At the same time, malicious applications could act as\n\t\t\t    the user, so requirements which confine malicious applications are still in scope.</description>"
       },
       "SecurityObjectives": [

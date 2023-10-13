@@ -17,6 +17,10 @@ function TabContent(props) {
     // Prop Validation
     TabContent.propTypes = {
         activeTab: PropTypes.string.isRequired,
+        selectedThreats: PropTypes.array,
+        selectedSecurityObjectives: PropTypes.array,
+        selectedSfrs: PropTypes.array,
+        selectedPps: PropTypes.array,
     };
 
     // Functions
@@ -30,27 +34,33 @@ function TabContent(props) {
             // All Results Tab Content
             case "results_tab":
                 title = "Results";
-                content = (<Results activeTab={props.activeTab}/>)
+                content = (<Results
+                    activeTab={props.activeTab}
+                    selectedThreats={props.selectedThreats}
+                    selectedSecurityObjectives={props.selectedSecurityObjectives}
+                    selectedSfrs={props.selectedSfrs}
+                    selectedPps={props.selectedPps}
+                />)
                 break;
             // Threats Tab Content
             case "threat_tab":
                 title = "Threats";
-                content = (<Threats activeTab={props.activeTab}/>)
+                content = (<Threats activeTab={props.activeTab} />)
                 break;
             // Objectives Tab Content
             case "objective_tab":
                 title = "Objectives";
-                content = (<Objectives activeTab={props.activeTab}/>)
+                content = (<Objectives activeTab={props.activeTab} />)
                 break;
             // SFRs Tab Content
             case "sfr_tab":
                 title = "SFRs";
-                content = (<SFRs activeTab={props.activeTab}/>)
+                content = (<SFRs activeTab={props.activeTab} />)
                 break;
             // PPs Tab Content
             case "pp_tab":
                 title = "PPs";
-                content = (<PPs activeTab={props.activeTab}/>)
+                content = (<PPs activeTab={props.activeTab} />)
                 break;
             // Default
             default:
@@ -74,7 +84,7 @@ function TabContent(props) {
     return (
         // Tab Content
         <div className="h-full">
-            { showTabContent() }
+            {showTabContent()}
         </div>
     );
 }

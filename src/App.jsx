@@ -16,13 +16,13 @@ function App() {
     // The currently active tab string value
     const [activeTab, setActiveTab] = useState(sessionStorage.getItem("activeTab") ? sessionStorage.getItem("activeTab") : "results_tab");
     // Selected Threats
-    const [selectedThreats, setSelectedThreats] = useState(sessionStorage.getItem("selectedThreats") ?  JSON.parse(sessionStorage.getItem("selectedThreats")) : null);
+    const [selectedThreats, setSelectedThreats] = useState(sessionStorage.getItem("selectedThreats") ? JSON.parse(sessionStorage.getItem("selectedThreats")) : null);
     // Selected Security Objectives
     const [selectedSecurityObjectives, setSelectedSecurityObjectives] = useState(sessionStorage.getItem("selectedSecurityObjectives") ? JSON.parse(sessionStorage.getItem("selectedSecurityObjectives")) : null);
     // Selected SFRs
-    const [selectedSfrs, setSelectedSfrs] = useState(sessionStorage.getItem("selectedSfrs") ?  JSON.parse(sessionStorage.getItem("selectedSfrs")) : null);
+    const [selectedSfrs, setSelectedSfrs] = useState(sessionStorage.getItem("selectedSfrs") ? JSON.parse(sessionStorage.getItem("selectedSfrs")) : null);
     // Selected Security Objectives
-    const [selectedPps, setSelectedPps] = useState(sessionStorage.getItem("selectedPps") ?  JSON.parse(sessionStorage.getItem("selectedPps")) : null);
+    const [selectedPps, setSelectedPps] = useState(sessionStorage.getItem("selectedPps") ? JSON.parse(sessionStorage.getItem("selectedPps")) : null);
 
     // Functions
     /**
@@ -110,7 +110,12 @@ function App() {
                     </div>
                     {/* The Tab Content */}
                     <div className="col-span-3 ... bg-neutral border-2 border-gray-500 rounded-lg p-4 ml-2 h-full">
-                        <TabContent activeTab={activeTab} />
+                        <TabContent activeTab={activeTab}
+                            selectedThreats={selectedThreats}
+                            selectedSecurityObjectives={selectedSecurityObjectives}
+                            selectedSfrs={selectedSfrs}
+                            selectedPps={selectedPps}
+                        />
                     </div>
                 </div>
             </div>
