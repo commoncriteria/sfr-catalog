@@ -29,6 +29,15 @@ export function getSfrs(sfrDB) {
 }
 
 /**
+ * Gets the PPs from the SFRDatabase
+ * @param sfrDB The SFRDatabase
+ * @returns {*} The PPs
+ */
+export function getPPs(sfrDB) {
+    return jmespath.search(sfrDB, `"Protection Profiles"[*].Name`);
+}
+
+/**
  * Gets the filtered Objectives
  * @param sfrDB     The SFRDatabase
  * @param threat    The Threat to filter on
@@ -78,4 +87,42 @@ export function SFRToSecurityObjective(sfrDB, sfr, objective) {
     } else {
         return false
     }
+}
+
+export function PPFilter(sfrDB, threat, objective, sfr) {
+    let pps = getPPs(sfrDB)
+    let returnPPs = null;
+    // Map through pps if they are not null/empty and if any threat/objective/sfr is not null
+    if (pps && Object.keys(pps).length !== 0 && (threat || objective || sfr)) {
+        // Initialize returnPPs as an array
+        returnPPs = []
+        // Map through the PPs
+        pps.map((pp) => {
+            // Set initial value to true
+            let includePP = true
+            // If threat is not null and includePP is true check if threat exists in the current pp
+            if (threat && includePP) {
+                let threats = jmespath.search(sfrDB, `"Protection Profiles"[?Name == '${pp}'].Threats[]`);
+                includePP = jmespath.search(sfrDB, `contains('${threats}', '${threat}')`);
+            }
+            // If objective is not null and includePP is true check if objective exists in the current pp
+            if (objective && includePP) {
+                let objectives = jmespath.search(sfrDB, `"Protection Profiles"[?Name == '${pp}'].SecurityObjectives[]`);
+                includePP = jmespath.search(sfrDB, `contains('${objectives}', '${objective}')`);
+            }
+            // If sfr is not null and includePP is true check if sfr exists in the current pp
+            if (sfr && includePP) {
+                let sfrs = jmespath.search(sfrDB, `"Protection Profiles"[?Name == '${pp}'].SFRs[]`);
+                includePP = jmespath.search(sfrDB, `contains('${sfrs}', '${sfr}')`);
+            }
+
+            // Add to pp if all parameters that aren't null are included in the PP
+            if (includePP && !returnPPs.includes(pp)) {
+                returnPPs.push(pp)
+            }
+        })
+    }
+
+    // Return the list of PPs and sort if it not null/empty
+    return (returnPPs && Object.keys(returnPPs).length !== 0) ? returnPPs.sort() : returnPPs
 }
