@@ -16,35 +16,35 @@ function Threats() {
                 {
                     name: "Application Software",
                     values: [
-                        {name: "T.NETWORK_ATTACK", isOpen: true, content: "Content"},
-                        {name: "O.INTEGRITY", isOpen: true, content: "Content"},
-                        {name: "fdp_dec_ext.1.1", isOpen: true, content: "Content"},
+                        {name: "T.NETWORK_ATTACK", isOpen: true, toggle: true, type: "Threats"},
+                        {name: "O.INTEGRITY", isOpen: true, toggle: true, type: "SecurityObjectives"},
+                        {name: "fdp_dec_ext.1.1", isOpen: true, toggle: true, type: "SFRs"},
                     ]
                 },
                 {
                     name: "Mobile Device",
                     values: [
-                        {name: "T.NETWORK_EAVESDROP", isOpen: true, content: "Content"},
+                        {name: "T.NETWORK_EAVESDROP", isOpen: true, toggle: true, type: "Threats"},
                     ]
                 },
                 {
                     name: "General-Purpose Computing Platforms",
                     values: [
-                        {name: "fau_stg.4.1", isOpen: true, content: "Content"},
+                        {name: "fau_stg.4.1", isOpen: true, toggle: true, type: "SFRs"},
                     ]
                 },
                 {
                     name: "General Purpose Operating System",
                     values: [
-                        {name: "O.PROTECTED_COMMS", isOpen: true, content: "Content"},
-                        {name: "fcs_cop.1.1/ENCRYPT", isOpen: true, content: "Content"},
+                        {name: "O.PROTECTED_COMMS", isOpen: true, toggle: true, type: "SecurityObjectives"},
+                        {name: "fcs_cop.1.1/ENCRYPT", isOpen: true, toggle: true, type: "SFRs"},
                     ]
                 },
                 {
                     name: "Virtualization System",
                     values: [
-                        {name: "T.WEAK_CRYPTO", isOpen: true, content: "Content"},
-                        {name: "O.VM_ENTROPY", isOpen: true, content: "Content"},
+                        {name: "T.WEAK_CRYPTO", isOpen: true, toggle: true, type: "Threats"},
+                        {name: "O.VM_ENTROPY", isOpen: true, toggle: true, type: "SecurityObjectives"},
                     ]
                 },
             ]);
@@ -74,11 +74,12 @@ function Threats() {
                                             values.map((item) => {
                                                 return (
                                                     <div className={"my-2"} key={item.name}>
-                                                        <AccordionContent id={item.name}
-                                                                          parent_id={ppName}
+                                                        <AccordionContent name={item.name}
+                                                                          ppName={ppName}
+                                                                          type = {item.type}
+                                                                          toggle={item.toggle}
                                                                           isOpen={item.isOpen}
                                                                           accordionHeader={item.name}
-                                                                          accordionContent={item.content}
                                                                           ppContent={currentPPContent}
                                                                           handleSetPPContent={handleSetPPContent}
                                                         />

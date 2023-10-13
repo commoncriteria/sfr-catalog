@@ -1,4 +1,5 @@
-import { Accordion, AccordionHeader, AccordionBody } from "@material-tailwind/react";
+import {Accordion, AccordionHeader, AccordionBody} from "@material-tailwind/react";
+import {alpha, Stack, styled, Switch, Typography} from "@mui/material";
 import PropTypes from "prop-types";
 
 /**
@@ -10,31 +11,92 @@ import PropTypes from "prop-types";
 function AccordionContent(props) {
     // Prop Validation
     AccordionContent.propTypes = {
-        id: PropTypes.string.isRequired,
-        parent_id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        ppName: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
+        toggle: PropTypes.bool.isRequired,
         isOpen: PropTypes.bool.isRequired,
         accordionHeader: PropTypes.string.isRequired,
-        accordionContent: PropTypes.node.isRequired,
         ppContent: PropTypes.array.isRequired,
         handleSetPPContent: PropTypes.func.isRequired,
     };
 
+    // Styling
+    const AccentSwitch = styled(Switch)(({ theme }) => {
+        return ({
+            '& .MuiSwitch-switchBase.Mui-checked': {
+                color: "#17877D",
+                '&:hover': {
+                    backgroundColor: alpha("#17877D", theme.palette.action.hoverOpacity),
+                },
+            },
+            '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+                backgroundColor: "#17877D",
+            },
+        });
+    });
+
+    // Functions
+    /**
+     * Display content according to toggle value, type, name and ppName.
+     * It will call the query according to the above values and display the associated data
+     * @returns {JSX.Element|null}
+     */
+    const queryContent = () => {
+        {/*TODO: call query according to toggle, type, name, ppName */}
+        let type = props.type
+        let name = props.name
+        let ppName = props.ppName
+        let toggle = props.toggle
+        switch(type) {
+            case "Threats": {
+                if (toggle) {
+                    return (<div>Threat XML Content</div>)
+                } else {
+                    return (<div>Threat String Content</div>)
+                }
+            }
+            case "SecurityObjectives": {
+                if (toggle) {
+                    return (<div>Objective XML Content</div>)
+                } else {
+                    return (<div>Objective String Content</div>)
+                }
+            }
+            case "SFRs": {
+                if (toggle) {
+                    return (<div>SFR XML Content</div>)
+                } else {
+                    return (<div>SFR String Content</div>)
+                }
+            }
+            default:
+                return null;
+        }
+    }
+
+    // Handle Functions
     /**
      * Handles the updates to the accordion and sets the related data in the parent
      */
-    const handleUpdates = () => {
+    const handleUpdates = (type) => {
         try {
             // Get selection value
-            let id = props.id
-            let parent_id = props.parent_id
+            let name = props.name
+            let ppName = props.ppName
             let isOpen = props.isOpen
             let pps = props.ppContent.valueOf()
-            let ppIndex = pps.findIndex(x => x.name === parent_id);
+            let toggle = props.toggle
+            let ppIndex = pps.findIndex(x => x.name === ppName);
             if (ppIndex !== -1) {
                 let values = pps[ppIndex].values.valueOf()
-                let valueIndex = values.findIndex(x => x.name === id);
+                let valueIndex = values.findIndex(x => x.name === name);
                 if (valueIndex !== -1) {
-                    pps[ppIndex].values[valueIndex].isOpen = !isOpen
+                    if (type === "accordion") {
+                        pps[ppIndex].values[valueIndex].isOpen = !isOpen
+                    } else {
+                        pps[ppIndex].values[valueIndex].toggle = !toggle
+                    }
                 }
             }
 
@@ -45,12 +107,11 @@ function AccordionContent(props) {
         }
     }
 
-
     // Return Function
     return (
         <div>
             <Accordion
-                id={props.id}
+                id={props.name}
                 className={"bg-gray-300 rounded-md border-2 border-gray-400"}
                 open={props.isOpen}
                 icon={
@@ -72,12 +133,24 @@ function AccordionContent(props) {
             >
                 <AccordionHeader
                     className={(props.isOpen ? " border-b-2 bg-gray-100" : " border-b-0") + " px-6 text-lg font-extrabold text-accent border-gray-400"}
-                    onClick={() => handleUpdates()}
+                    onClick={() => handleUpdates("accordion")}
                 >
                     {props.accordionHeader}
                 </AccordionHeader>
-                <AccordionBody className={"px-4 bg-gray-200 flex justify-center items-center"}>
-                    {props.accordionContent}
+                <AccordionBody className={"px-4 bg-gray-200"}>
+                    <div className="grid grid-rows-4 grid-flow-col gap-2">
+                        <div className="row-span-1">
+                            <Stack direction="row" component="label" alignItems="center" justifyContent="center">
+                                <Typography>String</Typography>
+                                <AccentSwitch checked={props.toggle} inputProps={{'aria-label': 'controlled'}} size="medium"
+                                              onChange={() => handleUpdates("toggle")}/>
+                                <Typography>XML</Typography>
+                            </Stack>
+                        </div>
+                        <div className="row-span-1 flex justify-center items-center text-lg">
+                            {queryContent()}
+                        </div>
+                    </div>
                 </AccordionBody>
             </Accordion>
         </div>
