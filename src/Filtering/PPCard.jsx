@@ -22,10 +22,20 @@ function PPCard(props) {
      * @param event the event handler
      */
     const handleDropdownSelect = (event, values) => {
-        if (typeof values == "string") {
-            props.handleSetSelectedPps([values])
-        } else {
-            props.handleSetSelectedPps(values)
+         if (typeof values == "string") {
+             if (!props.selections.includes(values)) {
+                 props.handleSetSelectedPps([values])
+             }
+         } else {
+             if (values && Object.keys(values).length === 0) {
+                 props.handleSetSelectedPps(null)
+             } else {
+                 if (values && Object.keys(values).length !== 0) {
+                     props.handleSetSelectedPps((values.filter((item, index) => values.indexOf(item) === index)))
+                 } else {
+                     props.handleSetSelectedPps(values)
+                 }
+             }
         }
     };
 
@@ -33,7 +43,7 @@ function PPCard(props) {
     return (
         <div>
             <Card
-                cardTitle={"PP"}
+                cardTitle={"PPs"}
                 cardContent={
                     <Dropdown
                         label={"PP"}

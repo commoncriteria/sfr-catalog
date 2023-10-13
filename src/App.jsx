@@ -24,7 +24,6 @@ function App() {
     // Selected Security Objectives
     const [selectedPps, setSelectedPps] = useState(sessionStorage.getItem("selectedPps") ?  JSON.parse(sessionStorage.getItem("selectedPps")) : null);
 
-
     // Functions
     /**
      * Handles the tab click and switches the tab to the appropriate pane

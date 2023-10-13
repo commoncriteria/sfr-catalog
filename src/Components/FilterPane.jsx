@@ -77,6 +77,17 @@ function FilterPane(props) {
         updateDropdowns("SFR", props.selectedSfrs, allSfrs)
     }, [props.selectedSfrs])
 
+    /**
+     * Use Effect for updating other filter types based on allPPs update
+     */
+    useEffect(() => {
+        // Update pp selections if it is only one option
+        let isOnlyOneSelection = isOnlyOneOptionAvailable(allPps, props.selectedPps)
+        if (isOnlyOneSelection) {
+            props.handleSetSelectedPps(isOnlyOneSelection)
+        }
+    }, [props.selectedPps])
+
     // Functions
     /**
      * Update dropdowns based on the updated value
@@ -90,7 +101,7 @@ function FilterPane(props) {
             switch(type) {
                 case "Threat":
                     {
-                        let oneSelected = isOnlyOneOptionAvailable(type, allValues, newSelections)
+                        let oneSelected = isOnlyOneOptionAvailable(allValues, newSelections)
                         if (oneSelected) {
                             props.handleSetSelectedThreats(oneSelected)
                         } else {
@@ -100,7 +111,7 @@ function FilterPane(props) {
                     break;
                 case "Objective":
                     {
-                        let oneSelected = isOnlyOneOptionAvailable(type, allValues, newSelections)
+                        let oneSelected = isOnlyOneOptionAvailable(allValues, newSelections)
                         if (oneSelected) {
                             props.handleSetSelectedSecurityObjectives(oneSelected)
                         } else {
@@ -110,7 +121,7 @@ function FilterPane(props) {
                     break;
                 case "SFR":
                     {
-                        let oneSelected = isOnlyOneOptionAvailable(type, allValues, newSelections)
+                        let oneSelected = isOnlyOneOptionAvailable(allValues, newSelections)
                         if (oneSelected) {
                             props.handleSetSelectedSfrs(oneSelected)
                         } else {
@@ -126,7 +137,61 @@ function FilterPane(props) {
             }
         } catch (e) {
             console.log(e)
+        } finally {
+            // Update PP Filter
+            updatePPFilter()
         }
+    }
+
+    /**
+     * The update pp filter method that updates pp dropdown and pp selections, based on all other selections
+     */
+    const updatePPFilter = () => {
+        // Get all of the current values
+        let selectedThreats = props.selectedThreats? props.selectedThreats.valueOf() : null;
+        let selectedObjectives = props.selectedSecurityObjectives? props.selectedSecurityObjectives.valueOf() : null;
+        let selectedSfrs = props.selectedSfrs? props.selectedSfrs.valueOf() : null;
+        let selectedPPs = props.selectedPps ? props.selectedPps.valueOf() : null;
+
+        // Initialize pp values and query new pps
+        let newSelectedPPs = null;
+        let newPPs = query.PPFilter(SFRDatabase, selectedThreats, selectedObjectives, selectedSfrs)
+        // If the new pps contain values, check for previous pp selections
+        if (newPPs && Object.keys(newPPs).length !== 0) {
+            // Sort the new pp list
+            newPPs.sort()
+            // If previous pp selections exist, check to see if they are in the new dropdown list options
+            if (selectedPPs && Object.keys(selectedPPs).length !== 0) {
+                selectedPPs.map((selectedPP) => {
+                    // Initialize new selections to an array, if it was previously null
+                    if (!newSelectedPPs) {
+                        newSelectedPPs = []
+                    }
+                    // Add previously selected PP to new pp selections if it exists in the new dropdown and doesn't
+                    // already exist in the selections array
+                    if (newPPs.includes(selectedPP) && !newSelectedPPs.includes(selectedPP)) {
+                        newSelectedPPs.push(selectedPP)
+                    }
+                })
+            }
+        }
+
+        // Sort the new pp dropdown options if it is not null/empty
+        if (newSelectedPPs) {
+            newSelectedPPs.sort()
+        }
+
+        // Update pps, and set to one element if there is only one option available
+        let isOnlyOneSelection = isOnlyOneOptionAvailable(newPPs, newSelectedPPs)
+        if (isOnlyOneSelection) {
+            props.handleSetSelectedPps(isOnlyOneSelection)
+        } else {
+            props.handleSetSelectedPps(newSelectedPPs)
+        }
+
+        // Set new PP dropdown and updated selections
+        props.handleSetSelectedPps(newSelectedPPs)
+        handleSetAllPps(newPPs)
     }
 
     /**
@@ -262,7 +327,7 @@ function FilterPane(props) {
         }
 
         // Update selections based on type
-        let isOnlyOneSelection = isOnlyOneOptionAvailable(updateType, newFullOptionsList, originalSelectionsForNewType)
+        let isOnlyOneSelection = isOnlyOneOptionAvailable(newFullOptionsList, originalSelectionsForNewType)
         if (isOnlyOneSelection) {
             newSelections = isOnlyOneSelection
         } else {
@@ -296,21 +361,13 @@ function FilterPane(props) {
 
     /**
      * Update selected drop down to automatically select option if there is only one available in the array
-     * @param type              The type of array to update ("Threat", "Objective", "SFR")
      * @param currentOptions    Current list of all options
      * @param selected          The currently selected options
      */
-    const isOnlyOneOptionAvailable = (type, currentOptions, selected) => {
+    const isOnlyOneOptionAvailable = (currentOptions, selected) => {
         // If current array only has one item, return item based on type
         if (currentOptions && Object.keys(currentOptions).length === 1 && !selected) {
-            switch(type) {
-                case "Threat":
-                    return currentOptions.valueOf();
-                case "Objective":
-                    return currentOptions.valueOf();
-                case "SFR":
-                    return currentOptions.valueOf();
-            }
+            return currentOptions.valueOf();
         }
         // Return null if the array options are greater than one
         return null;
@@ -519,7 +576,7 @@ function FilterPane(props) {
             {/* Threat Filtering Card */}
             <div>
                 {
-                    allThreats != null ?
+                    allThreats !== null ?
                         <ThreatCard
                             name={"Threats"}
                             allThreats={allThreats}
@@ -532,7 +589,7 @@ function FilterPane(props) {
             {/* Objectives Filtering Card */}
             <div>
                 {
-                    allSecurityObjectives != null ?
+                    allSecurityObjectives !== null ?
                         <ObjectivesCard
                             name={"SecurityObjectives"}
                             allSecurityObjectives={allSecurityObjectives}
@@ -545,7 +602,7 @@ function FilterPane(props) {
             {/* SFR Filtering Card */}
             <div>
                 {
-                    allSfrs != null ?
+                    allSfrs !== null ?
                         <SFRCard
                             name={"SFRs"}
                             allSfrs={allSfrs}
@@ -558,10 +615,10 @@ function FilterPane(props) {
             {/* PP Filtering Card */}
             <div>
                 {
-                    allPps != null ?
+                    allPps !== null ?
                         <PPCard
                             name={"PPs"}
-                            allSfrs={allPps}
+                            allPps={allPps}
                             selections={props.selectedPps}
                             handleSetSelectedPps={props.handleSetSelectedPps}
                         />
