@@ -304,7 +304,10 @@ function FilterPane(props) {
         }
 
         // Update dropdown
-        if (originalSelections && Object.keys(originalSelections).length !== 0) {
+        if (!props.selectedThreats && !props.selectedSecurityObjectives && !props.selectedSfrs) {
+            // If all dropdown selections are empty, set options list to queried list
+            newFullOptionsList = queriedList
+        } else if (originalSelections && Object.keys(originalSelections).length !== 0) {
             // If type is objectiveToThreat or sfrToObjective, pass in full queriedList
             if ((originalType === "Objective" && updateType === "Threat")
                 || (originalType === "SFR" && updateType === "Objective")) {
