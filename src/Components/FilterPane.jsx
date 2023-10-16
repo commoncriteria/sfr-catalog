@@ -77,17 +77,6 @@ function FilterPane(props) {
         updateDropdowns("SFR", props.selectedSfrs, allSfrs)
     }, [props.selectedSfrs])
 
-    /**
-     * Use Effect for updating other filter types based on allPPs update
-     */
-    useEffect(() => {
-        // Update pp selections if it is only one option
-        let isOnlyOneSelection = isOnlyOneOptionAvailable(allPps, props.selectedPps)
-        if (isOnlyOneSelection) {
-            props.handleSetSelectedPps(isOnlyOneSelection)
-        }
-    }, [props.selectedPps])
-
     // Functions
     /**
      * Update dropdowns based on the updated value
@@ -179,14 +168,6 @@ function FilterPane(props) {
         // Sort the new pp dropdown options if it is not null/empty
         if (newSelectedPPs) {
             newSelectedPPs.sort()
-        }
-
-        // Update pps, and set to one element if there is only one option available
-        let isOnlyOneSelection = isOnlyOneOptionAvailable(newPPs, newSelectedPPs)
-        if (isOnlyOneSelection) {
-            props.handleSetSelectedPps(isOnlyOneSelection)
-        } else {
-            props.handleSetSelectedPps(newSelectedPPs)
         }
 
         // Set new PP dropdown and updated selections
@@ -369,7 +350,7 @@ function FilterPane(props) {
      */
     const isOnlyOneOptionAvailable = (currentOptions, selected) => {
         // If current array only has one item, return item based on type
-        if (currentOptions && Object.keys(currentOptions).length === 1 && !selected) {
+        if (currentOptions && Object.keys(currentOptions).length === 1 && (!selected || (selected && Object.keys(selected).length === 0))) {
             return currentOptions.valueOf();
         }
         // Return null if the array options are greater than one
