@@ -34,7 +34,7 @@ export function getSfrs(sfrDB) {
  * @returns {*} The PPs
  */
 export function getPPs(sfrDB) {
-    return jmespath.search(sfrDB, `"Protection_Profiles"[*].Name`);
+    return jmespath.search(sfrDB, `Protection_Profiles[*].Name`);
 }
 
 /**
