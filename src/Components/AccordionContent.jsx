@@ -79,13 +79,13 @@ function AccordionContent(props) {
             case "Threats": {
                 if (toggle) {
                     return (
-                        <div>
+                        <div className="mx-3 my-2">
                             <XMLViewer xml={threat_content} theme={customTheme} collapsible />
                         </div>
                     )
                 } else {
                     return (
-                        <div>
+                        <div className="mx-3 my-2">
                             <p>{threat_content}</p>
                         </div>
                     )
@@ -94,13 +94,13 @@ function AccordionContent(props) {
             case "SecurityObjectives": {
                 if (toggle) {
                     return (
-                        <div>
+                        <div className="mx-3 my-2">
                             <XMLViewer xml={objective_content} theme={customTheme} collapsible />
                         </div>
                     )
                 } else {
                     return (
-                        <div>
+                        <div className="mx-3 my-2">
                             <p>{objective_content}</p>
                         </div>
                     )
@@ -109,13 +109,13 @@ function AccordionContent(props) {
             case "SFRs": {
                 if (toggle) {
                     return (
-                        <div>
+                        <div className="mx-3 my-2">
                             <XMLViewer xml={sfr_content} theme={customTheme} collapsible />
                         </div>
                     )
                 } else {
                     return (
-                        <div>
+                        <div className="mx-3 my-2">
                             <p>{sfr_content}</p>
                         </div>
                     )
@@ -189,8 +189,8 @@ function AccordionContent(props) {
                     {props.accordionHeader}
                 </AccordionHeader>
                 <AccordionBody className={"px-4 bg-gray-200"}>
-                    <div className="grid grid-rows-4 grid-flow-col gap-2">
-                        <div className="row-span-1">
+                    <div className="flex flex-col">
+                        <div className="">
                             <Stack direction="row" component="label" alignItems="center" justifyContent="center">
                                 <Typography>String</Typography>
                                 <AccentSwitch checked={props.toggle} inputProps={{ 'aria-label': 'controlled' }} size="medium"
@@ -198,7 +198,7 @@ function AccordionContent(props) {
                                 <Typography>XML</Typography>
                             </Stack>
                         </div>
-                        <div className="row-span-1 flex justify-center items-center text-lg">
+                        <div className="flex justify-center items-center text-lg">
                             {queryContent()}
                         </div>
                     </div>

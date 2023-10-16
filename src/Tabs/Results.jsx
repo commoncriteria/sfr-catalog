@@ -68,7 +68,7 @@ function Results(props) {
                 let ppName = pp.name
                 let values = pp.values.valueOf()
                 cards.push(
-                    <div className="my-4 mr-2 ml-2" key={ppName + "_Card"}>
+                    <div className={Object.keys(currentPPContent).length > 1 ? "flex-none my-4 w-1/2" : "my-4 mr-2 ml-2 w-full"} key={ppName + "_Card"}>
                         <Card
                             largeTitle={true}
                             cardTitle={ppName}
@@ -78,7 +78,7 @@ function Results(props) {
                                         (values && Object.keys(values) !== 0) ?
                                             values.map((item) => {
                                                 return (
-                                                    <div className={"my-2"} key={item.name}>
+                                                    <div className={"my-2"} key={item.name + ppName}>
                                                         <AccordionContent
                                                             name={item.name}
                                                             ppName={ppName}
@@ -127,7 +127,7 @@ function Results(props) {
             let nodes = getContent(ppContent.valueOf())
             return (
                 (nodes && Object.keys(nodes).length !== 0) ?
-                    <div>
+                    <div className="flex flex-row">
                         {nodes.map(node => {
                             return node;
                         })}
@@ -143,7 +143,7 @@ function Results(props) {
 
     // Return Function
     return (
-        <div className={"w-full h-full"}>
+        <div className={"w-full h-full overflow-auto"}>
             {contentData}
         </div>
     )
