@@ -31,7 +31,8 @@ function PPCard(props) {
                  props.handleSetSelectedPps(null)
              } else {
                  if (values && Object.keys(values).length !== 0) {
-                     props.handleSetSelectedPps((values.filter((item, index) => values.indexOf(item) === index)))
+                     let filtered = (values.filter((item, index) => values.indexOf(item) === index)).sort()
+                     props.handleSetSelectedPps(filtered)
                  } else {
                      props.handleSetSelectedPps(values)
                  }
