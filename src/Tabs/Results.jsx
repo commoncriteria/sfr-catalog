@@ -1,9 +1,7 @@
-// import { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import * as query from "../utils/query.js";
-import SFRDatabase from "../assets/NIAPDocumentBundle.json";
-import XMLViewer from "react-xml-viewer";
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
+import AccordionContent from "../Components/AccordionContent.jsx";
+import Card from "../Components/Card.jsx";
 
 
 /**
@@ -16,110 +14,137 @@ function Results(props) {
         selectedThreats: PropTypes.array,
         selectedSecurityObjectives: PropTypes.array,
         selectedSfrs: PropTypes.array,
+        selectedPps: PropTypes.array,
     }
 
-    const [formatString, setformatString] = useState(true);
+    // Constants
+    const [ppContent, setPPContent] = useState(sessionStorage.getItem("ppContent") ? JSON.parse(sessionStorage.getItem("ppContent")) : []);
 
-    // initialize to empty object by default
-    var sfr_content = {};
-    var threat_content = {};
-    var objective_content = {};
-    // populate content based on selections
-    if (props.selectedSfrs) {
-        sfr_content = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0];
+    // initialize metadata
+    var threat_accordion_object = null;
+    var objective_accordion_object = null;
+    var sfr_accordion_object = null;
+
+    useEffect(() => {
+        if (props.selectedSfrs) {
+            sfr_accordion_object = { name: props.selectedSfrs[0], isOpen: false, toggle: false, type: "SFRs" };
+        }
+
+        if (props.selectedThreats) {
+            threat_accordion_object = { name: props.selectedThreats[0], isOpen: false, toggle: false, type: "Threats" };
+        }
+
+        if (props.selectedSecurityObjectives) {
+            objective_accordion_object = { name: props.selectedSecurityObjectives[0], isOpen: false, toggle: false, type: "SecurityObjectives" };
+        }
+        // Update dropdowns according to threat selections
+        let ppContentArr = [];
+
+        if (props.selectedPps) {
+            props.selectedPps.forEach(pp => {
+                let pp_accordion_obj = {};
+                pp_accordion_obj["name"] = pp;
+                pp_accordion_obj["values"] = [threat_accordion_object, sfr_accordion_object, objective_accordion_object].filter(Boolean);
+                ppContentArr.push(pp_accordion_obj);
+            });
+        }
+        setPPContent(ppContentArr);
+    }, [props.selectedPps, props.selectedSfrs, props.selectedThreats, props.selectedSecurityObjectives])
+
+
+
+
+    // Functions
+    /**
+     * Gets the Card/Accordion content according to the newly updated ppContent value
+     * @param currentPPContent  The updated ppContent value
+     * @returns {null}          Returns the pp Cards
+     */
+    const getContent = (currentPPContent) => {
+        let cards = null
+        if (currentPPContent && Object.keys(currentPPContent).length !== 0) {
+            cards = []
+            currentPPContent.map((pp) => {
+                let ppName = pp.name
+                let values = pp.values.valueOf()
+                cards.push(
+                    <div className="my-4 mr-2 ml-2" key={ppName + "_Card"}>
+                        <Card
+                            largeTitle={true}
+                            cardTitle={ppName}
+                            cardContent={(
+                                <div key={ppName}>
+                                    {
+                                        (values && Object.keys(values) !== 0) ?
+                                            values.map((item) => {
+                                                return (
+                                                    <div className={"my-2"} key={item.name}>
+                                                        <AccordionContent
+                                                            name={item.name}
+                                                            ppName={ppName}
+                                                            type={item.type}
+                                                            toggle={item.toggle}
+                                                            isOpen={item.isOpen}
+                                                            accordionHeader={item.name}
+                                                            ppContent={currentPPContent}
+                                                            handleSetPPContent={handleSetPPContent}
+                                                            selectedThreats={props.selectedThreats}
+                                                            selectedSecurityObjectives={props.selectedSecurityObjectives}
+                                                            selectedSfrs={props.selectedSfrs}
+                                                        />
+                                                    </div>
+                                                )
+                                            })
+                                            : null
+                                    }
+                                </div>
+                            )}
+                        />
+                    </div>
+                )
+            })
+        }
+        return cards
     }
 
-    if (props.selectedThreats) {
-        threat_content = query.getThreatContent(SFRDatabase, props.selectedThreats[0])[0];
-        console.log(threat_content);
+    // Handler Functions
+    /**
+     * The handle method to set the ppContent
+     * @param content
+     */
+    const handleSetPPContent = (content) => {
+        sessionStorage.setItem("ppContent", JSON.stringify(content))
+        setPPContent(JSON.parse(sessionStorage.getItem("ppContent")))
     }
 
-    if (props.selectedSecurityObjectives) {
-        objective_content = query.getSecurityObjectiveContent(SFRDatabase, props.selectedSecurityObjectives[0])[0];
-    }
+    // Use Memos
+    /**
+     * The use memo to update the content data only when the ppContent updates
+     * @type {unknown}
+     */
+    const contentData = useMemo(() => {
+        if (ppContent && Object.keys(ppContent).length !== 0) {
+            let nodes = getContent(ppContent.valueOf())
+            return (
+                (nodes && Object.keys(nodes).length !== 0) ?
+                    <div>
+                        {nodes.map(node => {
+                            return node;
+                        })}
+                    </div>
+                    : null
+            )
+        }
+        return null;
+    }, [ppContent]);
 
-
-    function toggleFormat() {
-        setformatString(!formatString);
-    }
-
-    const customTheme = {
-        attributeKeyColor: "#0074D9",
-        attributeValueColor: "#2ECC40"
-    };
+    console.log(ppContent);
 
 
     // Return Function
     return (
-        <div>
-            <h2>Results Content</h2>
-            <div className="flex">
-                <input id="default-radio-1" type="radio" onChange={toggleFormat} defaultChecked value="string" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></input>
-                <label className="ml-2 text-sm font-medium text-white-900 dark:text-white-300">String</label>
-                <input id="default-radio-2" type="radio" onChange={toggleFormat} value="xml" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></input>
-                <label className="ml-2 text-sm font-medium text-white-900 dark:text-white-300">XML</label>
-            </div>
-            <h2 className="font-bold">Selected Threat: {props.selectedThreats} </h2>
-            <h2>Threat Content:
-                {threat_content != null ?
-                    formatString ?
-                        Object.keys(threat_content).map(key => (
-                            <div key={key}>
-                                <h1>{key}</h1>
-                                <p>{threat_content[key]}</p>
-                            </div>
-                        )) :
-                        Object.keys(threat_content).map(key => (
-                            <div key={key}>
-                                <h1>{key}</h1>
-                                <XMLViewer key={key} xml={JSON.stringify(threat_content[key])} theme={customTheme} collapsible />
-                            </div>
-                        ))
-                    : null
-                }
-            </h2>
-            <br></br>
-
-            <h2 className="font-bold">Selected Objective: {props.selectedSecurityObjectives} </h2>
-            <h2>Objective Content:
-                {objective_content != null ?
-                    formatString ?
-                        Object.keys(objective_content).map(key => (
-                            <div key={key}>
-                                <h1>{key}</h1>
-                                <p>{objective_content[key]}</p>
-                            </div>
-                        )) :
-                        Object.keys(objective_content).map(key => (
-                            <div key={key}>
-                                <h1>{key}</h1>
-                                <XMLViewer key={key} xml={JSON.stringify(objective_content[key])} theme={customTheme} collapsible />
-                            </div>
-                        ))
-                    : null
-                }
-            </h2>
-            <br></br>
-
-            <h2 className="font-bold">Selected SFR: {props.selectedSfrs} </h2>
-            <h2>SFR Content:
-                {sfr_content != null ?
-                    formatString ?
-                        Object.keys(sfr_content).map(key => (
-                            <div key={key}>
-                                <h1>{key}</h1>
-                                <p>{sfr_content[key]}</p>
-                            </div>
-                        )) :
-                        Object.keys(sfr_content).map(key => (
-                            <div key={key}>
-                                <h1>{key}</h1>
-                                <XMLViewer key={key} xml={JSON.stringify(sfr_content[key])} theme={customTheme} collapsible />
-                            </div>
-                        ))
-                    : null
-                }
-            </h2>
+        <div className={"w-full h-full"}>
+            {contentData}
         </div>
     )
 }

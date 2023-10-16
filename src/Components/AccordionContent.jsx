@@ -1,6 +1,10 @@
-import {Accordion, AccordionHeader, AccordionBody} from "@material-tailwind/react";
-import {alpha, Stack, styled, Switch, Typography} from "@mui/material";
+import { Accordion, AccordionHeader, AccordionBody } from "@material-tailwind/react";
+import { alpha, Stack, styled, Switch, Typography } from "@mui/material";
 import PropTypes from "prop-types";
+import * as query from "../utils/query.js";
+import SFRDatabase from "../assets/NIAPDocumentBundle.json";
+import { useState } from "react";
+import XMLViewer from "react-xml-viewer";
 
 /**
  * The Accordion class that displays the accordion
@@ -19,6 +23,9 @@ function AccordionContent(props) {
         accordionHeader: PropTypes.string.isRequired,
         ppContent: PropTypes.array.isRequired,
         handleSetPPContent: PropTypes.func.isRequired,
+        selectedThreats: PropTypes.array,
+        selectedSecurityObjectives: PropTypes.array,
+        selectedSfrs: PropTypes.array,
     };
 
     // Styling
@@ -36,38 +43,82 @@ function AccordionContent(props) {
         });
     });
 
-    // Functions
+    const customTheme = {
+        attributeKeyColor: "#0074D9",
+        attributeValueColor: "#2ECC40"
+    };
+
     /**
      * Display content according to toggle value, type, name and ppName.
      * It will call the query according to the above values and display the associated data
      * @returns {JSX.Element|null}
      */
     const queryContent = () => {
-        {/*TODO: call query according to toggle, type, name, ppName */}
         let type = props.type
-        let name = props.name
+        // let name = props.name
         let ppName = props.ppName
         let toggle = props.toggle
-        switch(type) {
+
+        let threat_content = {};
+        let objective_content = {};
+        let sfr_content = {};
+
+        // get content based on PP
+        if (props.selectedThreats) {
+            threat_content = query.getThreatContent(SFRDatabase, props.selectedThreats[0])[0][ppName];
+        }
+        if (props.selectedSecurityObjectives) {
+            objective_content = query.getSecurityObjectiveContent(SFRDatabase, props.selectedSecurityObjectives[0])[0][ppName];
+
+        }
+        if (props.selectedSfrs) {
+            sfr_content = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][ppName];
+        }
+
+        switch (type) {
             case "Threats": {
                 if (toggle) {
-                    return (<div>Threat XML Content</div>)
+                    return (
+                        <div>
+                            <XMLViewer xml={threat_content} theme={customTheme} collapsible />
+                        </div>
+                    )
                 } else {
-                    return (<div>Threat String Content</div>)
+                    return (
+                        <div>
+                            <p>{threat_content}</p>
+                        </div>
+                    )
                 }
             }
             case "SecurityObjectives": {
                 if (toggle) {
-                    return (<div>Objective XML Content</div>)
+                    return (
+                        <div>
+                            <XMLViewer xml={objective_content} theme={customTheme} collapsible />
+                        </div>
+                    )
                 } else {
-                    return (<div>Objective String Content</div>)
+                    return (
+                        <div>
+                            <p>{objective_content}</p>
+                        </div>
+                    )
                 }
             }
             case "SFRs": {
                 if (toggle) {
-                    return (<div>SFR XML Content</div>)
+                    return (
+                        <div>
+                            <XMLViewer xml={sfr_content} theme={customTheme} collapsible />
+                        </div>
+                    )
                 } else {
-                    return (<div>SFR String Content</div>)
+                    return (
+                        <div>
+                            <p>{sfr_content}</p>
+                        </div>
+                    )
                 }
             }
             default:
@@ -142,8 +193,8 @@ function AccordionContent(props) {
                         <div className="row-span-1">
                             <Stack direction="row" component="label" alignItems="center" justifyContent="center">
                                 <Typography>String</Typography>
-                                <AccentSwitch checked={props.toggle} inputProps={{'aria-label': 'controlled'}} size="medium"
-                                              onChange={() => handleUpdates("toggle")}/>
+                                <AccentSwitch checked={props.toggle} inputProps={{ 'aria-label': 'controlled' }} size="medium"
+                                    onChange={() => handleUpdates("toggle")} />
                                 <Typography>XML</Typography>
                             </Stack>
                         </div>
