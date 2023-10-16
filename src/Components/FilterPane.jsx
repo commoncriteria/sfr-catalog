@@ -77,6 +77,17 @@ function FilterPane(props) {
         updateDropdowns("SFR", props.selectedSfrs, allSfrs)
     }, [props.selectedSfrs])
 
+    /**
+     * Use Effect for updating other filter types based on selected sfr update
+     */
+    useEffect(() => {
+        // Update pp selections if it is only one option
+        let isOnlyOneSelection = isOnlyOneOptionAvailable(allPps, props.selectedPps)
+        if (isOnlyOneSelection) {
+            props.handleSetSelectedPps(isOnlyOneSelection)
+        }
+    }, [props.selectedPps])
+
     // Functions
     /**
      * Update dropdowns based on the updated value
@@ -88,36 +99,18 @@ function FilterPane(props) {
         // Filter down associated lists based on types
         try {
             switch(type) {
-                case "Threat":
-                    {
-                        let oneSelected = isOnlyOneOptionAvailable(allValues, newSelections)
-                        if (oneSelected) {
-                            props.handleSetSelectedThreats(oneSelected)
-                        } else {
-                            fromThreats(newSelections, allValues)
-                        }
-                    }
+                case "Threat": {
+                    fromThreats(newSelections, allValues)
                     break;
-                case "Objective":
-                    {
-                        let oneSelected = isOnlyOneOptionAvailable(allValues, newSelections)
-                        if (oneSelected) {
-                            props.handleSetSelectedSecurityObjectives(oneSelected)
-                        } else {
-                            fromObjectives(newSelections, allValues)
-                        }
-                    }
+                }
+                case "Objective": {
+                    fromObjectives(newSelections, allValues)
                     break;
-                case "SFR":
-                    {
-                        let oneSelected = isOnlyOneOptionAvailable(allValues, newSelections)
-                        if (oneSelected) {
-                            props.handleSetSelectedSfrs(oneSelected)
-                        } else {
-                            fromSFRs(newSelections, allValues)
-                        }
-                    }
-                    break;
+                }
+                case "SFR":{
+                        fromSFRs(newSelections, allValues)
+                        break;
+                     }
                 default:
                     break;
             }
@@ -170,9 +163,17 @@ function FilterPane(props) {
             newSelectedPPs.sort()
         }
 
+
         // Set new PP dropdown and updated selections
-        props.handleSetSelectedPps(newSelectedPPs)
         handleSetAllPps(newPPs)
+
+        // Update pps, and set to one element if there is only one option available
+        let isOnlyOneSelection = isOnlyOneOptionAvailable(newPPs, newSelectedPPs)
+        if (isOnlyOneSelection) {
+            props.handleSetSelectedPps(isOnlyOneSelection)
+        } else {
+            props.handleSetSelectedPps(newSelectedPPs)
+        }
     }
 
     /**
@@ -311,24 +312,19 @@ function FilterPane(props) {
         }
 
         // Update selections based on type
-        let isOnlyOneSelection = isOnlyOneOptionAvailable(newFullOptionsList, originalSelectionsForNewType)
-        if (isOnlyOneSelection) {
-            newSelections = isOnlyOneSelection
-        } else {
-            if (originalSelectionsForNewType && Object.keys(originalSelectionsForNewType).length !== 0) {
-                originalSelectionsForNewType.map((selected) => {
-                    if (newFullOptionsList && newFullOptionsList.includes(originalSelectionsForNewType.toString())) {
-                        if (!newSelections) {
-                            newSelections = []
-                        }
-                        if (!newSelections.includes(selected)) {
-                            newSelections.push(selected.valueOf())
-                        }
+        if (originalSelectionsForNewType && Object.keys(originalSelectionsForNewType).length !== 0) {
+            originalSelectionsForNewType.map((selected) => {
+                if (newFullOptionsList && newFullOptionsList.includes(originalSelectionsForNewType.toString())) {
+                    if (!newSelections) {
+                        newSelections = []
                     }
-                })
-            } else {
-                newSelections = null;
-            }
+                    if (!newSelections.includes(selected)) {
+                        newSelections.push(selected.valueOf())
+                    }
+                }
+            })
+        } else {
+            newSelections = null;
         }
 
         // Sort arrays if they are not null
