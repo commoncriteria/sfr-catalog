@@ -54,15 +54,15 @@ function Tabs(props) {
             {/* Tabs */}
             <TETabs>
                 {/* All Results Tab */}
-                { tabItem("Results", "results_tab", false) }
+                {/* { tabItem("Results", "results_tab", false) } */}
                 {/* Threats Tab */}
-                { tabItem("Threats", "threat_tab", false) }
+                {/* { tabItem("Threats", "threat_tab", false) } */}
                 {/* Objectives Tab */}
-                { tabItem("Objectives", "objective_tab", false) }
+                {/* { tabItem("Objectives", "objective_tab", false) } */}
                 {/* SFRs Tab */}
-                { tabItem("SFRs", "sfr_tab", false) }
+                {/* { tabItem("SFRs", "sfr_tab", false) } */}
                 {/* PPs Tab */}
-                { tabItem("PPs", "pp_tab", false) }
+                {/* { tabItem("PPs", "pp_tab", false) } */}
             </TETabs>
         </div>
     );

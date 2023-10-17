@@ -152,5 +152,6 @@ export function getThreatContent(sfrDB, threat) {
  * @returns {*} The SecurityObjectives(s) content
  */
 export function getSecurityObjectiveContent(sfrDB, objective) {
+    console.log(jmespath.search(sfrDB, `SecurityObjectives[?Name == '${objective}'].PP_Specific_Implementations`));
     return jmespath.search(sfrDB, `SecurityObjectives[?Name == '${objective}'].PP_Specific_Implementations`);
 }

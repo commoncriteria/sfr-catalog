@@ -63,6 +63,8 @@ function AccordionContent(props) {
         let objective_content = {};
         let sfr_content = {};
 
+        console.log(ppName);
+
         // get content based on PP
         if (props.selectedThreats) {
             threat_content = query.getThreatContent(SFRDatabase, props.selectedThreats[0])[0][ppName];
@@ -72,7 +74,7 @@ function AccordionContent(props) {
 
         }
         if (props.selectedSfrs) {
-            sfr_content = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][ppName];
+            sfr_content = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][ppName]["XML"];
         }
 
         switch (type) {
