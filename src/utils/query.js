@@ -16,7 +16,7 @@ export function getThreats(sfrDB) {
  * @returns {*} The Security Objectives
  */
 export function getSecurityObjectives(sfrDB) {
-    return jmespath.search(sfrDB, "Security_Objectives[*].Name");
+    return jmespath.search(sfrDB, "SecurityObjectives[*].Name");
 }
 
 /**
@@ -34,7 +34,7 @@ export function getSfrs(sfrDB) {
  * @returns {*} The PPs
  */
 export function getPPs(sfrDB) {
-    return jmespath.search(sfrDB, `Protection_Profiles[*].Name`);
+    return jmespath.search(sfrDB, `"Protection Profiles"[*].Name`);
 }
 
 /**
@@ -44,7 +44,7 @@ export function getPPs(sfrDB) {
  * @returns {*}     The Objectives based on filtered Threat(s)
  */
 export function ThreatToSecurityObjective(sfrDB, threat) {
-    return jmespath.search(sfrDB, `Threats[?Name == '${threat}'].Security_Objectives[]`);
+    return jmespath.search(sfrDB, `Threats[?Name == '${threat}'].SecurityObjectives[]`);
 }
 
 /**
@@ -70,7 +70,7 @@ export function SecurityObjectiveToThreat(sfrDB, objective, threat) {
  * @returns {*}     The SFRs based on filtered Objectives(s)
  */
 export function SecurityObjectiveToSFR(sfrDB, objective) {
-    return jmespath.search(sfrDB, `Security_Objectives[?Name == '${objective}'].SFRs[]`);
+    return jmespath.search(sfrDB, `SecurityObjectives[?Name == '${objective}'].SFRs[]`);
 }
 
 /**
@@ -102,17 +102,17 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
             let includePP = true
             // If threat is not null and includePP is true check if threat exists in the current pp
             if (threat && includePP) {
-                let threats = jmespath.search(sfrDB, `Protection_Profiles[?Name == '${pp}'].Threats[]`);
+                let threats = jmespath.search(sfrDB, `"Protection Profiles"[?Name == '${pp}'].Threats[]`);
                 includePP = jmespath.search(sfrDB, `contains('${threats}', '${threat}')`);
             }
             // If objective is not null and includePP is true check if objective exists in the current pp
             if (objective && includePP) {
-                let objectives = jmespath.search(sfrDB, `Protection_Profiles[?Name == '${pp}'].Security_Objectives[]`);
+                let objectives = jmespath.search(sfrDB, `"Protection Profiles"[?Name == '${pp}'].SecurityObjectives[]`);
                 includePP = jmespath.search(sfrDB, `contains('${objectives}', '${objective}')`);
             }
             // If sfr is not null and includePP is true check if sfr exists in the current pp
             if (sfr && includePP) {
-                let sfrs = jmespath.search(sfrDB, `Protection_Profiles[?Name == '${pp}'].SFRs[]`);
+                let sfrs = jmespath.search(sfrDB, `"Protection Profiles"[?Name == '${pp}'].SFRs[]`);
                 includePP = jmespath.search(sfrDB, `contains('${sfrs}', '${sfr}')`);
             }
 
