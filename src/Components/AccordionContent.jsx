@@ -54,16 +54,19 @@ function AccordionContent(props) {
      * @returns {JSX.Element|null}
      */
     const queryContent = () => {
+        console.log(props.ppContent);
+
         let type = props.type
         // let name = props.name
         let ppName = props.ppName
-        let toggle = props.toggle
+        // let ppName = props.ppContent;
+        let toggle = props.toggle;
 
         let threat_content = {};
         let objective_content = {};
         let sfr_content = {};
 
-        console.log(ppName);
+        // console.log(ppName);
 
         // get content based on PP
         if (props.selectedThreats) {
