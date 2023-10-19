@@ -76,12 +76,12 @@ function TabContent(props) {
                 <div className="mt-4 mb-0 border-2 border-gray-300 rounded-lg p-3 bg-gray-300 text-black flex justify-center child flex-1 text-lg">
                     {/* {content} */}
                     {<Results
-                    activeTab={props.activeTab}
-                    selectedThreats={props.selectedThreats}
-                    selectedSecurityObjectives={props.selectedSecurityObjectives}
-                    selectedSfrs={props.selectedSfrs}
-                    selectedPps={props.selectedPps}
-                />}
+                        activeTab={props.activeTab}
+                        selectedThreats={props.selectedThreats}
+                        selectedSecurityObjectives={props.selectedSecurityObjectives}
+                        selectedSfrs={props.selectedSfrs}
+                        selectedPps={props.selectedPps}
+                    />}
                 </div>
             </TETabsPane>
         )

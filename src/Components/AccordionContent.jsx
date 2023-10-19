@@ -54,19 +54,13 @@ function AccordionContent(props) {
      * @returns {JSX.Element|null}
      */
     const queryContent = () => {
-        console.log(props.ppContent);
-
         let type = props.type
-        // let name = props.name
         let ppName = props.ppName
-        // let ppName = props.ppContent;
         let toggle = props.toggle;
 
-        let threat_content = {};
-        let objective_content = {};
-        let sfr_content = {};
-
-        // console.log(ppName);
+        let threat_content = '';
+        let objective_content = '';
+        let sfr_content = '';
 
         // get content based on PP
         if (props.selectedThreats) {
@@ -188,6 +182,7 @@ function AccordionContent(props) {
                 }
             >
                 <AccordionHeader
+
                     className={(props.isOpen ? " border-b-2 bg-gray-100" : " border-b-0") + " px-6 text-lg font-extrabold text-accent border-gray-400"}
                     onClick={() => handleUpdates("accordion")}
                 >
@@ -203,7 +198,7 @@ function AccordionContent(props) {
                                 <Typography>XML</Typography>
                             </Stack>
                         </div>
-                        <div className="flex justify-center items-center text-lg">
+                        <div key={props.name} className="flex justify-center items-center text-lg">
                             {queryContent()}
                         </div>
                     </div>

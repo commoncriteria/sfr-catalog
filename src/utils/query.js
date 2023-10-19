@@ -48,22 +48,6 @@ export function ThreatToSecurityObjective(sfrDB, threat) {
 }
 
 /**
- * Gets the filtered Threats from Objectives
- * @param sfrDB     The SFRDatabase
- * @param objective The objective to filter on
- * @param threat    The threat to filter on
- * @returns {*}     The threats based on filtered objective(s)
- */
-export function SecurityObjectiveToThreat(sfrDB, objective, threat) {
-    let objectives = ThreatToSecurityObjective(sfrDB, threat)
-    if (objectives && Object.keys(objectives).length !== 0) {
-        return jmespath.search(sfrDB, `contains('${objectives}', '${objective}')`);
-    } else {
-        return false
-    }
-}
-
-/**
  * Gets the filtered SFRs
  * @param sfrDB     The SFRDatabase
  * @param threat    The Objective to filter on
@@ -73,24 +57,9 @@ export function SecurityObjectiveToSFR(sfrDB, objective) {
     return jmespath.search(sfrDB, `Security_Objectives[?Name == '${objective}'].SFRs[]`);
 }
 
-/**
- * Gets the filtered Objectives from SFRs
- * @param sfrDB     The SFRDatabase
- * @param sfr       The sfr to filter on
- * @param objective The objective to filter on
- * @returns {*}     The objectives based on filtered sfrs(s)
- */
-export function SFRToSecurityObjective(sfrDB, sfr, objective) {
-    let sfrs = SecurityObjectiveToSFR(sfrDB, objective)
-    if (sfrs && Object.keys(sfrs).length !== 0) {
-        return jmespath.search(sfrDB, `contains('${sfrs}', '${sfr}')`);
-    } else {
-        return false
-    }
-}
-
 export function PPFilter(sfrDB, threat, objective, sfr) {
     let pps = getPPs(sfrDB)
+    // console.log(pps);
     let returnPPs = null;
     // Map through pps if they are not null/empty and if any threat/objective/sfr is not null
     if (pps && Object.keys(pps).length !== 0 && (threat || objective || sfr)) {
@@ -127,7 +96,6 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
     return (returnPPs && Object.keys(returnPPs).length !== 0) ? returnPPs.sort() : returnPPs
 }
 
-
 /**
  * Gets the SFR content from the SFRDatabase
  * @param sfrDB The SFRDatabase
@@ -152,6 +120,69 @@ export function getThreatContent(sfrDB, threat) {
  * @returns {*} The SecurityObjectives(s) content
  */
 export function getSecurityObjectiveContent(sfrDB, objective) {
-    // console.log(jmespath.search(sfrDB, `Security_Objectives[?Name == '${objective}'].PP_Specific_Implementations`));
     return jmespath.search(sfrDB, `Security_Objectives[?Name == '${objective}'].PP_Specific_Implementations`);
+}
+
+/**
+ * Gets the Objectives based on given SFR
+ * @param sfrDB     The SFRDatabase
+ * @param sfr       The sfr to filter on
+ * @returns {*}     The objectives based on filtered sfrs(s)
+ */
+export function SFRToSecurityObjectives(sfrDB, sfr) {
+    return jmespath.search(sfrDB, `Security_Objectives[?contains(SFRs,'${sfr}')].Name`);
+}
+
+/**
+ * Gets the Threats based on given SFR
+ * @param sfrDB     The SFRDatabase
+ * @param sfr       The sfr to filter on
+ * @returns {*}     The objectives based on filtered sfrs(s)
+ */
+export function SFRToThreats(sfrDB, sfr) {
+    let objectives = SFRToSecurityObjectives(sfrDB, sfr);
+
+    if (objectives.length != 0) {
+        let filter_str = '';
+        for (let i = 0; i < objectives.length; i++) {
+            filter_str = i == objectives.length - 1 ? filter_str += `contains(Security_Objectives,'${objectives[i]}')` : filter_str += `contains(Security_Objectives,'${objectives[i]}') || `;
+        }
+
+        return jmespath.search(sfrDB, `Threats[?${filter_str}].Name`);
+    } else {
+        return false;
+    }
+}
+
+/**
+ * Gets the SFRs based on given Threat
+ * @param sfrDB     The SFRDatabase
+ * @param threat    The threat to filter on
+ * @returns {*}     The objectives based on filtered sfrs(s)
+ */
+export function ThreatToSFRs(sfrDB, threat) {
+    // convert threat to objectives
+    let objectives = ThreatToSecurityObjective(sfrDB, threat);
+
+    if (objectives.length != 0) {
+        // convert objectives to SFRs
+        let filter_str = '';
+        for (let i = 0; i < objectives.length; i++) {
+            filter_str = i == objectives.length - 1 ? filter_str += `contains(Name,'${objectives[i]}')` : filter_str += `contains(Name,'${objectives[i]}') || `;
+        }
+
+        return jmespath.search(sfrDB, `Security_Objectives[?${filter_str}].SFRs[]`);
+    } else {
+        return false;
+    }
+}
+
+/**
+ * Gets the Threats based on a given Objective
+ * @param sfrDB         The SFRDatabase
+ * @param objective     The Objective to filter on
+ * @returns {*}         The SFRs based on filtered Objectives(s)
+ */
+export function SecurityObjectiveToThreats(sfrDB, objective) {
+    return jmespath.search(sfrDB, `Threats[?contains(Security_Objectives,'${objective}')].Name`);
 }

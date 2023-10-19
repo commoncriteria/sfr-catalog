@@ -16,7 +16,6 @@ function Results(props) {
         selectedSfrs: PropTypes.array,
         selectedPps: PropTypes.array,
     }
-    console.log(props.selectedPps);
 
     // Constants
     const [ppContent, setPPContent] = useState(sessionStorage.getItem("ppContent") ? JSON.parse(sessionStorage.getItem("ppContent")) : []);
@@ -62,7 +61,6 @@ function Results(props) {
      * @returns {null}          Returns the pp Cards
      */
     const getContent = (currentPPContent) => {
-        console.log(currentPPContent);
         let cards = null
         if (currentPPContent && Object.keys(currentPPContent).length !== 0) {
             cards = []
@@ -140,7 +138,6 @@ function Results(props) {
         return null;
     }, [ppContent]);
 
-    console.log(ppContent);
 
 
     // Return Function
