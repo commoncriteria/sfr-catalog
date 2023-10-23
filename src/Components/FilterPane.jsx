@@ -45,7 +45,6 @@ function FilterPane(props) {
      */
     useEffect(() => {
         try {
-            console.log(query.sfrToTD(SFRDatabase, "fcs_ckm.1"));
             // Load in all data for filters if nothing has been selected
             if (!props.selectedThreats && !props.selectedSecurityObjectives && !props.selectedSfrs) {
                 handleClearAllFilters();
@@ -82,13 +81,13 @@ function FilterPane(props) {
     /**
      * Use Effect for updating other filter types based on selected sfr update
      */
-    useEffect(() => {
-        // Update pp selections if it is only one option
-        let isOnlyOneSelection = isOnlyOneOptionAvailable(allPps, props.selectedPps)
-        if (isOnlyOneSelection) {
-            props.handleSetSelectedPps(isOnlyOneSelection)
-        }
-    }, [props.selectedPps])
+    // useEffect(() => {
+    //     // Update pp selections if it is only one option
+    //     let isOnlyOneSelection = isOnlyOneOptionAvailable(allPps, props.selectedPps)
+    //     if (isOnlyOneSelection) {
+    //         props.handleSetSelectedPps(isOnlyOneSelection)
+    //     }
+    // }, [props.selectedPps])
 
     // Functions
     /**
@@ -122,6 +121,8 @@ function FilterPane(props) {
         } catch (e) {
             console.log(e)
         } finally {
+            // clear out selected PPs before rendering new set of PP options
+            props.handleSetSelectedPps(null)
             // Update PP Filter
             updatePPFilter()
         }
@@ -135,48 +136,21 @@ function FilterPane(props) {
         let selectedThreats = props.selectedThreats ? props.selectedThreats.valueOf() : null;
         let selectedObjectives = props.selectedSecurityObjectives ? props.selectedSecurityObjectives.valueOf() : null;
         let selectedSfrs = props.selectedSfrs ? props.selectedSfrs.valueOf() : null;
-        let selectedPPs = props.selectedPps ? props.selectedPps.valueOf() : null;
 
-        // Initialize pp values and query new pps
-        let newSelectedPPs = null;
+        // Query PPs based on user selections
         let newPPs = query.PPFilter(SFRDatabase, selectedThreats, selectedObjectives, selectedSfrs)
-        // If the new pps contain values, check for previous pp selections
-        if (newPPs && Object.keys(newPPs).length !== 0) {
-            // Sort the new pp list
-            newPPs.sort()
-            // If previous pp selections exist, check to see if they are in the new dropdown list options
-            if (selectedPPs && Object.keys(selectedPPs).length !== 0) {
-                selectedPPs.map((selectedPP) => {
-                    // Initialize new selections to an array, if it was previously null
-                    if (!newSelectedPPs) {
-                        newSelectedPPs = []
-                    }
-                    // Add previously selected PP to new pp selections if it exists in the new dropdown and doesn't
-                    // already exist in the selections array
-                    if (newPPs.includes(selectedPP) && !newSelectedPPs.includes(selectedPP)) {
-                        newSelectedPPs.push(selectedPP)
-                    }
-                })
-            }
-        }
-
-        // Sort the new pp dropdown options if it is not null/empty
-        if (newSelectedPPs) {
-            newSelectedPPs.sort()
-        }
-
-
         // Set new PP dropdown and updated selections
-        handleSetAllPps(newPPs)
+        handleSetAllPps(newPPs);
 
         // Update pps, and set to one element if there is only one option available
-        let isOnlyOneSelection = isOnlyOneOptionAvailable(newPPs, newSelectedPPs)
-        if (isOnlyOneSelection) {
-            props.handleSetSelectedPps(isOnlyOneSelection)
-        } else {
-            props.handleSetSelectedPps(newSelectedPPs)
-        }
-        props.handleSetSelectedPps(newSelectedPPs)
+        // let isOnlyOneSelection = isOnlyOneOptionAvailable(newPPs, newSelectedPPs)
+        // if (isOnlyOneSelection) {
+        //     props.handleSetSelectedPps(isOnlyOneSelection)
+        // } else {
+        //     props.handleSetSelectedPps(newSelectedPPs)
+        //     props.handleSetSelectedPps(newPPs)
+        // }
+        // props.handleSetSelectedPps(newSelectedPPs)
     }
 
     /**
@@ -184,7 +158,6 @@ function FilterPane(props) {
      * @param newThreats    The threat selections
      * @param fullThreats   The full threat dropdown list
      */
-    // const fromThreats = (newThreats, fullThreats) => {
     const fromThreats = () => {
         if (props.selectedThreats) { // if there is a selected threat
             let objectives = query.ThreatToSecurityObjective(SFRDatabase, props.selectedThreats[0]).sort();
@@ -286,14 +259,14 @@ function FilterPane(props) {
      * @param currentOptions    Current list of all options
      * @param selected          The currently selected options
      */
-    const isOnlyOneOptionAvailable = (currentOptions, selected) => {
-        // If current array only has one item, return item based on type
-        if (currentOptions && Object.keys(currentOptions).length === 1 && (!selected || (selected && Object.keys(selected).length === 0))) {
-            return currentOptions.valueOf();
-        }
-        // Return null if the array options are greater than one
-        return null;
-    }
+    // const isOnlyOneOptionAvailable = (currentOptions, selected) => {
+    //     // If current array only has one item, return item based on type
+    //     if (currentOptions && Object.keys(currentOptions).length === 1 && (!selected || (selected && Object.keys(selected).length === 0))) {
+    //         return currentOptions.valueOf();
+    //     }
+    //     // Return null if the array options are greater than one
+    //     return null;
+    // }
 
 
     // Handler Functions

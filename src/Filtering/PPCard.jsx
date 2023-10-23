@@ -30,6 +30,7 @@ function PPCard(props) {
             if (values && Object.keys(values).length === 0) {
                 if (props.allPps && Object.keys(props.allPps).length === 1) {
                     props.handleSetSelectedPps(props.allPps.valueOf())
+                    // props.handleSetSelectedPps(values)
                 } else {
                     props.handleSetSelectedPps(null)
                 }

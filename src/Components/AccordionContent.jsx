@@ -3,7 +3,6 @@ import { alpha, Stack, styled, Switch, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import * as query from "../utils/query.js";
 import SFRDatabase from "../assets/NIAPDocumentBundle.json";
-import { useState } from "react";
 import XMLViewer from "react-xml-viewer";
 
 /**

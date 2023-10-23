@@ -1,5 +1,6 @@
 // Imports
 import jmespath from 'jmespath';
+import { object } from 'prop-types';
 
 /**
  * Gets the Threats from the SFRDatabase
@@ -55,45 +56,6 @@ export function ThreatToSecurityObjective(sfrDB, threat) {
  */
 export function SecurityObjectiveToSFR(sfrDB, objective) {
     return jmespath.search(sfrDB, `Security_Objectives[?Name == '${objective}'].SFRs[]`);
-}
-
-export function PPFilter(sfrDB, threat, objective, sfr) {
-    let pps = getPPs(sfrDB)
-    // console.log(pps);
-    let returnPPs = null;
-    // Map through pps if they are not null/empty and if any threat/objective/sfr is not null
-    if (pps && Object.keys(pps).length !== 0 && (threat || objective || sfr)) {
-        // Initialize returnPPs as an array
-        returnPPs = []
-        // Map through the PPs
-        pps.map((pp) => {
-            // Set initial value to true
-            let includePP = true
-            // If threat is not null and includePP is true check if threat exists in the current pp
-            if (threat && includePP) {
-                let threats = jmespath.search(sfrDB, `"Protection_Profiles"[?Name == '${pp}'].Threats[]`);
-                includePP = jmespath.search(sfrDB, `contains('${threats}', '${threat}')`);
-            }
-            // If objective is not null and includePP is true check if objective exists in the current pp
-            if (objective && includePP) {
-                let objectives = jmespath.search(sfrDB, `"Protection_Profiles"[?Name == '${pp}'].Security_Objectives[]`);
-                includePP = jmespath.search(sfrDB, `contains('${objectives}', '${objective}')`);
-            }
-            // If sfr is not null and includePP is true check if sfr exists in the current pp
-            if (sfr && includePP) {
-                let sfrs = jmespath.search(sfrDB, `"Protection_Profiles"[?Name == '${pp}'].SFRs[]`);
-                includePP = jmespath.search(sfrDB, `contains('${sfrs}', '${sfr}')`);
-            }
-
-            // Add to pp if all parameters that aren't null are included in the PP
-            if (includePP && !returnPPs.includes(pp)) {
-                returnPPs.push(pp)
-            }
-        })
-    }
-
-    // Return the list of PPs and sort if it not null/empty
-    return (returnPPs && Object.keys(returnPPs).length !== 0) ? returnPPs.sort() : returnPPs
 }
 
 /**
@@ -195,4 +157,63 @@ export function SecurityObjectiveToThreats(sfrDB, objective) {
  */
 export function sfrToTD(sfrDB, sfr) {
     return jmespath.search(sfrDB, `SFRs[?Component == '${sfr}'].PP_Specific_Implementations[]`);
+}
+
+
+export function PPFilter(sfrDB, threat, objective, sfr) {
+    let threatPPs = [];
+    let objectivePPs = [];
+    let sfrPPs = [];
+
+    if (!threat && !objective && !sfr) {
+        return null;
+    }
+
+
+    if (threat) {
+        threatPPs = jmespath.search(sfrDB, `Threats[?Name == '${threat}'].Threat_Implementations | keys([0])`);
+    }
+
+    if (objective) {
+        objectivePPs = jmespath.search(sfrDB, `Security_Objectives[?Name == '${objective}'].PP_Specific_Implementations | keys([0])`);
+    }
+
+    if (sfr) {
+        sfrPPs = jmespath.search(sfrDB, `SFRs[?Name == '${sfr}'].PP_Specific_Implementations | keys([0])`);
+    }
+
+    // if only threat is selected
+    if (threat && !(objective && sfr)) {
+        return threatPPs;
+    }
+
+    // if only threat and objective selected
+    if (threat && objective && !sfr) {
+        return threatPPs.filter(x => objectivePPs.includes(x));
+    }
+
+    // if only threat and sfr selected
+    if (threat && sfr && !objective) {
+        return threatPPs.filter(x => sfrPPs.includes(x));
+    }
+
+    // if only objective is selected
+    if (objective && !(threat && sfr)) {
+        return objectivePPs;
+    }
+
+    // if only objective and sfr selected
+    if (objective && sfr && !threat) {
+        return objectivePPs.filter(x => sfrPPs.includes(x));
+    }
+
+    // if only sfr is selected
+    if (sfr && !(threat && objective)) {
+        return sfrPPs;
+    }
+
+    // if all selections are made
+    if (threat && objective && sfr) {
+        return threatPPs.filter(x => objectivePPs.includes(x)).filter(y => sfrPPs.includes(y));
+    }
 }
