@@ -33,10 +33,10 @@ function ThreatCard(props) {
     return (
         <div>
             <Card
-                cardTitle={"Threats"}
+                cardTitle={"Threats & Assumptions"}
                 cardContent={
                     <Dropdown
-                        label={"Threat"}
+                        label={"Threat/Assumption"}
                         multiselect={false}
                         options={props.allThreats}
                         selections={props.selections}

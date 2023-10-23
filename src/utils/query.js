@@ -186,3 +186,13 @@ export function ThreatToSFRs(sfrDB, threat) {
 export function SecurityObjectiveToThreats(sfrDB, objective) {
     return jmespath.search(sfrDB, `Threats[?contains(Security_Objectives,'${objective}')].Name`);
 }
+
+/**
+ * Gets a TD based on a given SFR
+ * @param sfrDB         The SFRDatabase
+ * @param sfr           The SFR to filter on
+ * @returns {*}         The TD's tied to the SFR for all PP Specific Implementations
+ */
+export function sfrToTD(sfrDB, sfr) {
+    return jmespath.search(sfrDB, `SFRs[?Component == '${sfr}'].PP_Specific_Implementations[]`);
+}

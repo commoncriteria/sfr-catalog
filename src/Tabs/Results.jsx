@@ -44,7 +44,7 @@ function Results(props) {
             props.selectedPps.forEach(pp => {
                 let pp_accordion_obj = {};
                 pp_accordion_obj["name"] = pp;
-                pp_accordion_obj["values"] = [threat_accordion_object, sfr_accordion_object, objective_accordion_object].filter(Boolean);
+                pp_accordion_obj["values"] = [threat_accordion_object, objective_accordion_object, sfr_accordion_object].filter(Boolean);
                 ppContentArr.push(pp_accordion_obj);
             });
         }

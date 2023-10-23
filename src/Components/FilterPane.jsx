@@ -45,6 +45,7 @@ function FilterPane(props) {
      */
     useEffect(() => {
         try {
+            console.log(query.sfrToTD(SFRDatabase, "fcs_ckm.1"));
             // Load in all data for filters if nothing has been selected
             if (!props.selectedThreats && !props.selectedSecurityObjectives && !props.selectedSfrs) {
                 handleClearAllFilters();

@@ -189,7 +189,7 @@ function AccordionContent(props) {
                     {props.accordionHeader}
                 </AccordionHeader>
                 <AccordionBody className={"px-4 bg-gray-200"}>
-                    <div className="flex flex-col">
+                    <div className={props.type == "SFRs" ? "flex flex-col" : "flex flex-col h-64 overflow-auto"}>
                         <div className="">
                             <Stack direction="row" component="label" alignItems="center" justifyContent="center">
                                 <Typography>String</Typography>
@@ -198,7 +198,7 @@ function AccordionContent(props) {
                                 <Typography>XML</Typography>
                             </Stack>
                         </div>
-                        <div key={props.name} className="flex justify-center items-center text-lg">
+                        <div key={props.name} className={props.type == "SFRs" ? "flex max-h-[36rem] overflow-auto" : "flex justify-center items-center text-lg"}>
                             {queryContent()}
                         </div>
                     </div>
