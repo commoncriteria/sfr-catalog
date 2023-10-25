@@ -185,18 +185,7 @@ export function sfrToTD(sfrDB, sfr, pps) {
         }
 
         return jmespath.search(sfrDB, `Technical_Decisions[?${filter_str}]`);
-
-
     }
-
-
-
-    // console.log(jmespath.search(sfrDB, `SFRs[?Component == '${sfr}'].PP_Specific_Implementations | [0].*.TD_List[].TD_Number`));
-    // let tds = [];
-    // pps.forEach(pp => {
-    //     tds.push(pp["TD_List"])
-
-    // });
 }
 
 /**
@@ -216,7 +205,6 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
     if (!threat && !objective && !sfr) {
         return null;
     }
-
 
     if (threat) {
         threatPPs = jmespath.search(sfrDB, `Threats[?Name == '${threat}'].Threat_Implementations | keys([0])`);
@@ -246,7 +234,7 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
     }
 
     // if only objective is selected
-    if (objective && !threat && sfr) {
+    if (objective && !threat && !sfr) {
         return objectivePPs;
     }
 
