@@ -9,7 +9,16 @@ export default {
     "./node_modules/tw-elements-react/dist/js/**/*.js"
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        // Simple 16 column grid
+        '25': 'repeat(25, minmax(0, 1fr))',
+      },
+      gridColumn: {
+        'span-25': 'span 25 / span 25',
+        'span-24': 'span 24 / span 25',
+      }
+    },
   },
   darkMode: "class",
   plugins: [daisyui, tw_elements_react],
