@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import { useState, useMemo, useEffect } from "react";
 import AccordionContent from "../Components/AccordionContent.jsx";
 import Card from "../Components/Card.jsx";
+import * as query from "../utils/query.js";
+import SFRDatabase from "../assets/NIAPDocumentBundle.json";
 
 
 /**
@@ -65,8 +67,9 @@ function Results(props) {
         if (currentPPContent && Object.keys(currentPPContent).length !== 0) {
             cards = []
             currentPPContent.map((pp) => {
-                let ppName = pp.name
-                let values = pp.values.valueOf()
+                let ppName = pp.name;
+                let values = pp.values.valueOf();
+                let tds = query.sfrToTD(SFRDatabase, props.selectedSfrs, props.selectedPps);
                 cards.push(
                     <div className={Object.keys(currentPPContent).length > 1 ? "flex-none my-4 w-1/2" : "my-4 mr-2 ml-2 w-full"} key={ppName + "_Card"}>
                         <Card
@@ -91,9 +94,12 @@ function Results(props) {
                                                             selectedThreats={props.selectedThreats}
                                                             selectedSecurityObjectives={props.selectedSecurityObjectives}
                                                             selectedSfrs={props.selectedSfrs}
+                                                            tds={tds == undefined ? [] : tds}
                                                         />
                                                     </div>
                                                 )
+
+
                                             })
                                             : null
                                     }

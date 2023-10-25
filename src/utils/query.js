@@ -1,6 +1,5 @@
 // Imports
 import jmespath from 'jmespath';
-import { object } from 'prop-types';
 
 /**
  * Gets the Threats from the SFRDatabase
@@ -153,14 +152,63 @@ export function SecurityObjectiveToThreats(sfrDB, objective) {
  * Gets a TD based on a given SFR
  * @param sfrDB         The SFRDatabase
  * @param sfr           The SFR to filter on
+ * @param pps           The PPs to filter on
  * @returns {*}         The TD's tied to the SFR for all PP Specific Implementations
  */
-export function sfrToTD(sfrDB, sfr) {
-    return jmespath.search(sfrDB, `SFRs[?Component == '${sfr}'].PP_Specific_Implementations[]`);
+export function sfrToTD(sfrDB, sfr, pps) {
+    // only search for TDs if an SFR and PP has been selected
+    if (pps && sfr) {
+        let pp_implementations = jmespath.search(sfrDB, `SFRs[?Component == '${sfr}'].PP_Specific_Implementations`)[0];
+
+        let filtered_pp_implementations = Object.keys(pp_implementations).filter(key => pps.includes(key)).reduce((obj, key) => {
+            obj[key] = pp_implementations[key];
+            return obj;
+        }, {});
+
+        // create array of TD's based on the user selections
+        let td_number = [];
+        for (const [ppName, ppMeta] of Object.entries(filtered_pp_implementations)) {
+            // console.log(`${ppName}: ${ppMeta}`);
+            for (const [ppMetaKey, ppMetaValue] of Object.entries(ppMeta)) {
+                if (ppMetaKey == 'TD_List') {
+                    ppMeta[ppMetaKey].forEach(td => {
+                        td_number.push(td.TD_Number);
+                    });
+                }
+            }
+        }
+
+        // get the TD object (which has pub date, text, etc)
+        let filter_str = '';
+        for (let i = 0; i < td_number.length; i++) {
+            filter_str = i == td_number.length - 1 ? filter_str += `contains(TD_Number,'${td_number[i]}')` : filter_str += `contains(TD_Number,'${td_number[i]}') || `;
+        }
+
+        return jmespath.search(sfrDB, `Technical_Decisions[?${filter_str}]`);
+
+
+    }
+
+
+
+    // console.log(jmespath.search(sfrDB, `SFRs[?Component == '${sfr}'].PP_Specific_Implementations | [0].*.TD_List[].TD_Number`));
+    // let tds = [];
+    // pps.forEach(pp => {
+    //     tds.push(pp["TD_List"])
+
+    // });
 }
 
-
+/**
+ * Get PP(s) based on user selections
+ * @param sfrDB         The SFRDatabase
+ * @param threat        The Threat to filter on
+ * @param objective     The Objective to filter on
+ * @param sfr           The SFR to filter on
+ * @returns {*}         The PP's tied to the selections, for all PP Implementations
+ */
 export function PPFilter(sfrDB, threat, objective, sfr) {
+    // PPs mapped to each selection type
     let threatPPs = [];
     let objectivePPs = [];
     let sfrPPs = [];
@@ -183,7 +231,7 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
     }
 
     // if only threat is selected
-    if (threat && !(objective && sfr)) {
+    if (threat && !objective && !sfr) {
         return threatPPs;
     }
 
@@ -198,7 +246,7 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
     }
 
     // if only objective is selected
-    if (objective && !(threat && sfr)) {
+    if (objective && !threat && sfr) {
         return objectivePPs;
     }
 
@@ -208,7 +256,7 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
     }
 
     // if only sfr is selected
-    if (sfr && !(threat && objective)) {
+    if (sfr && !threat && !objective) {
         return sfrPPs;
     }
 

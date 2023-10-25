@@ -1,4 +1,4 @@
-import { Accordion, AccordionHeader, AccordionBody } from "@material-tailwind/react";
+import { Accordion, AccordionHeader, AccordionBody, Tooltip } from "@material-tailwind/react";
 import { alpha, Stack, styled, Switch, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import * as query from "../utils/query.js";
@@ -25,6 +25,7 @@ function AccordionContent(props) {
         selectedThreats: PropTypes.array,
         selectedSecurityObjectives: PropTypes.array,
         selectedSfrs: PropTypes.array,
+        tds: PropTypes.array,
     };
 
     // Styling
@@ -63,14 +64,26 @@ function AccordionContent(props) {
 
         // get content based on PP
         if (props.selectedThreats) {
-            threat_content = query.getThreatContent(SFRDatabase, props.selectedThreats[0])[0][ppName];
+            try {
+                threat_content = query.getThreatContent(SFRDatabase, props.selectedThreats[0])[0][ppName];
+            } catch (e) {
+                console.log(e);
+            }
         }
         if (props.selectedSecurityObjectives) {
-            objective_content = query.getSecurityObjectiveContent(SFRDatabase, props.selectedSecurityObjectives[0])[0][ppName];
-
+            try {
+                objective_content = query.getSecurityObjectiveContent(SFRDatabase, props.selectedSecurityObjectives[0])[0][ppName];
+            } catch (e) {
+                console.log(e);
+            }
         }
         if (props.selectedSfrs) {
-            sfr_content = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][ppName]["XML"];
+            // try catch as there may be a race condition since the pp filter is reactive in many places and content might be undefined on first render
+            try {
+                sfr_content = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][ppName]["XML"];
+            } catch (e) {
+                console.log(e);
+            }
         }
 
         switch (type) {
@@ -185,7 +198,20 @@ function AccordionContent(props) {
                     className={(props.isOpen ? " border-b-2 bg-gray-100" : " border-b-0") + " px-6 text-lg font-extrabold text-accent border-gray-400"}
                     onClick={() => handleUpdates("accordion")}
                 >
-                    {props.accordionHeader}
+                    <div className="flex flex-row gap-2">
+                        <span className="">{props.accordionHeader}</span>
+                        {
+                            (props.type == "SFRs" && props.tds.length != 0) ?
+                                <Tooltip content={`TD: ${props.tds[0].TD_Number}, Publication Date: ${props.tds[0].Publication_Date}`}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                </Tooltip>
+                                : null
+                        }
+                    </div>
+
+
                 </AccordionHeader>
                 <AccordionBody className={"px-4 bg-gray-200"}>
                     <div className={props.type == "SFRs" ? "flex flex-col" : "flex flex-col h-64 overflow-auto"}>

@@ -81,13 +81,13 @@ function FilterPane(props) {
     /**
      * Use Effect for updating other filter types based on selected sfr update
      */
-    // useEffect(() => {
-    //     // Update pp selections if it is only one option
-    //     let isOnlyOneSelection = isOnlyOneOptionAvailable(allPps, props.selectedPps)
-    //     if (isOnlyOneSelection) {
-    //         props.handleSetSelectedPps(isOnlyOneSelection)
-    //     }
-    // }, [props.selectedPps])
+    useEffect(() => {
+        // Update pp selections if it is only one option
+        // let isOnlyOneSelection = isOnlyOneOptionAvailable(allPps, props.selectedPps)
+        // if (isOnlyOneSelection) {
+        //     props.handleSetSelectedPps(isOnlyOneSelection)
+        // }
+    }, [props.selectedPps])
 
     // Functions
     /**
@@ -115,9 +115,9 @@ function FilterPane(props) {
                 default:
                     break;
             }
-            if (!props.selectedThreats && !props.selectedSecurityObjectives && !props.selectedSfrs) {
-                handleClearAllFilters()
-            }
+            // if (!props.selectedThreats && !props.selectedSecurityObjectives && !props.selectedSfrs) {
+            //     handleClearAllFilters()
+            // }
         } catch (e) {
             console.log(e)
         } finally {
@@ -125,6 +125,10 @@ function FilterPane(props) {
             props.handleSetSelectedPps(null)
             // Update PP Filter
             updatePPFilter()
+
+            if (!props.selectedThreats && !props.selectedSecurityObjectives && !props.selectedSfrs) {
+                handleClearAllFilters()
+            }
         }
     }
 
