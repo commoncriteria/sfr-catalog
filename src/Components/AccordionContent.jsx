@@ -1,9 +1,10 @@
-import { Accordion, AccordionHeader, AccordionBody, Tooltip } from "@material-tailwind/react";
+import { Accordion, AccordionHeader, AccordionBody } from "@material-tailwind/react";
 import { alpha, Stack, styled, Switch, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import * as query from "../utils/query.js";
 import SFRDatabase from "../assets/NIAPDocumentBundle.json";
 import XMLViewer from "react-xml-viewer";
+import Modal from "./Modal.jsx";
 
 /**
  * The Accordion class that displays the accordion
@@ -200,15 +201,6 @@ function AccordionContent(props) {
                 >
                     <div className="flex flex-row gap-2">
                         <span className="">{props.accordionHeader}</span>
-                        {
-                            (props.type == "SFRs" && props.tds.length != 0) ?
-                                <Tooltip content={`TD: ${props.tds[0].TD_Number}, Publication Date: ${props.tds[0].Publication_Date}`}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                                    </svg>
-                                </Tooltip>
-                                : null
-                        }
                     </div>
 
 
@@ -222,6 +214,18 @@ function AccordionContent(props) {
                                     onChange={() => handleUpdates("toggle")} />
                                 <Typography>XML</Typography>
                             </Stack>
+                        </div>
+                        <div style={{ display:"flex", justifyContent:"center", alignContent: "center", marginTop:"10px", marginBottom:"10px" }}>
+                            {
+                                (props.type == "SFRs" && props.tds.length != 0) ?
+                                    <Modal
+                                        title={`TD: ${props.tds[0].TD_Number}`}
+                                        content={props.tds[0]}
+                                        buttonName={"View TD"}
+                                        type={"TD"}
+                                    />
+                                    : null
+                            }
                         </div>
                         <div key={props.name} className={props.type == "SFRs" ? "flex max-h-[36rem] overflow-auto" : "flex justify-center items-center text-lg"}>
                             {queryContent()}
