@@ -101,7 +101,6 @@
           "fpt_api_ext.1",
           "fpt_lib_ext.1",
           "ftp_dit_ext.1",
-          "fcs_ckm.1",
           "fcs_ckm.1/AK",
           "fcs_ckm.2",
           "fia_x509_ext.1",
@@ -121,7 +120,6 @@
           "fdp_dar_ext.1",
           "fcs_ckm.1",
           "fcs_ckm.1/SK",
-          "fcs_ckm.1",
           "fcs_ckm.1/PBKDF",
           "fcs_cop.1/SKC",
           "fcs_cop.1/Hash",
@@ -132,7 +130,6 @@
           "fcs_rbg_ext.1",
           "fcs_ckm.1",
           "ftp_dit_ext.1",
-          "fcs_ckm.1",
           "fcs_ckm.1/AK",
           "fcs_ckm.2",
           "fcs_cop.1/SKC",
@@ -330,7 +327,6 @@
           "fdp_stg_ext.1",
           "fdp_upc_ext.1",
           "fdp_upc_ext.1/APPS",
-          "fdp_upc_ext.1",
           "fdp_upc_ext.1/BLUETOOTH",
           "fia_x509_ext.1",
           "fia_x509_ext.2",
@@ -412,7 +408,6 @@
           "fpt_tst_ext.1",
           "fpt_tst_ext.2",
           "fpt_tst_ext.2/PREKERNEL",
-          "fpt_tst_ext.2",
           "fpt_tst_ext.2/POSTKERNEL",
           "fpt_tst_ext.3",
           "fpt_tud_ext.1",
@@ -1191,7 +1186,15 @@
         ]
       },
       "Security_Objective_Mappings": {
-        "O.PROTECTED_COMMS": []
+        "O.PROTECTED_COMMS": [
+          "fia_blt_ext.1",
+          "fia_blt_ext.2",
+          "fia_blt_ext.3",
+          "fia_blt_ext.4",
+          "fia_blt_ext.6",
+          "ftp_blt_ext.1",
+          "ftp_blt_ext.2"
+        ]
       }
     },
     {
@@ -1300,13 +1303,35 @@
         ]
       },
       "Security_Objective_Mappings": {
-        "O.AUTHENTICATION_MACSEC": [],
-        "O.AUTHORIZED_ADMINISTRATION": [],
-        "O.CRYPTOGRAPHIC_FUNCTIONS_MACSEC": [],
-        "O.PORT_FILTERING_MACSEC": [],
-        "O.REPLAY_DETECTION": [],
-        "O.SYSTEM_MONITORING_MACSEC": [],
-        "O.TSF_INTEGRITY": []
+        "O.AUTHENTICATION_MACSEC": [
+          "fcs_macsec_ext.4",
+          "fcs_mka_ext.1",
+          "fia_psk_ext.1"
+        ],
+        "O.AUTHORIZED_ADMINISTRATION": [
+          "fmt_smf.1/MACSEC",
+          "fpt_cak_ext.1"
+        ],
+        "O.CRYPTOGRAPHIC_FUNCTIONS_MACSEC": [
+          "fcs_cop.1/CMAC",
+          "fcs_cop.1/MACSEC",
+          "fcs_macsec_ext.2",
+          "fcs_macsec_ext.3",
+          "ftp_itc.1/MACSEC"
+        ],
+        "O.PORT_FILTERING_MACSEC": [
+          "fcs_macsec_ext.1",
+          "fia_psk_ext.1"
+        ],
+        "O.REPLAY_DETECTION": [
+          "fpt_rpl.1"
+        ],
+        "O.SYSTEM_MONITORING_MACSEC": [
+          "fau_gen.1/MACSEC"
+        ],
+        "O.TSF_INTEGRITY": [
+          "fpt_fls.1"
+        ]
       }
     },
     {
@@ -1367,9 +1392,20 @@
       },
       "Security_Objective_Mappings": {
         "O.AUTHORIZED_ADMINISTRATION": [],
-        "O.PROTECTED_COMMUNICATIONS": [],
+        "O.PROTECTED_COMMUNICATIONS": [
+          "fcs_tlsc_ext.1",
+          "fcs_tlsc_ext.2",
+          "fcs_tlss_ext.1",
+          "fcs_tlss_ext.2",
+          "fia_x509_ext.1/Rev",
+          "fia_x509_ext.2",
+          "fia_x509_ext.3",
+          "ftp_itc.1"
+        ],
         "O.RESOURCE_AVAILABILITY": [],
-        "O.SYSTEM_MONITORING": [],
+        "O.SYSTEM_MONITORING": [
+          "ftp_itc.1"
+        ],
         "O.TOPOLOGY_HIDING": [],
         "O.TRAFFIC_FILTERING": [],
         "O.USER_DATA_DELIVERY": []
@@ -1442,13 +1478,42 @@
         ]
       },
       "Security_Objective_Mappings": {
-        "O.AUTHORIZED_ADMINISTRATION": [],
-        "O.PROTECTED_COMMUNICATIONS": [],
-        "O.RESOURCE_AVAILABILITY": [],
-        "O.SYSTEM_MONITORING": [],
-        "O.TOPOLOGY_HIDING": [],
-        "O.TRAFFIC_FILTERING": [],
-        "O.USER_DATA_DELIVERY": []
+        "O.AUTHORIZED_ADMINISTRATION": [
+          "fmt_smf.1/SBC"
+        ],
+        "O.PROTECTED_COMMUNICATIONS": [
+          "fcs_srtp_ext.1",
+          "fia_sipt_ext.1",
+          "ftp_itc.1/ESC",
+          "ftp_itc.1/VVoIP"
+        ],
+        "O.RESOURCE_AVAILABILITY": [
+          "fru_prs_ext.1",
+          "fru_rsa.1"
+        ],
+        "O.SYSTEM_MONITORING": [
+          "fau_arp_ext.1",
+          "fau_gen.1/SBC",
+          "fau_saa.1",
+          "fau_sel.1",
+          "ftp_itc.1/ARP"
+        ],
+        "O.TOPOLOGY_HIDING": [
+          "fdp_ifc.1",
+          "fdp_iff.1",
+          "ffw_nat_ext.1"
+        ],
+        "O.TRAFFIC_FILTERING": [
+          "ffw_acl_ext.1",
+          "ffw_acl_ext.2",
+          "ffw_dpi_ext.1"
+        ],
+        "O.USER_DATA_DELIVERY": [
+          "fdp_ifc.1",
+          "fdp_iff.1",
+          "ffw_nat_ext.1",
+          "fia_sipt_ext.1"
+        ]
       }
     },
     {
@@ -1503,8 +1568,12 @@
         ]
       },
       "Security_Objective_Mappings": {
-        "O.VMM_INTEGRITY": [],
-        "O.MANAGEMENT_ACCESS": []
+        "O.VMM_INTEGRITY": [
+          "fmt_mof_ext.1"
+        ],
+        "O.MANAGEMENT_ACCESS": [
+          "fmt_mof_ext.1"
+        ]
       }
     },
     {
@@ -1559,8 +1628,12 @@
         ]
       },
       "Security_Objective_Mappings": {
-        "O.VMM_INTEGRITY": [],
-        "O.MANAGEMENT_ACCESS": []
+        "O.VMM_INTEGRITY": [
+          "fmt_mof_ext.1"
+        ],
+        "O.MANAGEMENT_ACCESS": [
+          "fmt_mof_ext.1"
+        ]
       }
     },
     {
@@ -1778,9 +1851,9 @@
           "fia_x509_ext.2"
         ],
         "O.CRYPTOGRAPHIC_FUNCTIONS": [
-          "fcs_ckm.1/AK",
           "fcs_ckm.1",
           "fcs_ckm.2",
+          "fcs_ckm.1/AK",
           "fcs_cop.1/SKC",
           "ftp_dit_ext.1"
         ],
@@ -1926,10 +1999,20 @@
         ]
       },
       "Security_Objective_Mappings": {
-        "O.AUTHENTICATION": [],
-        "O.CRYPTOGRAPHIC_FUNCTIONS": [],
-        "O.KNOWN_STATE": [],
-        "O.NONDISCLOSURE": [],
+        "O.AUTHENTICATION": [
+          "fcs_ipsec_ext.1"
+        ],
+        "O.CRYPTOGRAPHIC_FUNCTIONS": [
+          "fcs_ckm.1/VPN",
+          "fcs_ipsec_ext.1"
+        ],
+        "O.KNOWN_STATE": [
+          "fmt_smf.1/VPN",
+          "fpt_tst_ext.1/VPN"
+        ],
+        "O.NONDISCLOSURE": [
+          "fdp_rip.2"
+        ],
         "OE.NO_TOE_BYPASS": [],
         "OE.PHYSICAL": [],
         "OE.TRUSTED_CONFIG": []
@@ -2007,12 +2090,25 @@
       },
       "Security_Objective_Mappings": {
         "O.ADDRESS_FILTERING": [],
-        "O.AUTHENTICATION": [],
-        "O.CRYPTOGRAPHIC_FUNCTIONS": [],
-        "O.FAIL_SECURE": [],
+        "O.AUTHENTICATION": [
+          "fcs_ipsec_ext.1",
+          "fia_x509_ext.1/Rev",
+          "fia_x509_ext.2",
+          "fia_x509_ext.3"
+        ],
+        "O.CRYPTOGRAPHIC_FUNCTIONS": [
+          "fcs_cop.1/DataEncryption",
+          "fcs_ipsec_ext.1"
+        ],
+        "O.FAIL_SECURE": [
+          "fpt_tst_ext.1",
+          "fpt_tud_ext.1"
+        ],
         "O.PORT_FILTERING": [],
         "O.SYSTEM_MONITORING": [],
-        "O.TOE_ADMINISTRATION": [],
+        "O.TOE_ADMINISTRATION": [
+          "fmt_mtd.1/CryptoKeys"
+        ],
         "OE.CONNECTIONS": []
       }
     },
@@ -2086,13 +2182,29 @@
         ]
       },
       "Security_Objective_Mappings": {
-        "O.ADDRESS_FILTERING": [],
-        "O.AUTHENTICATION": [],
-        "O.CRYPTOGRAPHIC_FUNCTIONS": [],
-        "O.FAIL_SECURE": [],
-        "O.PORT_FILTERING": [],
-        "O.SYSTEM_MONITORING": [],
-        "O.TOE_ADMINISTRATION": [],
+        "O.ADDRESS_FILTERING": [
+          "fpf_rul_ext.1"
+        ],
+        "O.AUTHENTICATION": [
+          "ftp_itc.1/VPN"
+        ],
+        "O.CRYPTOGRAPHIC_FUNCTIONS": [
+          "fcs_ckm.1/IKE"
+        ],
+        "O.FAIL_SECURE": [
+          "fpt_fls.1/SelfTest",
+          "fpt_tst_ext.3"
+        ],
+        "O.PORT_FILTERING": [
+          "fpf_rul_ext.1"
+        ],
+        "O.SYSTEM_MONITORING": [
+          "fau_gen.1/VPN",
+          "fpf_rul_ext.1"
+        ],
+        "O.TOE_ADMINISTRATION": [
+          "fmt_smf.1/VPN"
+        ],
         "OE.CONNECTIONS": []
       }
     },
@@ -2150,11 +2262,18 @@
         ]
       },
       "Security_Objective_Mappings": {
-        "O.SYSTEM_MONITORING": [],
+        "O.SYSTEM_MONITORING": [
+          "fau_gen_ext.1",
+          "fau_stg_ext.1"
+        ],
         "O.WIDS_ANALYZE": [],
         "O.WIDS_REACT": [],
         "O.TOE_ADMINISTRATION": [],
-        "O.TRUSTED_COMMUNICATIONS": [],
+        "O.TRUSTED_COMMUNICATIONS": [
+          "fco_cpc_ext.1",
+          "fpt_itt.1",
+          "ftp_itc.1"
+        ],
         "OE.CONNECTIONS": [],
         "OE.PROPER_ADMIN": []
       }
@@ -2221,10 +2340,30 @@
         ]
       },
       "Security_Objective_Mappings": {
-        "O.SYSTEM_MONITORING": [],
-        "O.WIDS_ANALYZE": [],
-        "O.WIDS_REACT": [],
-        "O.TOE_ADMINISTRATION": [],
+        "O.SYSTEM_MONITORING": [
+          "fau_gen.1/WIDS",
+          "fau_rpt_ext.1"
+        ],
+        "O.WIDS_ANALYZE": [
+          "fau_arp.1",
+          "fau_arp_ext.1",
+          "fau_ids_ext.1",
+          "fau_inv_ext.1",
+          "fau_inv_ext.2",
+          "fau_inv_ext.3",
+          "fau_saa.1",
+          "fau_wid_ext.1",
+          "fau_wid_ext.2",
+          "fdp_ifc.1"
+        ],
+        "O.WIDS_REACT": [
+          "fau_arp.1",
+          "fau_saa.1",
+          "fmt_smf.1/WIDS"
+        ],
+        "O.TOE_ADMINISTRATION": [
+          "fmt_smf.1/WIDS"
+        ],
         "O.TRUSTED_COMMUNICATIONS": [],
         "OE.CONNECTIONS": [],
         "OE.PROPER_ADMIN": []
@@ -2285,10 +2424,19 @@
         ]
       },
       "Security_Objective_Mappings": {
-        "O.CRYPTOGRAPHIC_FUNCTIONS": [],
-        "O.AUTHENTICATION": [],
-        "O.FAIL_SECURE": [],
-        "O.SYSTEM_MONITORING": [],
+        "O.CRYPTOGRAPHIC_FUNCTIONS": [
+          "fcs_cop.1/DataEncryption"
+        ],
+        "O.AUTHENTICATION": [
+          "fco_cpc_ext.1"
+        ],
+        "O.FAIL_SECURE": [
+          "fpt_tst_ext.1"
+        ],
+        "O.SYSTEM_MONITORING": [
+          "fau_gen_ext.1",
+          "fau_stg_ext.1"
+        ],
         "O.TOE_ADMINISTRATION": [],
         "OE.CONNECTIONS": []
       }
@@ -2352,11 +2500,26 @@
         ]
       },
       "Security_Objective_Mappings": {
-        "O.CRYPTOGRAPHIC_FUNCTIONS": [],
-        "O.AUTHENTICATION": [],
-        "O.FAIL_SECURE": [],
-        "O.SYSTEM_MONITORING": [],
-        "O.TOE_ADMINISTRATION": [],
+        "O.CRYPTOGRAPHIC_FUNCTIONS": [
+          "fcs_ckm.1/WPA",
+          "fcs_ckm.2/GTK",
+          "fcs_ckm.2/PMK"
+        ],
+        "O.AUTHENTICATION": [
+          "fia_8021x_ext.1",
+          "fia_uau.6",
+          "fta_tse.1"
+        ],
+        "O.FAIL_SECURE": [
+          "fpt_fls.1"
+        ],
+        "O.SYSTEM_MONITORING": [
+          "fau_gen.1/WLAN"
+        ],
+        "O.TOE_ADMINISTRATION": [
+          "fmt_smr_ext.1",
+          "fmt_smf.1/AccessSystem"
+        ],
         "OE.CONNECTIONS": []
       }
     },
@@ -2526,12 +2689,31 @@
         ]
       },
       "Security_Objective_Mappings": {
-        "O.AUTH_COMM": [],
-        "O.CRYPTOGRAPHIC_FUNCTIONS": [],
-        "O.SELF_TEST": [],
-        "O.SYSTEM_MONITORING": [],
-        "O.TOE_ADMINISTRATION": [],
-        "O.WIRELESS_ACCESS_POINT_CONNECTION": [],
+        "O.AUTH_COMM": [
+          "fcs_tlsc_ext.1/WLAN",
+          "fia_pae_ext.1",
+          "fia_x509_ext.1/WLAN",
+          "fia_x509_ext.2/WLAN",
+          "ftp_itc.1/WLAN"
+        ],
+        "O.CRYPTOGRAPHIC_FUNCTIONS": [
+          "fcs_ckm.1/WPA",
+          "fcs_ckm.2/WLAN",
+          "fcs_wpa_ext.1"
+        ],
+        "O.SELF_TEST": [
+          "fpt_tst_ext.3/WLAN"
+        ],
+        "O.SYSTEM_MONITORING": [
+          "fau_gen.1/WLAN"
+        ],
+        "O.TOE_ADMINISTRATION": [
+          "fia_x509_ext.6",
+          "fmt_smf.1/WLAN"
+        ],
+        "O.WIRELESS_ACCESS_POINT_CONNECTION": [
+          "fta_wse_ext.1"
+        ],
         "OE.NO_TOE_BYPASS": [],
         "OE.TRUSTED_ADMIN": []
       }
@@ -7377,7 +7559,14 @@
         "fia_x509_ext.5",
         "fpt_blt_ext.1",
         "ftp_itc_ext.1",
-        "fcs_ckm_ext.4"
+        "fcs_ckm_ext.4",
+        "fia_blt_ext.1",
+        "fia_blt_ext.2",
+        "fia_blt_ext.3",
+        "fia_blt_ext.4",
+        "fia_blt_ext.6",
+        "ftp_blt_ext.1",
+        "ftp_blt_ext.2"
       ]
     },
     {
@@ -7792,7 +7981,8 @@
         "fpt_hcl_ext.1",
         "fpt_ml_ext.1",
         "fpt_vdp_ext.1",
-        "fpt_viv_ext.1"
+        "fpt_viv_ext.1",
+        "fmt_mof_ext.1"
       ]
     },
     {
@@ -7864,7 +8054,8 @@
         "fia_x509_ext.2",
         "fmt_smo_ext.1",
         "ftp_itc_ext.1",
-        "ftp_trp.1"
+        "ftp_trp.1",
+        "fmt_mof_ext.1"
       ]
     },
     {
@@ -7955,7 +8146,11 @@
         "MACsec Ethernet Encryption (ND) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n            To further address the issues associated with unauthorized disclosure of information, a compliant TOE’s authentication ability (MKA) \r\n            will allow a MACsec peer to establish connectivity associations (CAs) with another MACsec peer. \r\n            MACsec endpoints authenticate each other to ensure they are communicating with an authorized MAC Security Entity (SecY) entity.\r\n            <h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FCS_MACSEC_EXT.4, FCS_MKA_EXT.1, FIA_PSK_EXT.1, FCS_DEVID_EXT.1 (selection-based), FCS_EAP-TLS_EXT.1 (selection-based) \r\n          </description>",
         "MACsec Ethernet Encryption (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n            To further address the issues associated with unauthorized disclosure of information, a compliant TOE’s authentication ability (MKA) \r\n            will allow a MACsec peer to establish connectivity associations (CAs) with another MACsec peer. \r\n            MACsec endpoints authenticate each other to ensure they are communicating with an authorized MAC Security Entity (SecY) entity.\r\n            <h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FCS_MACSEC_EXT.4, FCS_MKA_EXT.1, FIA_PSK_EXT.1, FCS_DEVID_EXT.1 (selection-based), FCS_EAP-TLS_EXT.1 (selection-based) \r\n          </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fcs_macsec_ext.4",
+        "fcs_mka_ext.1",
+        "fia_psk_ext.1"
+      ]
     },
     {
       "Name": "O.AUTHORIZED_ADMINISTRATION",
@@ -7966,7 +8161,11 @@
         "Session Border Controller (ND) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">All network devices are expected to provide services that allow the security functionality of the device to be managed. \r\n            The SBC, as a specific type of network device, has a refined set of management functions to address its specialized behavior.\r\n            <h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" /><h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FMT_SMF.1/SBC\r\n          </description>",
         "Session Border Controller (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">All network devices are expected to provide services that allow the security functionality of the device to be managed. \r\n            The SBC, as a specific type of network device, has a refined set of management functions to address its specialized behavior.\r\n            <h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" /><h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FMT_SMF.1/SBC\r\n          </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fmt_smf.1/MACSEC",
+        "fpt_cak_ext.1",
+        "fmt_smf.1/SBC"
+      ]
     },
     {
       "Name": "O.CRYPTOGRAPHIC_FUNCTIONS_MACSEC",
@@ -7975,7 +8174,13 @@
         "MACsec Ethernet Encryption (ND) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n            To address the issues associated with unauthorized modification and disclosure of information, compliant TOEs will implement cryptographic capabilities. \r\n            These capabilities are intended to maintain confidentiality and allow for detection and modification of data that is transmitted outside of the TOE.\r\n            <h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FCS_COP.1/CMAC, FCS_COP.1/MACSEC, FCS_MACSEC_EXT.2, FCS_MACSEC_EXT.3, FTP_ITC.1/MACSEC, \r\n            FTP_TRP.1/MACSEC (optional), FCS_SNMP_EXT.1 (selection-based)\r\n          </description>",
         "MACsec Ethernet Encryption (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n            To address the issues associated with unauthorized modification and disclosure of information, compliant TOEs will implement cryptographic capabilities. \r\n            These capabilities are intended to maintain confidentiality and allow for detection and modification of data that is transmitted outside of the TOE.\r\n            <h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FCS_COP.1/CMAC, FCS_COP.1/MACSEC, FCS_MACSEC_EXT.2, FCS_MACSEC_EXT.3, FTP_ITC.1/MACSEC, \r\n            FTP_TRP.1/MACSEC (optional), FCS_SNMP_EXT.1 (selection-based)\r\n          </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fcs_cop.1/CMAC",
+        "fcs_cop.1/MACSEC",
+        "fcs_macsec_ext.2",
+        "fcs_macsec_ext.3",
+        "ftp_itc.1/MACSEC"
+      ]
     },
     {
       "Name": "O.PORT_FILTERING_MACSEC",
@@ -7984,7 +8189,10 @@
         "MACsec Ethernet Encryption (ND) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">To further address the issues associated with unauthorized network access, a compliant TOE’s port filtering capability will restrict \r\n            the flow of network traffic through the TOE based on layer 2 frame characteristics and whether or not the traffic represents valid MACsec frames \r\n            and MACsec Key Agreement Protocol Data Units (MKPDUs).\r\n            <h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FCS_MACSEC_EXT.1, FIA_PSK_EXT.1, FPT_DDP_EXT.1\r\n          </description>",
         "MACsec Ethernet Encryption (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">To further address the issues associated with unauthorized network access, a compliant TOE’s port filtering capability will restrict \r\n            the flow of network traffic through the TOE based on layer 2 frame characteristics and whether or not the traffic represents valid MACsec frames \r\n            and MACsec Key Agreement Protocol Data Units (MKPDUs).\r\n            <h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FCS_MACSEC_EXT.1, FIA_PSK_EXT.1, FPT_DDP_EXT.1\r\n          </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fcs_macsec_ext.1",
+        "fia_psk_ext.1"
+      ]
     },
     {
       "Name": "O.REPLAY_DETECTION",
@@ -7993,7 +8201,9 @@
         "MACsec Ethernet Encryption (ND) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n            A MACsec device is expected to help mitigate the threat of MACsec data integrity violations by providing a mechanism to \r\n            detect and discard replayed traffic for MPDUs.\r\n            <h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FPT_RPL.1, FPT_RPL_EXT.1 (optional)\r\n          </description>",
         "MACsec Ethernet Encryption (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n            A MACsec device is expected to help mitigate the threat of MACsec data integrity violations by providing a mechanism to \r\n            detect and discard replayed traffic for MPDUs.\r\n            <h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FPT_RPL.1, FPT_RPL_EXT.1 (optional)\r\n          </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fpt_rpl.1"
+      ]
     },
     {
       "Name": "O.SYSTEM_MONITORING_MACSEC",
@@ -8002,7 +8212,9 @@
         "MACsec Ethernet Encryption (ND) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n            To address the issues of administrators being able to monitor the operations of the MACsec device, \r\n            compliant TOEs will implement the ability to log the flow of Ethernet traffic. Specifically, the TOE will provide the means for administrators to \r\n            configure rules to ‘log’ when Ethernet traffic grants or restricts access. As a result, the ‘log’ will result in informative event logs whenever a match occurs. \r\n            In addition, the establishment of security CAs is auditable, not only between MACsec devices, but also with MAC Security Key Agreement Entities (KaYs).\r\n            <h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FAU_GEN.1/MACSEC\r\n          </description>",
         "MACsec Ethernet Encryption (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n            To address the issues of administrators being able to monitor the operations of the MACsec device, \r\n            compliant TOEs will implement the ability to log the flow of Ethernet traffic. Specifically, the TOE will provide the means for administrators to \r\n            configure rules to ‘log’ when Ethernet traffic grants or restricts access. As a result, the ‘log’ will result in informative event logs whenever a match occurs. \r\n            In addition, the establishment of security CAs is auditable, not only between MACsec devices, but also with MAC Security Key Agreement Entities (KaYs).\r\n            <h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FAU_GEN.1/MACSEC\r\n          </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fau_gen.1/MACSEC"
+      ]
     },
     {
       "Name": "O.TSF_INTEGRITY",
@@ -8011,7 +8223,9 @@
         "MACsec Ethernet Encryption (ND) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n            To mitigate the security risk that the MACsec device may fail during startup, \r\n            it is required to fail-secure if any self-test failures occur during startup. \r\n            This ensures that the device will only operate when it is in a known state.\r\n            <h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FPT_FLS.1\r\n          </description>",
         "MACsec Ethernet Encryption (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n            To mitigate the security risk that the MACsec device may fail during startup, \r\n            it is required to fail-secure if any self-test failures occur during startup. \r\n            This ensures that the device will only operate when it is in a known state.\r\n            <h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FPT_FLS.1\r\n          </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fpt_fls.1"
+      ]
     },
     {
       "Name": "O.PROTECTED_COMMUNICATIONS",
@@ -8020,7 +8234,20 @@
         "Session Border Controller (ND) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">To mitigate the threat of data-in-transit disclosure, the SBC must ensure that remote communications are secured using appropriate means. \r\n            This includes the security of VVoIP signaling and media channels and Session Initiation Protocol (SIP) trunking, \r\n            in addition to any secure communications channels that are defined by the Base-PP, such as communication with audit or authentication servers.\r\n            <h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" /><h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FCS_TLSC_EXT.1 (refined from Base-PP), FCS_TLSC_EXT.2 (refined from Base-PP), FCS_TLSS_EXT.1 (refined from Base-PP), \r\n            FCS_TLSS_EXT.2 (refined from Base-PP), FIA_X509_EXT.1/Rev (refined from Base-PP), FIA_X509_EXT.2 (refined from Base-PP), \r\n            FIA_X509_EXT.3 (refined from Base-PP), FTP_ITC.1 (refined from Base-PP), FCS_SRTP_EXT.1, FIA_SIPT_EXT.1, FTP_ITC.1/ARP, FTP_ITC.1/ESC, FTP_ITC.1/VVoIP, FTP_ITC.1/H323 (selection-based)\r\n          </description>",
         "Session Border Controller (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">To mitigate the threat of data-in-transit disclosure, the SBC must ensure that remote communications are secured using appropriate means. \r\n            This includes the security of VVoIP signaling and media channels and Session Initiation Protocol (SIP) trunking, \r\n            in addition to any secure communications channels that are defined by the Base-PP, such as communication with audit or authentication servers.\r\n            <h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" /><h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FCS_TLSC_EXT.1 (refined from Base-PP), FCS_TLSC_EXT.2 (refined from Base-PP), FCS_TLSS_EXT.1 (refined from Base-PP), \r\n            FCS_TLSS_EXT.2 (refined from Base-PP), FIA_X509_EXT.1/Rev (refined from Base-PP), FIA_X509_EXT.2 (refined from Base-PP), \r\n            FIA_X509_EXT.3 (refined from Base-PP), FTP_ITC.1 (refined from Base-PP), FCS_SRTP_EXT.1, FIA_SIPT_EXT.1, FTP_ITC.1/ARP, FTP_ITC.1/ESC, FTP_ITC.1/VVoIP, FTP_ITC.1/H323 (selection-based)\r\n          </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fcs_tlsc_ext.1",
+        "fcs_tlsc_ext.2",
+        "fcs_tlss_ext.1",
+        "fcs_tlss_ext.2",
+        "fia_x509_ext.1/Rev",
+        "fia_x509_ext.2",
+        "fia_x509_ext.3",
+        "ftp_itc.1",
+        "fcs_srtp_ext.1",
+        "fia_sipt_ext.1",
+        "ftp_itc.1/ESC",
+        "ftp_itc.1/VVoIP"
+      ]
     },
     {
       "Name": "O.RESOURCE_AVAILABILITY",
@@ -8029,7 +8256,10 @@
         "Session Border Controller (ND) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The SBC is not capable of performing its primary functionality if an attacker is able to prevent it from handling user data through a denial of service (DoS) attack. \r\n            Therefore, the SBC is expected to provide security functions that allow it to prioritize its resources and protect against traffic that is designed only to disrupt availability of the device.\r\n            <h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" /><h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FRU_PRS_EXT.1, FRU_RSA.1\r\n          </description>",
         "Session Border Controller (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The SBC is not capable of performing its primary functionality if an attacker is able to prevent it from handling user data through a denial of service (DoS) attack. \r\n            Therefore, the SBC is expected to provide security functions that allow it to prioritize its resources and protect against traffic that is designed only to disrupt availability of the device.\r\n            <h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" /><h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FRU_PRS_EXT.1, FRU_RSA.1\r\n          </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fru_prs_ext.1",
+        "fru_rsa.1"
+      ]
     },
     {
       "Name": "O.SYSTEM_MONITORING",
@@ -8047,7 +8277,21 @@
         "WLAN Client (MDF) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE will provide the capability to generate audit\r\n            data.</description>",
         "WLAN Client (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE will provide the capability to generate audit\r\n            data.</description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "ftp_itc.1",
+        "fau_arp_ext.1",
+        "fau_gen.1/SBC",
+        "fau_saa.1",
+        "fau_sel.1",
+        "ftp_itc.1/ARP",
+        "fau_gen.1/VPN",
+        "fpf_rul_ext.1",
+        "fau_gen_ext.1",
+        "fau_stg_ext.1",
+        "fau_gen.1/WIDS",
+        "fau_rpt_ext.1",
+        "fau_gen.1/WLAN"
+      ]
     },
     {
       "Name": "O.TOPOLOGY_HIDING",
@@ -8056,7 +8300,11 @@
         "Session Border Controller (ND) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">In order to ensure that there is no unauthorized disclosure of network information, \r\n            the SBC is expected to hide the topology of the protected network. \r\n            The SBC ensures no unauthorized disclosure by functioning as a B2BUA and by providing support for network address translation (NAT). \r\n            These mechanisms ensure that the intended recipient of data being transmitted through the TOE is not revealed and that devices inside the protected network are not directly accessible.\r\n            <h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" /><h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FDP_IFC.1, FDP_IFF.1, FFW_NAT_EXT.1\r\n          </description>",
         "Session Border Controller (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">In order to ensure that there is no unauthorized disclosure of network information, \r\n            the SBC is expected to hide the topology of the protected network. \r\n            The SBC ensures no unauthorized disclosure by functioning as a B2BUA and by providing support for network address translation (NAT). \r\n            These mechanisms ensure that the intended recipient of data being transmitted through the TOE is not revealed and that devices inside the protected network are not directly accessible.\r\n            <h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" /><h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FDP_IFC.1, FDP_IFF.1, FFW_NAT_EXT.1\r\n          </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fdp_ifc.1",
+        "fdp_iff.1",
+        "ffw_nat_ext.1"
+      ]
     },
     {
       "Name": "O.TRAFFIC_FILTERING",
@@ -8065,7 +8313,11 @@
         "Session Border Controller (ND) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">In order to ensure that malicious traffic cannot compromise the SBC or devices on its protected network, \r\n            the SBC is expected to provide rudimentary traffic filtering capabilities. \r\n            This ensures that unauthorized TCP/UDP traffic is blocked and that all signaling and media traffic is first checked to be well-formed prior to performing any action on it.\r\n            <h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" /><h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FFW_ACL_EXT.1, FFW_ACL_EXT.2, FFW_DPI_EXT.1\r\n          </description>",
         "Session Border Controller (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">In order to ensure that malicious traffic cannot compromise the SBC or devices on its protected network, \r\n            the SBC is expected to provide rudimentary traffic filtering capabilities. \r\n            This ensures that unauthorized TCP/UDP traffic is blocked and that all signaling and media traffic is first checked to be well-formed prior to performing any action on it.\r\n            <h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" /><h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FFW_ACL_EXT.1, FFW_ACL_EXT.2, FFW_DPI_EXT.1\r\n          </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "ffw_acl_ext.1",
+        "ffw_acl_ext.2",
+        "ffw_dpi_ext.1"
+      ]
     },
     {
       "Name": "O.USER_DATA_DELIVERY",
@@ -8074,7 +8326,12 @@
         "Session Border Controller (ND) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">When user data is transmitted between calling parties, the calling parties expect that this data is only transmitted to the intended recipients. \r\n            The SBC is expected to provide this assurance through correctly functioning as a B2BUA and through correct implementation of SIP.\r\n            <h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" /><h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FDP_IFC.1, FDP_IFF.1, FFW_NAT_EXT.1, FIA_SIPT_EXT.1, FIA_SIPS_EXT.1 (implementation-based)\r\n          </description>",
         "Session Border Controller (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">When user data is transmitted between calling parties, the calling parties expect that this data is only transmitted to the intended recipients. \r\n            The SBC is expected to provide this assurance through correctly functioning as a B2BUA and through correct implementation of SIP.\r\n            <h:p xmlns:h=\"http://www.w3.org/1999/xhtml\" /><h:b xmlns:h=\"http://www.w3.org/1999/xhtml\">Addressed by:</h:b> FDP_IFC.1, FDP_IFF.1, FFW_NAT_EXT.1, FIA_SIPT_EXT.1, FIA_SIPS_EXT.1 (implementation-based)\r\n          </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fdp_ifc.1",
+        "fdp_iff.1",
+        "ffw_nat_ext.1",
+        "fia_sipt_ext.1"
+      ]
     },
     {
       "Name": "O.AUTHENTICATION",
@@ -8093,7 +8350,14 @@
       "SFRs": [
         "fia_x509_ext.3",
         "fdp_ifc_ext.1",
-        "fia_x509_ext.2"
+        "fia_x509_ext.2",
+        "fcs_ipsec_ext.1",
+        "fia_x509_ext.1/Rev",
+        "ftp_itc.1/VPN",
+        "fco_cpc_ext.1",
+        "fia_8021x_ext.1",
+        "fia_uau.6",
+        "fta_tse.1"
       ]
     },
     {
@@ -8126,7 +8390,16 @@
         "ftp_dit_ext.1",
         "fpt_itt.1/1",
         "ftp_itc.1/1",
-        "ftp_trp.1/1"
+        "ftp_trp.1/1",
+        "fcs_ckm.1/VPN",
+        "fcs_ipsec_ext.1",
+        "fcs_cop.1/DataEncryption",
+        "fcs_ckm.1/IKE",
+        "fcs_ckm.1/WPA",
+        "fcs_ckm.2/GTK",
+        "fcs_ckm.2/PMK",
+        "fcs_ckm.2/WLAN",
+        "fcs_wpa_ext.1"
       ]
     },
     {
@@ -8140,7 +8413,9 @@
         "VPN Client (MANDATORY) [2.4]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE will provide sufficient measures to ensure it is operating in a known state. At minimum this\r\n            includes management functionality to allow the security functionality to be configured and self-test\r\n            functionality that allows it to assert its own integrity. It may also include auditing functionality that\r\n            can be used to determine the operational behavior of the TOE.<h:br xmlns:h=\"http://www.w3.org/1999/xhtml\" /><h:br xmlns:h=\"http://www.w3.org/1999/xhtml\" />\r\n\t\t\tAddressed by: FMT_SMF_EXT.1 (refined from MDF PP), FMT_SMF.1/VPN, FPT_TST_EXT.1/VPN, \r\n\t\t\tFAU_GEN.1/VPN (optional), FAU_SEL.1/VPN (optional).\r\n          </description>"
       },
       "SFRs": [
-        "fmt_smf_ext.1"
+        "fmt_smf_ext.1",
+        "fmt_smf.1/VPN",
+        "fpt_tst_ext.1/VPN"
       ]
     },
     {
@@ -8155,7 +8430,8 @@
       },
       "SFRs": [
         "fcs_ckm_ext.2",
-        "fcs_ckm_ext.4"
+        "fcs_ckm_ext.4",
+        "fdp_rip.2"
       ]
     },
     {
@@ -8192,7 +8468,9 @@
         "VPN Gateway (ND) [1.3]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">To address the issues associated with unauthorized disclosure of information, inappropriate access to\r\n            services, misuse of services, disruption or denial of services, and network-based reconnaissance,\r\n            compliant TOE’s will implement packet filtering capability. That capability will restrict the flow of\r\n            network traffic between protected networks and other attached networks based on network\r\n            addresses of the network nodes originating (source) or receiving (destination) applicable network\r\n            traffic as well as on established connection information.\r\n            <h:br xmlns:h=\"http://www.w3.org/1999/xhtml\" />\r\n            Addressed by: FPF_RUL_EXT.1, FTA_VCM_EXT.1 (optional)\r\n          </description>",
         "VPN Gateway (MANDATORY) [1.3]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">To address the issues associated with unauthorized disclosure of information, inappropriate access to\r\n            services, misuse of services, disruption or denial of services, and network-based reconnaissance,\r\n            compliant TOE’s will implement packet filtering capability. That capability will restrict the flow of\r\n            network traffic between protected networks and other attached networks based on network\r\n            addresses of the network nodes originating (source) or receiving (destination) applicable network\r\n            traffic as well as on established connection information.\r\n            <h:br xmlns:h=\"http://www.w3.org/1999/xhtml\" />\r\n            Addressed by: FPF_RUL_EXT.1, FTA_VCM_EXT.1 (optional)\r\n          </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fpf_rul_ext.1"
+      ]
     },
     {
       "Name": "O.FAIL_SECURE",
@@ -8203,7 +8481,13 @@
         "Wireless Local Area Network (WLAN) Access System (ND) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">Upon a self-test failure, the TOE will shut down to ensure that data cannot be passed without adhering to the TOE's security policies.\r\n                  </description>",
         "Wireless Local Area Network (WLAN) Access System (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">Upon a self-test failure, the TOE will shut down to ensure that data cannot be passed without adhering to the TOE's security policies.\r\n                  </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fpt_tst_ext.1",
+        "fpt_tud_ext.1",
+        "fpt_fls.1/SelfTest",
+        "fpt_tst_ext.3",
+        "fpt_fls.1"
+      ]
     },
     {
       "Name": "O.PORT_FILTERING",
@@ -8212,7 +8496,9 @@
         "VPN Gateway (ND) [1.3]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n            To further address the issues associated with unauthorized disclosure of information, etc., a compliant\r\n            TOE’s port filtering capability will restrict the flow of network traffic between protected networks and\r\n            other attached networks based on the originating (source) or receiving (destination) port (or\r\n            service) identified in the network traffic as well as on established connection information.\r\n            <h:br xmlns:h=\"http://www.w3.org/1999/xhtml\" />\r\n            Addressed by: FPF_RUL_EXT.1\r\n          </description>",
         "VPN Gateway (MANDATORY) [1.3]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n            To further address the issues associated with unauthorized disclosure of information, etc., a compliant\r\n            TOE’s port filtering capability will restrict the flow of network traffic between protected networks and\r\n            other attached networks based on the originating (source) or receiving (destination) port (or\r\n            service) identified in the network traffic as well as on established connection information.\r\n            <h:br xmlns:h=\"http://www.w3.org/1999/xhtml\" />\r\n            Addressed by: FPF_RUL_EXT.1\r\n          </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fpf_rul_ext.1"
+      ]
     },
     {
       "Name": "O.TOE_ADMINISTRATION",
@@ -8228,7 +8514,15 @@
         "WLAN Client (MDF) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE will provide mechanisms to allow\r\n            administrators to be able to configure the TOE. </description>",
         "WLAN Client (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE will provide mechanisms to allow\r\n            administrators to be able to configure the TOE. </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fmt_mtd.1/CryptoKeys",
+        "fmt_smf.1/VPN",
+        "fmt_smf.1/WIDS",
+        "fmt_smr_ext.1",
+        "fmt_smf.1/AccessSystem",
+        "fia_x509_ext.6",
+        "fmt_smf.1/WLAN"
+      ]
     },
     {
       "Name": "OE.CONNECTIONS",
@@ -8250,7 +8544,18 @@
         "Wireless Intrusion Detection/Prevention System (ND) [2.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n  <h:p xmlns:h=\"http://www.w3.org/1999/xhtml\">\r\n\t      The WIDS must be able to analyze collected or observed WLAN activity on\r\n              monitored network to identify potential violations of approved WLAN policies,\r\n              unauthorized connections involving internal WLAN devices, and non-secure communications.<!-- </h:p><h:p> --><!-- Addressed by: FAU_ARP.1, FAU_ARP_EXT.1, FAU_IDS_EXT.1, --><!-- FAU_INV_EXT.1, FAU_INV_EXT.2, FAU_INV_EXT.3, FAU_SAA.1,  --><!-- FAU_WID_EXT.1, FAU_WID_EXT.2, FDP_IFC.1, FAU_WID_EXT.3 (optional), --><!-- FAU_WID_EXT.4 (optional), FAU_ANO_EXT.1 (selection-based), FAU_SIG_EXT.1 (selection-based), --><!-- FAU_INV_EXT.4 (objective), FAU_INV_EXT.5 (objective), FAU_MAC_EXT.1 (objective) --></h:p>\r\n</description>",
         "Wireless Intrusion Detection/Prevention System (MANDATORY) [2.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n  <h:p xmlns:h=\"http://www.w3.org/1999/xhtml\">\r\n\t      The WIDS must be able to analyze collected or observed WLAN activity on\r\n              monitored network to identify potential violations of approved WLAN policies,\r\n              unauthorized connections involving internal WLAN devices, and non-secure communications.<!-- </h:p><h:p> --><!-- Addressed by: FAU_ARP.1, FAU_ARP_EXT.1, FAU_IDS_EXT.1, --><!-- FAU_INV_EXT.1, FAU_INV_EXT.2, FAU_INV_EXT.3, FAU_SAA.1,  --><!-- FAU_WID_EXT.1, FAU_WID_EXT.2, FDP_IFC.1, FAU_WID_EXT.3 (optional), --><!-- FAU_WID_EXT.4 (optional), FAU_ANO_EXT.1 (selection-based), FAU_SIG_EXT.1 (selection-based), --><!-- FAU_INV_EXT.4 (objective), FAU_INV_EXT.5 (objective), FAU_MAC_EXT.1 (objective) --></h:p>\r\n</description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fau_arp.1",
+        "fau_arp_ext.1",
+        "fau_ids_ext.1",
+        "fau_inv_ext.1",
+        "fau_inv_ext.2",
+        "fau_inv_ext.3",
+        "fau_saa.1",
+        "fau_wid_ext.1",
+        "fau_wid_ext.2",
+        "fdp_ifc.1"
+      ]
     },
     {
       "Name": "O.WIDS_REACT",
@@ -8259,7 +8564,11 @@
         "Wireless Intrusion Detection/Prevention System (ND) [2.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n  <h:p xmlns:h=\"http://www.w3.org/1999/xhtml\">\r\nThe TOE must be able to react, as configured by the administrators, to \r\n            configured policy violations or other potential malicious activity.</h:p>\r\n  <!--   <h:p> -->\r\n  <!--   Addressed by: FAU_ARP.1, FAU_SAA.1, FMT_SMF.1/WIDS, FAU_ANO_EXT.1 (selection-based), FAU_WIP_EXT.1 (objective) -->\r\n  <!-- </h:p> -->\r\n</description>",
         "Wireless Intrusion Detection/Prevention System (MANDATORY) [2.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n  <h:p xmlns:h=\"http://www.w3.org/1999/xhtml\">\r\nThe TOE must be able to react, as configured by the administrators, to \r\n            configured policy violations or other potential malicious activity.</h:p>\r\n  <!--   <h:p> -->\r\n  <!--   Addressed by: FAU_ARP.1, FAU_SAA.1, FMT_SMF.1/WIDS, FAU_ANO_EXT.1 (selection-based), FAU_WIP_EXT.1 (objective) -->\r\n  <!-- </h:p> -->\r\n</description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fau_arp.1",
+        "fau_saa.1",
+        "fmt_smf.1/WIDS"
+      ]
     },
     {
       "Name": "O.TRUSTED_COMMUNICATIONS",
@@ -8268,7 +8577,11 @@
         "Wireless Intrusion Detection/Prevention System (ND) [2.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n To further address the threat of untrusted communications channels that is\r\n            defined in the Base-PP, conformant TOEs will provide trusted communications between\r\n            distributed components if any exist.\r\n          </description>",
         "Wireless Intrusion Detection/Prevention System (MANDATORY) [2.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">\r\n To further address the threat of untrusted communications channels that is\r\n            defined in the Base-PP, conformant TOEs will provide trusted communications between\r\n            distributed components if any exist.\r\n          </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fco_cpc_ext.1",
+        "fpt_itt.1",
+        "ftp_itc.1"
+      ]
     },
     {
       "Name": "O.AUTH_COMM",
@@ -8278,7 +8591,13 @@
         "WLAN Client (MDF) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE will provide a means to ensure that it is\r\n            communicating with an authorized access point and\r\n            not some other entity pretending to be an authorized\r\n            access point, and will provide assurance to the access\r\n            point of its identity.</description>",
         "WLAN Client (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE will provide a means to ensure that it is\r\n            communicating with an authorized access point and\r\n            not some other entity pretending to be an authorized\r\n            access point, and will provide assurance to the access\r\n            point of its identity.</description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fcs_tlsc_ext.1/WLAN",
+        "fia_pae_ext.1",
+        "fia_x509_ext.1/WLAN",
+        "fia_x509_ext.2/WLAN",
+        "ftp_itc.1/WLAN"
+      ]
     },
     {
       "Name": "O.SELF_TEST",
@@ -8288,7 +8607,9 @@
         "WLAN Client (MDF) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE will provide the capability to test some\r\n            subset of its security functionality to ensure it is operating properly. </description>",
         "WLAN Client (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE will provide the capability to test some\r\n            subset of its security functionality to ensure it is operating properly. </description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fpt_tst_ext.3/WLAN"
+      ]
     },
     {
       "Name": "O.WIRELESS_ACCESS_POINT_CONNECTION",
@@ -8298,7 +8619,9 @@
         "WLAN Client (MDF) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE will provide the capability to restrict the\r\n            wireless access points to which it will connect.</description>",
         "WLAN Client (MANDATORY) [1.0]": "<description xmlns=\"https://niap-ccevs.org/cc/v1\">The TOE will provide the capability to restrict the\r\n            wireless access points to which it will connect.</description>"
       },
-      "SFRs": []
+      "SFRs": [
+        "fta_wse_ext.1"
+      ]
     }
   ],
   "Threats": [
