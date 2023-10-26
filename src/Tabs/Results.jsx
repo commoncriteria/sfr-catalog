@@ -69,7 +69,7 @@ function Results(props) {
             currentPPContent.map((pp) => {
                 let ppName = pp.name;
                 let values = pp.values.valueOf();
-                let tds = query.sfrToTD(SFRDatabase, props.selectedSfrs, props.selectedPps);
+                let tds = query.sfrToTD(SFRDatabase, props.selectedSfrs, ppName);
                 cards.push(
                     <div className={Object.keys(currentPPContent).length > 1 ? "flex-none my-4 w-1/2" : "my-4 mr-2 ml-2 w-full"} key={ppName + "_Card"}>
                         <Card
