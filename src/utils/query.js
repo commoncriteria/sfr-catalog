@@ -178,13 +178,18 @@ export function sfrToTD(sfrDB, sfr, pps) {
             }
         }
 
-        // get the TD object (which has pub date, text, etc)
-        let filter_str = '';
-        for (let i = 0; i < td_number.length; i++) {
-            filter_str = i == td_number.length - 1 ? filter_str += `contains(TD_Number,'${td_number[i]}')` : filter_str += `contains(TD_Number,'${td_number[i]}') || `;
-        }
+        // if there are TDs, return the metadata, else return empty arr
+        if (td_number.length != 0) {
+            // get the TD object (which has pub date, text, etc)
+            let filter_str = '';
+            for (let i = 0; i < td_number.length; i++) {
+                filter_str = i == td_number.length - 1 ? filter_str += `contains(TD_Number,'${td_number[i]}')` : filter_str += `contains(TD_Number,'${td_number[i]}') || `;
+            }
 
-        return jmespath.search(sfrDB, `Technical_Decisions[?${filter_str}]`);
+            return jmespath.search(sfrDB, `Technical_Decisions[?${filter_str}]`);
+        } else {
+            return td_number;
+        }
     }
 }
 
