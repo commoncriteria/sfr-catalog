@@ -22,15 +22,10 @@ function PPCard(props) {
      * @param event the event handler
      */
     const handleDropdownSelect = (event, values) => {
-        if (typeof values == "string") {
-            if (!props.selections.includes(values)) {
-                props.handleSetSelectedPps([values])
-            }
-        } else {
+        if (values.length != 0) {
             if (values && Object.keys(values).length === 0) {
                 if (props.allPps && Object.keys(props.allPps).length === 1) {
                     props.handleSetSelectedPps(props.allPps.valueOf())
-                    // props.handleSetSelectedPps(values)
                 } else {
                     props.handleSetSelectedPps(null)
                 }
@@ -42,6 +37,8 @@ function PPCard(props) {
                     props.handleSetSelectedPps(values)
                 }
             }
+        } else { // if selection is cleared out, set to null
+            props.handleSetSelectedPps(null);
         }
     };
 
