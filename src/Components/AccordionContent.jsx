@@ -199,7 +199,7 @@ function AccordionContent(props) {
                     onClick={() => handleUpdates("accordion")}
                 >
                     <div className="flex flex-row gap-2">
-                        <span className="">{props.accordionHeader}</span>
+                        <span>{props.accordionHeader}</span>
                         {
                             (props.type == "SFRs" && props.tds.length != 0) ?
                                 <Tooltip content={`TD: ${props.tds[0].TD_Number}, Publication Date: ${props.tds[0].Publication_Date}`}>
