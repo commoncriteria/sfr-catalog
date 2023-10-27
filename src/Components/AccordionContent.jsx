@@ -195,15 +195,12 @@ function AccordionContent(props) {
                 }
             >
                 <AccordionHeader
-
                     className={(props.isOpen ? " border-b-2 bg-gray-100" : " border-b-0") + " px-6 text-lg font-extrabold text-accent border-gray-400"}
                     onClick={() => handleUpdates("accordion")}
                 >
                     <div className="flex flex-row gap-2">
                         <span className="">{props.accordionHeader}</span>
                     </div>
-
-
                 </AccordionHeader>
                 <AccordionBody className={"px-4 bg-gray-200"}>
                     <div className={props.type == "SFRs" ? "flex flex-col" : "flex flex-col h-64 overflow-auto"}>

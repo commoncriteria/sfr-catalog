@@ -69,21 +69,21 @@ function TabContent(props) {
 
         // Tab Content by Type
         return (
-            <TETabsPane show={props.activeTab === tab} className="rounded-lg h-full parent flex flex-col">
+            <TETabsPane show={props.activeTab === tab} className="rounded-lg min-h-full parent flex flex-col">
                 <div className="border-2 border-gray-400 rounded-xl p-3 bg-base-200 h-16">
                     <h1 className="text-3xl font-bold text-secondary flex justify-center items-center">Results</h1>
                 </div>
                 <div className="mt-4 mb-0 border-2 border-gray-300 rounded-lg p-3 bg-gray-300 text-black flex justify-center child flex-1 text-lg">
-                    {/* {content} */}
                     {props.selectedPps ?
                         <Results
-                        activeTab={props.activeTab}
-                        selectedThreats={props.selectedThreats}
-                        selectedSecurityObjectives={props.selectedSecurityObjectives}
-                        selectedSfrs={props.selectedSfrs}
-                        selectedPps={props.selectedPps}
-                    /> :
-                    null
+                            activeTab={props.activeTab}
+                            selectedThreats={props.selectedThreats}
+                            selectedSecurityObjectives={props.selectedSecurityObjectives}
+                            selectedSfrs={props.selectedSfrs}
+                            selectedPps={props.selectedPps}
+                        />
+                        :
+                        null
                 }
                 </div>
             </TETabsPane>

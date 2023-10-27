@@ -53,9 +53,6 @@ function Results(props) {
         setPPContent(ppContentArr);
     }, [props.selectedPps, props.selectedSfrs, props.selectedThreats, props.selectedSecurityObjectives])
 
-
-
-
     // Functions
     /**
      * Gets the Card/Accordion content according to the newly updated ppContent value
@@ -148,7 +145,7 @@ function Results(props) {
 
     // Return Function
     return (
-        <div className={"w-full h-full overflow-auto"}>
+        <div className={"w-full min-h-full overflow-auto"}>
             {contentData}
         </div>
     )
