@@ -73,7 +73,7 @@ function TabContent(props) {
                 <div className="border-2 border-gray-400 rounded-xl p-3 bg-base-200 h-16">
                     <h1 className="text-3xl font-bold text-secondary flex justify-center items-center">Results</h1>
                 </div>
-                <div className="mt-4 mb-0 border-2 border-gray-300 rounded-lg p-3 bg-gray-300 text-black flex justify-center child flex-1 text-lg">
+                <div className="mt-4 mb-0 border-2 border-gray-300 rounded-lg p-3 bg-gray-300 text-black flex justify-center child flex-1 text-lg min-h-screen">
                     {props.selectedPps ?
                         <Results
                             activeTab={props.activeTab}
