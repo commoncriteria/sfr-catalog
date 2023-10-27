@@ -104,7 +104,7 @@ function Modal(props) {
                     onClose={handleClose}
                     aria-describedby="alert-dialog-slide-description"
                     style={{ borderRadius: "100px" }}
-                    maxWidth={"md"}
+                    maxWidth={"lg"}
                 >
                     <DialogTitle
                         color="secondary"
