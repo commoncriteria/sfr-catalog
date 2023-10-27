@@ -321,7 +321,7 @@ function FilterPane(props) {
     return (
         <div className="h-full w-full rounded-lg">
             <div className="border-2 border-gray-400 rounded-xl p-3 bg-base-200 h-16 grid grid-cols-11">
-                <h1 className="text-3xl font-bold text-accent flex justify-center items-center col-span-10 ...">Filter</h1>
+                <h1 className="text-3xl font-bold text-accent flex justify-center items-center ml-5 col-span-10 ...">Filter</h1>
                 <div className="... flex justify-end items-end mb-[4px] pr-1">
                     <TERipple rippleColor="light">
                         {props.filterStatus ?

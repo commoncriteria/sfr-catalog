@@ -29,15 +29,15 @@ function Results(props) {
 
     useEffect(() => {
         if (props.selectedSfrs) {
-            sfr_accordion_object = { name: props.selectedSfrs[0], isOpen: false, toggle: false, type: "SFRs" };
+            sfr_accordion_object = { name: props.selectedSfrs[0], isOpen: false, toggle: true, type: "SFRs" };
         }
 
         if (props.selectedThreats) {
-            threat_accordion_object = { name: props.selectedThreats[0], isOpen: false, toggle: false, type: "Threats" };
+            threat_accordion_object = { name: props.selectedThreats[0], isOpen: false, toggle: true, type: "Threats" };
         }
 
         if (props.selectedSecurityObjectives) {
-            objective_accordion_object = { name: props.selectedSecurityObjectives[0], isOpen: false, toggle: false, type: "SecurityObjectives" };
+            objective_accordion_object = { name: props.selectedSecurityObjectives[0], isOpen: false, toggle: true, type: "SecurityObjectives" };
         }
         // Update dropdowns according to threat selections
         let ppContentArr = [];
