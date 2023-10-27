@@ -17,6 +17,10 @@ function TabContent(props) {
     // Prop Validation
     TabContent.propTypes = {
         activeTab: PropTypes.string.isRequired,
+        selectedThreats: PropTypes.array,
+        selectedSecurityObjectives: PropTypes.array,
+        selectedSfrs: PropTypes.array,
+        selectedPps: PropTypes.array,
     };
 
     // Functions
@@ -30,27 +34,33 @@ function TabContent(props) {
             // All Results Tab Content
             case "results_tab":
                 title = "Results";
-                content = (<Results activeTab={props.activeTab}/>)
+                content = (<Results
+                    activeTab={props.activeTab}
+                    selectedThreats={props.selectedThreats}
+                    selectedSecurityObjectives={props.selectedSecurityObjectives}
+                    selectedSfrs={props.selectedSfrs}
+                    selectedPps={props.selectedPps}
+                />)
                 break;
             // Threats Tab Content
             case "threat_tab":
                 title = "Threats";
-                content = (<Threats activeTab={props.activeTab}/>)
+                content = (<Threats activeTab={props.activeTab} />)
                 break;
             // Objectives Tab Content
             case "objective_tab":
                 title = "Objectives";
-                content = (<Objectives activeTab={props.activeTab}/>)
+                content = (<Objectives activeTab={props.activeTab} />)
                 break;
             // SFRs Tab Content
             case "sfr_tab":
                 title = "SFRs";
-                content = (<SFRs activeTab={props.activeTab}/>)
+                content = (<SFRs activeTab={props.activeTab} />)
                 break;
             // PPs Tab Content
             case "pp_tab":
                 title = "PPs";
-                content = (<PPs activeTab={props.activeTab}/>)
+                content = (<PPs activeTab={props.activeTab} />)
                 break;
             // Default
             default:
@@ -61,10 +71,20 @@ function TabContent(props) {
         return (
             <TETabsPane show={props.activeTab === tab} className="rounded-lg h-full parent flex flex-col">
                 <div className="border-2 border-gray-400 rounded-xl p-3 bg-base-200 h-16">
-                    <h1 className="text-3xl font-bold text-secondary flex justify-center items-center">{title}</h1>
+                    <h1 className="text-3xl font-bold text-secondary flex justify-center items-center">Results</h1>
                 </div>
-                <div className="mt-4 mb-0 border-2 border-gray-400 rounded-lg p-3 bg-gray-300 text-black flex justify-center child flex-1 text-lg">
-                    {content}
+                <div className="mt-4 mb-0 border-2 border-gray-300 rounded-lg p-3 bg-gray-300 text-black flex justify-center child flex-1 text-lg">
+                    {/* {content} */}
+                    {props.selectedPps ?
+                        <Results
+                        activeTab={props.activeTab}
+                        selectedThreats={props.selectedThreats}
+                        selectedSecurityObjectives={props.selectedSecurityObjectives}
+                        selectedSfrs={props.selectedSfrs}
+                        selectedPps={props.selectedPps}
+                    /> :
+                    null
+                }
                 </div>
             </TETabsPane>
         )
@@ -74,7 +94,7 @@ function TabContent(props) {
     return (
         // Tab Content
         <div className="h-full">
-            { showTabContent() }
+            {showTabContent()}
         </div>
     );
 }

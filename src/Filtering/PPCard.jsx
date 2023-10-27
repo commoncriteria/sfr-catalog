@@ -1,18 +1,63 @@
 // Imports
-import FilterCard from "../Components/FilterCard.jsx";
+import Card from "../Components/Card.jsx";
+import PropTypes from "prop-types";
+import Dropdown from "../Components/Dropdown.jsx";
 
 /**
  * The PPCard class that displays the PPCard tab content
+ * @param props             the input props
  * @returns {JSX.Element}   the tab content
  * @constructor             passes in props to the class
  */
-function PPCard() {
+function PPCard(props) {
+    // Prop Validation
+    PPCard.propTypes = {
+        allPps: PropTypes.array.isRequired,
+        selections: PropTypes.array,
+        handleSetSelectedPps: PropTypes.func.isRequired
+    };
+
+    /**
+     * Handles the dropdown select for pps
+     * @param event the event handler
+     */
+    const handleDropdownSelect = (event, values) => {
+        if (values.length != 0) {
+            if (values && Object.keys(values).length === 0) {
+                if (props.allPps && Object.keys(props.allPps).length === 1) {
+                    props.handleSetSelectedPps(props.allPps.valueOf())
+                } else {
+                    props.handleSetSelectedPps(null)
+                }
+            } else {
+                if (values && Object.keys(values).length !== 0) {
+                    let filtered = (values.filter((item, index) => values.indexOf(item) === index)).sort()
+                    props.handleSetSelectedPps(filtered)
+                } else {
+                    props.handleSetSelectedPps(values)
+                }
+            }
+        } else { // if selection is cleared out, set to null
+            props.handleSetSelectedPps(null);
+        }
+    };
+
     // Return Function
     return (
-        <FilterCard
-            cardTitle={"PPs"}
-            cardContent={ <h5 className="text-gray-600 dark:text-gray-600 p-4">PP Selections</h5> }
-        />
+        <div>
+            <Card
+                cardTitle={"PPs"}
+                cardContent={
+                    <Dropdown
+                        label={"PP"}
+                        multiselect={true}
+                        options={props.allPps}
+                        selections={props.selections}
+                        handleDropdownSelect={handleDropdownSelect}
+                    />
+                }
+            />
+        </div>
     )
 }
 

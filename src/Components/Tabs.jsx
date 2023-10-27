@@ -22,7 +22,7 @@ function Tabs(props) {
      * @returns {string}    The current tab style for the selected tab
      */
     const tabStyle = (tabType) => {
-        let style = "text-[18px] font-bold h-[65px] flex justify-center items-center"
+        let style = "font-size-[36px] font-bold h-[65px] flex justify-center items-center"
         if (props.activeTab === tabType) {
             style += " bg-base-100"
         }
@@ -54,15 +54,15 @@ function Tabs(props) {
             {/* Tabs */}
             <TETabs>
                 {/* All Results Tab */}
-                { tabItem("Results", "results_tab", false) }
+                {/* { tabItem("Results", "results_tab", false) } */}
                 {/* Threats Tab */}
-                { tabItem("Threats", "threat_tab", false) }
+                {/* { tabItem("Threats", "threat_tab", false) } */}
                 {/* Objectives Tab */}
-                { tabItem("Objectives", "objective_tab", false) }
+                {/* { tabItem("Objectives", "objective_tab", false) } */}
                 {/* SFRs Tab */}
-                { tabItem("SFRs", "sfr_tab", false) }
+                {/* { tabItem("SFRs", "sfr_tab", false) } */}
                 {/* PPs Tab */}
-                { tabItem("PPs", "pp_tab", false) }
+                {/* { tabItem("PPs", "pp_tab", false) } */}
             </TETabs>
         </div>
     );

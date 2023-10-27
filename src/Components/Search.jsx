@@ -1,9 +1,17 @@
+// Imports
+import PropTypes from "prop-types";
+
 /**
  * The Search class that allows for user search form input
  * @returns {JSX.Element}   the search bar content/form
  * @constructor             passes in props to the class
  */
-function Search() {
+function Search(props) {
+    // Prop Validation
+    Search.propTypes = {
+        handleQuery: PropTypes.func.isRequired
+    };
+
     // Return Function
     return (
         <div className="w-full border-2 border-white rounded-full">
@@ -27,6 +35,9 @@ function Search() {
                     <input
                         type="text"
                         placeholder="Search"
+                        onChange={event=>{
+                            setTimeout(() => props.handleQuery(event.target.value), "150");
+                        }}
                         className="w-full py-3 pl-12 pr-4 input input-bordered input-white border-2 text-gray-600 rounded-3xl bg-gray-200"
                     />
                 </div>
