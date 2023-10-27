@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import PropTypes from "prop-types";
 import XMLViewer from "react-xml-viewer";
-import {createTheme, ThemeProvider} from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material";
 
 /**
  * The dialog slide transition
@@ -79,6 +79,13 @@ function Modal(props) {
         return sfrs
     }
 
+    /**
+    * Converts TD string to HTML
+    */
+    const TDtoHTML = (td) => {
+        return <div className="m-5" dangerouslySetInnerHTML={{ __html: td }} />;
+    }
+
     // Return Function
     return (
         <div>
@@ -87,7 +94,7 @@ function Modal(props) {
                     variant="contained"
                     size="medium"
                     color="primary"
-                    sx={{color: "white"}}
+                    sx={{ color: "white" }}
                     onClick={handleClickOpen}>{props.buttonName}
                 </Button>
                 <Dialog
@@ -96,7 +103,7 @@ function Modal(props) {
                     keepMounted
                     onClose={handleClose}
                     aria-describedby="alert-dialog-slide-description"
-                    style={{borderRadius: "100px"}}
+                    style={{ borderRadius: "100px" }}
                     maxWidth={"md"}
                 >
                     <DialogTitle
@@ -112,45 +119,39 @@ function Modal(props) {
                             flex: "auto",
                             backgroundColor: "#F3F4F6"
                         }}
-                        >{props.title}
+                    >{props.title}
                     </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-slide-description"
-                           sx={{
-                               margin: 0,
-                               textAlign: "center",
-                               color: "black",
-                               fontWeight: "normal",
-                               fontSize: "14px",
-                               flex: "auto",
-                               marginTop: "20px",
-                           }}
-                        >
-                            <div>
-                                {props.type === "TD" ?
+                    <DialogContent
+                        sx={{
+                            margin: 0,
+                            textAlign: "left",
+                            color: "black",
+                            fontWeight: "normal",
+                            fontSize: "14px",
+                            flex: "auto",
+                            marginTop: "20px",
+                        }}
+                    >
+                        <div>
+                            {props.type === "TD" ?
+                                <div>
                                     <div>
-                                        <div>
-                                            <label style={{fontWeight:"bold"}}>Publication Date: </label>
-                                            <label>{props.content.Publication_Date}</label>
-                                        </div>
-                                        <div style={{marginTop:"10px"}}>
-                                            <label style={{fontWeight:"bold"}}>SFR Components: </label>
-                                            <label>{getSFRs()}</label>
-                                        </div>
-                                        <div style={{marginTop:"10px"}}>
-                                            <label style={{fontWeight:"bold"}}>Text: </label>
-                                            <XMLViewer xml={props.content.Text} collapsible
-                                                       theme={{ attributeKeyColor: "#E051BA",
-                                                           attributeValueColor: "#1FB2A6",
-                                                       }}
-                                            />
-                                        </div>
+                                        <label style={{ fontWeight: "bold" }}>Publication Date: </label>
+                                        <label>{props.content.Publication_Date}</label>
                                     </div>
-                                    :
-                                    props.content
-                                }
-                            </div>
-                        </DialogContentText>
+                                    <div style={{ marginTop: "10px" }}>
+                                        <label style={{ fontWeight: "bold" }}>SFR Components: </label>
+                                        <label>{getSFRs()}</label>
+                                    </div>
+                                    <div style={{ marginTop: "10px" }}>
+                                        <label style={{ fontWeight: "bold" }}>Text: </label>
+                                        {TDtoHTML(props.content.Text)}
+                                    </div>
+                                </div>
+                                :
+                                props.content
+                            }
+                        </div>
                     </DialogContent>
                     <DialogActions>
                         <Button
