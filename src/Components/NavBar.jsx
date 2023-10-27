@@ -18,7 +18,7 @@ function NavBar(props) {
     // Return Function
     return (
         <nav className="navbar flex text-neutral-content w-full bg-base-300 border-2 border-t-3 border-l-3 rounded-lg border-gray-500 mt-1">
-            <div className="navbar-start font-title flex font-bold text-[44px] text-teal-400 pl-5">Catalog</div>
+            <div className="navbar-start font-title flex font-bold text-[44px] text-teal-400 pl-5">SFR Catalog</div>
             <div className="navbar-end">
                 <Tabs activeTab={props.activeTab} handleTabClick={props.handleTabClick.bind(this)}/>
             </div>

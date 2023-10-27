@@ -50,7 +50,7 @@ function FilterPane(props) {
                 handleClearAllFilters();
             }
         } catch (e) {
-            console.log(e)
+            console.log(e);
         }
     }, [SFRDatabase]);
 
@@ -59,7 +59,7 @@ function FilterPane(props) {
      */
     useEffect(() => {
         // Update dropdowns according to threat selections
-        updateDropdowns("Threat")
+        updateDropdowns("Threat");
     }, [props.selectedThreats])
 
     /**
@@ -67,7 +67,7 @@ function FilterPane(props) {
      */
     useEffect(() => {
         // Update dropdowns according to security objective selections
-        updateDropdowns("Objective")
+        updateDropdowns("Objective");
     }, [props.selectedSecurityObjectives])
 
     /**
@@ -75,7 +75,7 @@ function FilterPane(props) {
      */
     useEffect(() => {
         // Update dropdowns according to sfr selections
-        updateDropdowns("SFR")
+        updateDropdowns("SFR");
     }, [props.selectedSfrs])
 
 
@@ -83,8 +83,6 @@ function FilterPane(props) {
     /**
      * Update dropdowns based on the updated value
      * @param type          The initial type to filter from
-     * @param newSelections The new selections from the initial type
-     * @param allValues     The full dropdown list from the initial type
      */
     const updateDropdowns = (type) => {
         // Filter down associated lists based on types
@@ -99,22 +97,24 @@ function FilterPane(props) {
                     break;
                 }
                 case "SFR": {
-                    fromSFRs()
+                    fromSFRs();
                     break;
                 }
                 default:
                     break;
             }
         } catch (e) {
-            console.log(e)
+            console.log(e);
         } finally {
-            // clear out selected PPs before rendering new set of PP options
-            props.handleSetSelectedPps(null)
             // Update PP Filter
-            updatePPFilter()
+            updatePPFilter();
+
+            // update pp selections on re-render to only include those that are part of the available list of PPs, else clear out and set to null
+            let ppOptions = query.PPFilter(SFRDatabase, props.selectedThreats, props.selectedSecurityObjectives, props.selectedSfrs);
+            ppOptions && ppOptions.length && props.selectedPps && props.selectedPps.length > 0 ? props.handleSetSelectedPps(props.selectedPps.filter(x => ppOptions.includes(x))) : props.handleSetSelectedPps(null);
 
             if (!props.selectedThreats && !props.selectedSecurityObjectives && !props.selectedSfrs) {
-                handleClearAllFilters()
+                handleClearAllFilters();
             }
         }
     }
@@ -123,21 +123,12 @@ function FilterPane(props) {
      * The update pp filter method that updates pp dropdown and pp selections, based on all other selections
      */
     const updatePPFilter = () => {
-        // Get all of the current values
-        let selectedThreats = props.selectedThreats ? props.selectedThreats.valueOf() : null;
-        let selectedObjectives = props.selectedSecurityObjectives ? props.selectedSecurityObjectives.valueOf() : null;
-        let selectedSfrs = props.selectedSfrs ? props.selectedSfrs.valueOf() : null;
-
-        // Query PPs based on user selections
-        let newPPs = query.PPFilter(SFRDatabase, selectedThreats, selectedObjectives, selectedSfrs)
-        // Set new PP dropdown and updated selections
-        handleSetAllPps(newPPs);
+        // Set PP dropdown options based on selected threat, sfr, and/or objective
+        handleSetAllPps(query.PPFilter(SFRDatabase, props.selectedThreats, props.selectedSecurityObjectives, props.selectedSfrs));
     }
 
     /**
      * Filtering down based on threats
-     * @param newThreats    The threat selections
-     * @param fullThreats   The full threat dropdown list
      */
     const fromThreats = () => {
         if (props.selectedThreats) { // if there is a selected threat
@@ -181,10 +172,7 @@ function FilterPane(props) {
 
     /**
      * Filtering down based on objectives
-     * @param newObjectives    The objective selections
-     * @param fullObjectives   The full objective dropdown list
      */
-    // const fromObjectives = (newObjectives, fullObjectives) => {
     const fromObjectives = () => {
         if (props.selectedSecurityObjectives) { // if there is a selected security objective
             let sfrs = query.SecurityObjectiveToSFR(SFRDatabase, props.selectedSecurityObjectives[0]).sort();
@@ -221,10 +209,7 @@ function FilterPane(props) {
 
     /**
      * Filtering down based on SFRs
-     * @param newSFRs    The SFRs selections
-     * @param fullSFRs   The full SFRs dropdown list
      */
-    // const fromSFRs = (newSFRs, fullSFRs) => {
     const fromSFRs = () => {
         if (props.selectedSfrs) { // if there is a selected sfr
             let objectives = query.SFRToSecurityObjectives(SFRDatabase, props.selectedSfrs[0]).sort();
@@ -272,13 +257,13 @@ function FilterPane(props) {
         handleSetAllThreats(query.getThreats(SFRDatabase).sort());
         handleSetAllSecurityObjectives(query.getSecurityObjectives(SFRDatabase).sort());
         handleSetAllSfrs(query.getSfrs(SFRDatabase).sort());
-        handleSetAllPps(null)
+        handleSetAllPps(null);
 
         // Reset selections to default
-        props.handleSetSelectedThreats(null)
-        props.handleSetSelectedSecurityObjectives(null)
-        props.handleSetSelectedSfrs(null)
-        props.handleSetSelectedPps(null)
+        props.handleSetSelectedThreats(null);
+        props.handleSetSelectedSecurityObjectives(null);
+        props.handleSetSelectedSfrs(null);
+        props.handleSetSelectedPps(null);
     }
 
     /**
@@ -288,8 +273,8 @@ function FilterPane(props) {
     const handleSetAllThreats = (value) => {
         // If threats were updated, set state
         if (JSON.stringify(allThreats) !== JSON.stringify(value)) {
-            setThreats(value)
-            sessionStorage.setItem("allThreats", JSON.stringify(value))
+            setThreats(value);
+            sessionStorage.setItem("allThreats", JSON.stringify(value));
         }
     }
 
@@ -300,8 +285,8 @@ function FilterPane(props) {
     const handleSetAllSecurityObjectives = (value) => {
         // If objectives were updated, set state
         if (JSON.stringify(allSecurityObjectives) !== JSON.stringify(value)) {
-            setSecurityObjectives(value)
-            sessionStorage.setItem("allSecurityObjectives", JSON.stringify(value))
+            setSecurityObjectives(value);
+            sessionStorage.setItem("allSecurityObjectives", JSON.stringify(value));
         }
     }
 
@@ -312,8 +297,8 @@ function FilterPane(props) {
     const handleSetAllSfrs = (value) => {
         // If sfrs were updated, set state
         if (JSON.stringify(allSfrs) !== JSON.stringify(value)) {
-            setSfrs(value)
-            sessionStorage.setItem("allSfrs", JSON.stringify(value))
+            setSfrs(value);
+            sessionStorage.setItem("allSfrs", JSON.stringify(value));
         }
     }
 
@@ -324,8 +309,8 @@ function FilterPane(props) {
     const handleSetAllPps = (value) => {
         // If pps were updated, set state
         if (JSON.stringify(allPps) !== JSON.stringify(value)) {
-            setPps(value)
-            sessionStorage.setItem("allPps", JSON.stringify(value))
+            setPps(value);
+            sessionStorage.setItem("allPps", JSON.stringify(value));
         }
     }
 
