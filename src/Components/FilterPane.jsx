@@ -368,6 +368,7 @@ function FilterPane(props) {
                             allPps={allPps}
                             selections={props.selectedPps}
                             handleSetSelectedPps={props.handleSetSelectedPps}
+                            handleSetAllPps={handleSetAllPps}
                         />
                         : null
                 }
