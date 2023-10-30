@@ -2,6 +2,7 @@
 import Card from "../Components/Card.jsx";
 import PropTypes from "prop-types";
 import Dropdown from "../Components/Dropdown.jsx";
+import { useState } from "react";
 
 /**
  * The SFRCard class that displays the SFRCard filtering content
@@ -14,7 +15,8 @@ function SFRCard(props) {
     SFRCard.propTypes = {
         allSfrs: PropTypes.array.isRequired,
         selections: PropTypes.array,
-        handleSetSelectedSfrs: PropTypes.func.isRequired
+        handleSetSelectedSfrs: PropTypes.func.isRequired,
+        handleSetSfrSearch: PropTypes.func
     };
 
     /**
@@ -29,6 +31,36 @@ function SFRCard(props) {
         }
     };
 
+    const handleTextInput = (event, newinputvalue, reason) => {
+        // console.log(event);
+        // console.log(newinputvalue);
+        // console.log(reason);
+
+        // event sometimes coming as null which clears out textfield
+        // if (event) {
+            if (reason === 'reset') {
+                props.handleSetSfrSearch(null);
+                return;
+            } else {
+                props.handleSetSfrSearch(newinputvalue);
+            }
+
+        // }
+
+        
+
+
+        // if (event) {
+        //     let string = event.target.value;
+        //     if (string != undefined) {
+        //         // props.handleSetSfrSearch(string);
+        //         setinp(string);
+        //     }
+
+        // }
+
+    }
+
     // Return Function
     return (
         <div>
@@ -41,6 +73,7 @@ function SFRCard(props) {
                         options={props.allSfrs}
                         selections={props.selections}
                         handleDropdownSelect={handleDropdownSelect}
+                        handleTextInput={handleTextInput}
                     />
                 }
             />

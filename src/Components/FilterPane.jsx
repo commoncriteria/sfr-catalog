@@ -23,6 +23,8 @@ function FilterPane(props) {
     const [allSecurityObjectives, setSecurityObjectives] = useState(sessionStorage.getItem("allSecurityObjectives") ? JSON.parse(sessionStorage.getItem("allSecurityObjectives")) : null);
     // SFRs
     const [allSfrs, setSfrs] = useState(sessionStorage.getItem("allSfrs") ? JSON.parse(sessionStorage.getItem("allSfrs")) : null);
+    // SFRs
+    const [searchSfrString, setSearchSfrString] = useState(sessionStorage.getItem("searchSfrs") ? JSON.parse(sessionStorage.getItem("searchSfrs")) : null);
     // PPs
     const [allPps, setPps] = useState(sessionStorage.getItem("allPps") ? JSON.parse(sessionStorage.getItem("allPps")) : null);
 
@@ -78,6 +80,18 @@ function FilterPane(props) {
         updateDropdowns("SFR");
     }, [props.selectedSfrs])
 
+    /**
+    * Use Effect for updating other filter types based on selected sfr update
+    */
+    useEffect(() => {
+        // console.log(searchSfrString);
+        // if (searchSfrString) {
+        //     console.log(query.stringToSFR(SFRDatabase, searchSfrString));
+        // }
+        updateDropdowns("SFR");
+    }, [searchSfrString])
+
+
 
     // Functions
     /**
@@ -106,7 +120,7 @@ function FilterPane(props) {
         } catch (e) {
             console.log(e);
         } finally {
-            // Update PP Filter
+            // Update PP Filter based on selections made
             updatePPFilter();
 
             // update pp selections on re-render to only include those that are part of the available list of PPs, else clear out and set to null
@@ -241,7 +255,16 @@ function FilterPane(props) {
                 handleSetAllThreats(threats);
                 handleSetAllSfrs(query.getSfrs(SFRDatabase).sort());
             }
-        } else { // if no sfr is selected/cleared out 
+        } else { // if no sfr is selected/cleared out OR if search is by string
+            if (searchSfrString) {
+                // update objective options
+                let sfrToPP = query.stringToSFR(SFRDatabase, searchSfrString);
+                // console.log([...new Set(Object.keys(sfrToPP))]);
+                console.log(Object.keys(sfrToPP));
+                handleSetAllSfrs(Object.keys(sfrToPP));
+                console.log(allSfrs);
+
+            }
             // update threats
             fromThreats();
         }
@@ -264,6 +287,8 @@ function FilterPane(props) {
         props.handleSetSelectedSecurityObjectives(null);
         props.handleSetSelectedSfrs(null);
         props.handleSetSelectedPps(null);
+
+        handleSetSfrSearch(null);
     }
 
     /**
@@ -299,6 +324,21 @@ function FilterPane(props) {
         if (JSON.stringify(allSfrs) !== JSON.stringify(value)) {
             setSfrs(value);
             sessionStorage.setItem("allSfrs", JSON.stringify(value));
+        }
+    }
+
+    /**
+    * Handles setting the sfrs
+    * @param value The sfr value
+    // */
+    const handleSetSfrSearch = (value) => {
+        // console.log(value);
+        // console.log(searchSfrString);
+
+        // If sfrs were updated, set state
+        if (JSON.stringify(searchSfrString) !== JSON.stringify(value)) {
+            setSearchSfrString(value);
+            sessionStorage.setItem("searchSfrs", JSON.stringify(value));
         }
     }
 
@@ -353,8 +393,9 @@ function FilterPane(props) {
                         <SFRCard
                             name={"SFRs"}
                             allSfrs={allSfrs}
-                            selections={props.selectedSfrs}
+                            selections={props.selectedSfrs ? props.selectedSfrs : []}
                             handleSetSelectedSfrs={props.handleSetSelectedSfrs}
+                            handleSetSfrSearch={handleSetSfrSearch}
                         />
                         : null
                 }

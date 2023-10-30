@@ -25,6 +25,8 @@ function App() {
     const [selectedPps, setSelectedPps] = useState(sessionStorage.getItem("selectedPps") ? JSON.parse(sessionStorage.getItem("selectedPps")) : null);
     // Filter Pane Visible Status
     const [filterStatus, setFilterStatus] = useState(sessionStorage.getItem("filterStatus") ? JSON.parse(sessionStorage.getItem("filterStatus")) : true);
+    // Search string for SFR search
+    // const [sfrSearch, setSfrSearch] = useState(sessionStorage.getItem("sfrSearch") ? JSON.parse(sessionStorage.getItem("sfrSearch")) : true);
 
     // Functions
     /**
@@ -90,13 +92,25 @@ function App() {
 
     /**
      * Handles setting the Filter Pane Status
-     * @param value The selected pps value
+     * @param value The filter status value
      */
-         const handleSetFilterStatus = (value) => {
-            // Toggle the Filter Pane Visibility
-                setFilterStatus(value)
-                sessionStorage.setItem("filterStatus", JSON.stringify(value))
-        }
+    const handleSetFilterStatus = (value) => {
+        // Toggle the Filter Pane Visibility
+        setFilterStatus(value)
+        sessionStorage.setItem("filterStatus", JSON.stringify(value))
+    }
+
+
+    /**
+    * Handles setting the Filter Pane Status
+    * @param value The selected pps value
+    */
+    // const handleSetSfrSearch = (value) => {
+    //     // Toggle the Filter Pane Visibility
+    //     setSfrSearch(value)
+    //     sessionStorage.setItem("sfrSearch", JSON.stringify(value))
+    // }
+
 
     // Return Function
     return (
@@ -110,7 +124,7 @@ function App() {
                     {/* The Filter Pane Content */}
                     <div className={filterStatus ? "col-span-1 ... bg-neutral border-2 border-gray-500 rounded-lg p-4 pb-0 pr-0 h-full" : "col-start-1 ... bg-neutral border-2 border-gray-500 rounded-lg h-full"}>
                         <div className={filterStatus ? "flex flex-row justify-between" : "flex flex-col justify-evenly"}>
-                            {filterStatus ?  <FilterPane
+                            {filterStatus ? <FilterPane
                                 selectedThreats={selectedThreats}
                                 selectedSecurityObjectives={selectedSecurityObjectives}
                                 selectedSfrs={selectedSfrs}
@@ -119,26 +133,28 @@ function App() {
                                 handleSetSelectedSecurityObjectives={handleSetSelectedSecurityObjectives}
                                 handleSetSelectedSfrs={handleSetSelectedSfrs}
                                 handleSetSelectedPps={handleSetSelectedPps}
+                                // sfrSearch={sfrSearch}
+                                // handleSetSfrSearch={handleSetSfrSearch}
                             /> : null
                             }
-                           {filterStatus ? 
-                           <div className="self-center" onClick={()=>{handleSetFilterStatus(!filterStatus)}}>
-                                <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
-                                </svg>
-                            </div> 
-                            : 
-                            <div className="self-center" onClick={()=>{handleSetFilterStatus(!filterStatus)}}>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 mt-3">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                                </svg>
-                            </div> 
+                            {filterStatus ?
+                                <div className="self-center" onClick={() => { handleSetFilterStatus(!filterStatus) }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
+                                    </svg>
+                                </div>
+                                :
+                                <div className="self-center" onClick={() => { handleSetFilterStatus(!filterStatus) }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 mt-3">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                                    </svg>
+                                </div>
                             }
-                            
-                         
+
+
 
                         </div>
-                       
+
                     </div>
                     {/* The Tab Content */}
                     <div className={filterStatus ? "col-span-3 ... bg-neutral border-2 border-gray-500 rounded-lg p-4 ml-2 h-full" : "col-span-24 bg-neutral border-2 border-gray-500 rounded-lg p-4 ml-2 h-full"}>

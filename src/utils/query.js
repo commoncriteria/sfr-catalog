@@ -258,3 +258,49 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
         return threatPPs.filter(x => objectivePPs.includes(x)).filter(y => sfrPPs.includes(y));
     }
 }
+
+
+/**
+ * Gets the SFR content from the SFRDatabase
+ * @param sfrDB The SFRDatabase
+ * @returns {*} The SFR(s) content
+ */
+export function stringToSFR(sfrDB, searchString) {
+    // console.log(searchString);
+    let sfr_obj = {};
+
+    let sfrs = getSfrs(sfrDB);
+
+    // get sfr:xml mapping for all SFRs
+    sfrs.forEach(sfr => {
+        sfr_obj[sfr] = getSfrContent(sfrDB, sfr);
+    });
+
+
+    let matchedSfrToPP = {};
+
+    for (const [sfr, ppImplementation] of Object.entries(sfr_obj)) {
+        // console.log(value[0])
+        // if (value == "XML") {
+        //     console.log(key[value]);
+        // }
+        // console.log(ppImplementation[0]);
+        for (const [pp, value] of Object.entries(ppImplementation[0])) {
+            if ('XML' in value) {
+                // console.log(value);
+                // console.log(value['XML']);
+                if (value['XML'].toLowerCase().includes(searchString.toLowerCase())) {
+                    matchedSfrToPP[sfr] = pp;
+                }
+            }   
+        }
+    }
+
+    console.log(matchedSfrToPP);
+    
+    // console.log(sfr_obj);
+
+
+
+    return sfr_obj;
+}

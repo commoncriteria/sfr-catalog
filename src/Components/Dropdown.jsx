@@ -16,6 +16,7 @@ function Dropdown(props) {
         options: PropTypes.array.isRequired,
         selections: PropTypes.array,
         handleDropdownSelect: PropTypes.func.isRequired,
+        handleTextInput: PropTypes.func,
     };
 
     // Return Function
@@ -25,10 +26,13 @@ function Dropdown(props) {
                 multiple={props.multiselect}
                 id={props.label}
                 options={props.options}
-                value={props.selections ? props.selections : []}
+                // value={props.selections ? props.selections : []}
+                // value={props.selections ? props.selections : null} // The Autocomplete expects the `value` prop to be an array when `multiple={true}` or undefined; array keeps resetting free text
                 getOptionLabel={(option) => option.toString()}
                 isOptionEqualToValue={(option, value) => option == value[0]}
                 onChange={props.handleDropdownSelect}
+                freeSolo
+                onInputChange={props.handleTextInput}
                 className={"m-2"}
                 sx={{
                     "root": {
@@ -52,6 +56,7 @@ function Dropdown(props) {
                         label={"Select " + props.label}
                         variant="outlined"
                         size={"medium"}
+                        // onChange={props.handleTextInput}
                         InputLabelProps={{
                             sx: {
                                 "color": "#17877D",
