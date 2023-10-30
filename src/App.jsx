@@ -5,6 +5,8 @@ import NavBar from "./Components/NavBar.jsx";
 import TabContent from "./Components/TabContent.jsx";
 import "tw-elements-react/dist/css/tw-elements-react.min.css";
 import "./index.css"
+import {TERipple} from "tw-elements-react";
+import {Box} from "@mui/material";
 
 /**
  * The App class that runs the Catalog project
@@ -38,7 +40,6 @@ function App() {
         setActiveTab(value);
         sessionStorage.setItem("activeTab", value)
     };
-
 
     /**
      * Handles setting the selected threats
@@ -100,56 +101,58 @@ function App() {
 
     // Return Function
     return (
-        <div className="pb-5 min-w-full min-h-screen">
-            <div className="p-1">
-                {/* The Navigation Bar */}
-                <div className="bg-base-300 w-full p-1 pt-2 sticky top-0 z-30 pb-2 rounded-sm">
-                    <NavBar handleTabClick={handleTabClick.bind(this)} activeTab={activeTab} />
-                </div>
-                <div className={filterStatus ? "grid grid-cols-4 w-full h-full p-1 bg-base-200 rounded-xl z-10 min-h-screen" : "grid grid-cols-25 w-full h-full p-1 bg-base-200 rounded-xl z-10 min-h-screen"}>
-                    {/* The Filter Pane Content */}
-                    <div className={filterStatus ? "col-span-1 ... bg-neutral border-2 border-gray-500 rounded-lg p-4 pb-0 pr-0 h-full" : "col-start-1 ... bg-neutral border-2 border-gray-500 rounded-lg h-full"}>
-                        <div className={filterStatus ? "flex flex-row justify-between" : "flex flex-col justify-evenly"}>
-                            {filterStatus ?  <FilterPane
-                                selectedThreats={selectedThreats}
-                                selectedSecurityObjectives={selectedSecurityObjectives}
-                                selectedSfrs={selectedSfrs}
-                                selectedPps={selectedPps}
-                                handleSetSelectedThreats={handleSetSelectedThreats}
-                                handleSetSelectedSecurityObjectives={handleSetSelectedSecurityObjectives}
-                                handleSetSelectedSfrs={handleSetSelectedSfrs}
-                                handleSetSelectedPps={handleSetSelectedPps}
-                            /> : null
-                            }
-                           {filterStatus ? 
-                           <div className="self-center" onClick={()=>{handleSetFilterStatus(!filterStatus)}}>
-                                <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
-                                </svg>
-                            </div> 
-                            : 
-                            <div className="self-center" onClick={()=>{handleSetFilterStatus(!filterStatus)}}>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 mt-3">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                                </svg>
-                            </div> 
-                            }
-                            
-                         
-
-                        </div>
-                       
+        <div className="pb-5 min-w-full min-h-screen p-1">
+            {/* The Navigation Bar */}
+            <div className="bg-base-300 w-full p-1 pt-2 sticky top-0 z-30 pb-2 rounded-sm">
+                <NavBar handleTabClick={handleTabClick.bind(this)} activeTab={activeTab} />
+            </div>
+            <div className="w-full h-full rounded-xl min-h-screen">
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        m: "5px",
+                        bgcolor: 'bg-base-200',
+                    }}
+                >
+                    <div className="bg-neutral border-2 border-gray-500 rounded-lg p-4 min-h-full">
+                        {/* The Filter Content Pane */}
+                        {
+                            !filterStatus ?
+                                <div className="border-2 border-gray-400 rounded-xl p-3 bg-base-200 h-16 pt-4">
+                                    <TERipple rippleColor="light">
+                                        <svg onClick={() => {handleSetFilterStatus(!filterStatus)}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#1FB2A6" className="w-7 h-7">
+                                            <path fillRule="evenodd" d="M4.72 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L11.69 12 4.72 5.03a.75.75 0 010-1.06zm6 0a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06L17.69 12l-6.97-6.97a.75.75 0 010-1.06z" clipRule="evenodd" />
+                                        </svg>
+                                    </TERipple>
+                                </div>
+                                :
+                                <div className="min-w-[325px] max-w-[325px]">
+                                    <FilterPane
+                                        filterStatus={filterStatus}
+                                        selectedThreats={selectedThreats}
+                                        selectedSecurityObjectives={selectedSecurityObjectives}
+                                        selectedSfrs={selectedSfrs}
+                                        selectedPps={selectedPps}
+                                        handleSetSelectedThreats={handleSetSelectedThreats}
+                                        handleSetSelectedSecurityObjectives={handleSetSelectedSecurityObjectives}
+                                        handleSetSelectedSfrs={handleSetSelectedSfrs}
+                                        handleSetSelectedPps={handleSetSelectedPps}
+                                        handleSetFilterStatus={handleSetFilterStatus}
+                                    />
+                                </div>
+                        }
                     </div>
-                    {/* The Tab Content */}
-                    <div className={filterStatus ? "col-span-3 ... bg-neutral border-2 border-gray-500 rounded-lg p-4 ml-2 h-full" : "col-span-24 bg-neutral border-2 border-gray-500 rounded-lg p-4 ml-2 h-full"}>
+                    {/* The Tab Content Pane */}
+                    <div className={"bg-neutral border-2 border-gray-500 rounded-lg p-4 ml-2 w-full overflow-x-hidden min-h-full"}>
                         <TabContent activeTab={activeTab}
-                            selectedThreats={selectedThreats}
-                            selectedSecurityObjectives={selectedSecurityObjectives}
-                            selectedSfrs={selectedSfrs}
-                            selectedPps={selectedPps}
+                                    selectedThreats={selectedThreats}
+                                    selectedSecurityObjectives={selectedSecurityObjectives}
+                                    selectedSfrs={selectedSfrs}
+                                    selectedPps={selectedPps}
                         />
                     </div>
-                </div>
+                </Box>
             </div>
         </div>
     )
