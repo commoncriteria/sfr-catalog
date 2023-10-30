@@ -216,11 +216,11 @@ function AccordionContent(props) {
             >
                 <AccordionHeader
 
-                    className={(props.isOpen ? " border-b-2 bg-gray-100" : " border-b-0") + " px-6 text-lg font-extrabold text-accent border-gray-400"}
+                    className={(props.isOpen ? " border-b-2 bg-gray-100" : " border-b-0") + " px-6 text-sm max-md:text-[0.5rem] md:max-lg:text-sm lg:max-2xl:text-md 2xl:text-lg font-extrabold text-accent border-gray-400"}
                     onClick={() => handleUpdates("accordion")}
                 >
                     <div className="flex flex-row gap-2">
-                        <span className="">{props.accordionHeader}</span>
+                        <span>{props.accordionHeader}</span>
                     </div>
 
 
@@ -258,7 +258,7 @@ function AccordionContent(props) {
                                     : null
                             }
                         </div>
-                        <div key={props.name} className={props.type == "SFRs" ? "flex min-h-[36rem] max-h-[36rem] overflow-auto" : "flex min-h-[32rem] max-h-[32rem] overflow-auto"}>
+                        <div key={props.name} className={props.type == "SFRs" ? "flex min-h-[36rem] max-h-[36rem] overflow-auto text-md lg:max-2xl:text-lg 2xl:text-xl" : "flex min-h-[32rem] max-h-[32rem] overflow-auto text-md lg:max-2xl:text-lg 2xl:text-xl"}>
                             {queryContent()}
                         </div>
                     </div>
