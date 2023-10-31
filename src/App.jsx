@@ -103,7 +103,7 @@ function App() {
     return (
         <div className="pb-5 min-w-full min-h-screen p-1">
             {/* The Navigation Bar */}
-            <div className="bg-base-300 w-full p-1 pt-2 sticky top-0 z-30 pb-2 rounded-sm min-w-[848px]">
+            <div className="bg-base-300 w-full p-1 pt-2 sticky top-0 z-30 pb-2 rounded-sm min-w-[853px]">
                 <NavBar handleTabClick={handleTabClick.bind(this)} activeTab={activeTab} />
             </div>
             <div className="w-full h-full rounded-xl min-h-screen">
@@ -144,7 +144,7 @@ function App() {
                         }
                     </div>
                     {/* The Tab Content Pane */}
-                    <div className={"bg-neutral border-2 border-gray-500 rounded-lg p-4 ml-2 w-full overflow-x-hidden min-h-full min-w-[470px]"}>
+                    <div className={"bg-neutral border-2 border-gray-500 rounded-lg p-4 ml-2 w-full overflow-x-hidden min-h-full min-w-[475px]"}>
                         <TabContent activeTab={activeTab}
                                     selectedThreats={selectedThreats}
                                     selectedSecurityObjectives={selectedSecurityObjectives}
