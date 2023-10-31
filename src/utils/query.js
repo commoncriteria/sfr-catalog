@@ -280,20 +280,21 @@ export function stringToSFR(sfrDB, searchString) {
     let matchedSfrToPP = {};
 
     for (const [sfr, ppImplementation] of Object.entries(sfr_obj)) {
-        // console.log(value[0])
-        // if (value == "XML") {
-        //     console.log(key[value]);
-        // }
-        // console.log(ppImplementation[0]);
+        let pp_arr = [];
         for (const [pp, value] of Object.entries(ppImplementation[0])) {
             if ('XML' in value) {
                 // console.log(value);
                 // console.log(value['XML']);
                 if (value['XML'].toLowerCase().includes(searchString.toLowerCase())) {
-                    matchedSfrToPP[sfr] = pp;
+                    // matchedSfrToPP[sfr] = pp;
+                    pp_arr.push(pp);
                 }
             }   
         }
+        if (pp_arr.length != 0) {
+            matchedSfrToPP[sfr] = pp_arr;
+        }
+        
     }
 
     console.log(matchedSfrToPP);

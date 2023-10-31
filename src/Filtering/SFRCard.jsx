@@ -2,7 +2,6 @@
 import Card from "../Components/Card.jsx";
 import PropTypes from "prop-types";
 import Dropdown from "../Components/Dropdown.jsx";
-import { useState } from "react";
 
 /**
  * The SFRCard class that displays the SFRCard filtering content
@@ -44,18 +43,6 @@ function SFRCard(props) {
             } else {
                 props.handleSetSfrSearch(newinputvalue);
             }
-
-        // }
-
-        
-
-
-        // if (event) {
-        //     let string = event.target.value;
-        //     if (string != undefined) {
-        //         // props.handleSetSfrSearch(string);
-        //         setinp(string);
-        //     }
 
         // }
 

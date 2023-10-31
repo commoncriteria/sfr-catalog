@@ -259,7 +259,6 @@ function FilterPane(props) {
             if (searchSfrString) {
                 // update objective options
                 let sfrToPP = query.stringToSFR(SFRDatabase, searchSfrString);
-                // console.log([...new Set(Object.keys(sfrToPP))]);
                 console.log(Object.keys(sfrToPP));
                 handleSetAllSfrs(Object.keys(sfrToPP));
                 console.log(allSfrs);
