@@ -222,8 +222,6 @@ function AccordionContent(props) {
                     <div className="flex flex-row gap-2">
                         <span>{props.accordionHeader}</span>
                     </div>
-
-
                 </AccordionHeader>
                 <AccordionBody className={"px-4 bg-gray-200"}>
                     <div className={props.type == "SFRs" ? "flex flex-col h-fit" : "flex flex-col h-fit"}>
