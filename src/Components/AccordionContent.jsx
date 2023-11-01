@@ -174,19 +174,48 @@ function AccordionContent(props) {
     }
 
     /**
-    * Isolating this function to be used with clipboard
+    * Copy content of pane to clipboard
+    * @param type: Threats, SecurityObjectives, or SFRs
     */
-    const copySFRToClipboard = () => {
-        let sfr_content = null;
-        try {
-            sfr_content = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][props.ppName]["XML"];
-        } catch (e) {
-            console.log(e);
-        }
+    const copyToClipboard = (type) => {
+        let content = null;
 
-        if (sfr_content) {
-            navigator.clipboard.writeText(sfr_content);
-            toast.success("Copied to Clipboard");
+        switch (type) {
+            case "Threats": {
+                try {
+                    content = query.getThreatContent(SFRDatabase, props.selectedThreats[0])[0][props.ppName];
+
+                    navigator.clipboard.writeText(content);
+                    toast.success("Copied to Clipboard");
+                } catch (e) {
+                    console.log(e);
+                }
+                break;
+            }
+            case "SecurityObjectives": {
+                try {
+                    content = query.getSecurityObjectiveContent(SFRDatabase, props.selectedSecurityObjectives[0])[0][props.ppName];
+
+                    navigator.clipboard.writeText(content);
+                    toast.success("Copied to Clipboard");
+                } catch (e) {
+                    console.log(e);
+                }
+                break;
+            }
+            case "SFRs": {
+                try {
+                    content = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][props.ppName]["XML"];
+
+                    navigator.clipboard.writeText(content);
+                    toast.success("Copied to Clipboard");
+                } catch (e) {
+                    console.log(e);
+                }
+                break;
+            }
+            default:
+                return null;
         }
     }
 
@@ -222,24 +251,24 @@ function AccordionContent(props) {
                         <span>{props.accordionHeader}</span>
                         {
                             (props.type == "SFRs" && props.tds.length != 0) ?
-                            <span className="ml-1">
-                                <Tooltip placement="bottom" className="border bg-white border-accent-content rounded-lg shadow-xl shadow-black/10"
-                                         content={
-                                             <div className="p-3">
-                                                 <Typography className="text-[#E051BA] text-center">
-                                                     <span className="font-semibold">{`Contains TD: ${props.tds[0].TD_Number}`}</span>
-                                                 </Typography>
-                                             </div>
-                                         }
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                         strokeWidth={2} className="w-[3vh] h-[3vh] flex-none cursor-pointer text-blue-gray-500">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
-                                    </svg>
-                                </Tooltip>
-                            </span>
-                            :
-                            null
+                                <span className="ml-1">
+                                    <Tooltip placement="bottom" className="border bg-white border-accent-content rounded-lg shadow-xl shadow-black/10"
+                                        content={
+                                            <div className="p-3">
+                                                <Typography className="text-[#E051BA] text-center">
+                                                    <span className="font-semibold">{`Contains TD: ${props.tds[0].TD_Number}`}</span>
+                                                </Typography>
+                                            </div>
+                                        }
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                            strokeWidth={2} className="w-[3vh] h-[3vh] flex-none cursor-pointer text-blue-gray-500">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                        </svg>
+                                    </Tooltip>
+                                </span>
+                                :
+                                null
                         }
                     </div>
                 </AccordionHeader>
@@ -253,7 +282,7 @@ function AccordionContent(props) {
                                 <Typography>XML</Typography>
                             </Stack>
                             <div className="flex justify-center items-center"
-                                onClick={copySFRToClipboard}
+                                onClick={() => copyToClipboard(props.type)}
                             >
                                 <Tooltip content="Copy to Clipboard">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 cursor-pointer">
