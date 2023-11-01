@@ -23,10 +23,12 @@ function FilterPane(props) {
     const [allSecurityObjectives, setSecurityObjectives] = useState(sessionStorage.getItem("allSecurityObjectives") ? JSON.parse(sessionStorage.getItem("allSecurityObjectives")) : null);
     // SFRs
     const [allSfrs, setSfrs] = useState(sessionStorage.getItem("allSfrs") ? JSON.parse(sessionStorage.getItem("allSfrs")) : null);
-    // 
+    // SFR Query
     const [sfrQuery, setSfrQuery] = useState(sessionStorage.getItem("sfrQuery") ? JSON.parse(sessionStorage.getItem("sfrQuery")) : null);
-    //
-    const [filteredSfrs, setFilteredSfrs] = useState(sessionStorage.getItem("filteredSfrs") ? JSON.parse(sessionStorage.getItem("filteredSfrs")) : null);
+    // Filtered SFRs
+    const [filteredSfrs, setFilteredSfrs] = useState(sessionStorage.getItem("filteredSfrs") ? JSON.parse(sessionStorage.getItem("filteredSfrs")) : []);
+    // SFR Input Value
+    const [sfrInputValue, setSfrInputValue] = useState(sessionStorage.getItem("searchInput") ? JSON.parse(sessionStorage.getItem("searchInput")) : "");
     // PPs
     const [allPps, setPps] = useState(sessionStorage.getItem("allPps") ? JSON.parse(sessionStorage.getItem("allPps")) : null);
 
@@ -41,7 +43,6 @@ function FilterPane(props) {
         handleSetSelectedSfrs: PropTypes.func.isRequired,
         handleSetSelectedPps: PropTypes.func.isRequired,
     };
-
 
     // Use Effects
     /**
@@ -81,9 +82,6 @@ function FilterPane(props) {
         // Update dropdowns according to sfr selections
         updateDropdowns("SFR");
     }, [props.selectedSfrs])
-
-
-
 
     // Functions
     /**
@@ -281,8 +279,8 @@ function FilterPane(props) {
         props.handleSetSelectedSecurityObjectives(null);
         props.handleSetSelectedSfrs(null);
         props.handleSetSelectedPps(null);
-
-        handleSetSfrQuery(null);
+        handleSetSfrQuery(null, []);
+        handleSetSfrInputValue("");
     }
 
     /**
@@ -318,40 +316,30 @@ function FilterPane(props) {
         if (JSON.stringify(allSfrs) !== JSON.stringify(value)) {
             setSfrs(value);
             sessionStorage.setItem("allSfrs", JSON.stringify(value));
-
-            
-            
-
-            let intersection = filteredSfrs.filter((x) => {
-                console.log(x)
-                console.log(x.sfr)
-                allSfrs.includes(x.sfr);
-            });
-            console.log(intersection);
-
-            // setFilteredSfrs(sfrToPP);
-            // sessionStorage.setItem("filteredSfrs", JSON.stringify(sfrToPP));
-
         }
     }
 
     /**
-    * Handles setting the sfrs
-    * @param value The sfr value
-    // */
-    const handleSetSfrQuery = (value) => {
-        setSfrQuery(value);
-        sessionStorage.setItem("sfrQuery", JSON.stringify(value));
+    * Handles setting the sfrs based on sfr content
+    * @param selectedSFR The sfr value
+    * @param filteredSFRs The filtered sfr values
+    */
+    const handleSetSfrQuery = (selectedSFR, filteredSFRs) => {
+        // Sets the sfr query
+        setSfrQuery(selectedSFR);
+        sessionStorage.setItem("sfrQuery", JSON.stringify(selectedSFR));
 
-        let sfrToPP = query.stringToSFR(SFRDatabase, value);
+        // Sets the filtered sfrs
+        setFilteredSfrs(filteredSFRs);
+        sessionStorage.setItem("filteredSfrs", JSON.stringify(filteredSFRs));
+    }
 
-        if (sfrToPP) { // if there is a result
-            setFilteredSfrs(sfrToPP);
-            sessionStorage.setItem("filteredSfrs", JSON.stringify(sfrToPP));
-        } else {
-            setFilteredSfrs(null);
-            sessionStorage.setItem("filteredSfrs", "null");
-        }
+    /**
+     * Handles the input value
+     */
+    const handleSetSfrInputValue = (newInputValue) => {
+        setSfrInputValue(newInputValue)
+        sessionStorage.setItem("searchInput", JSON.stringify(newInputValue))
     }
 
     /**
@@ -406,7 +394,9 @@ function FilterPane(props) {
                             name={"SFRs"}
                             allSfrs={allSfrs}
                             filteredSfrs={filteredSfrs}
+                            inputValue={sfrInputValue}
                             selections={props.selectedSfrs}
+                            handleSetSfrInputValue={handleSetSfrInputValue}
                             handleSetSelectedSfrs={props.handleSetSelectedSfrs}
                             handleSetSfrQuery={handleSetSfrQuery}
                             sfrQuery={sfrQuery}

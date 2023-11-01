@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Dropdown from "../Components/Dropdown.jsx";
 import SearchDropdown from "../Components/SearchDropdown.jsx";
 import { alpha, Stack, styled, Switch, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 /**
  * The SFRCard class that displays the SFRCard filtering content
@@ -20,83 +20,42 @@ function SFRCard(props) {
         allSfrs: PropTypes.array,
         filteredSfrs: PropTypes.array,
         selections: PropTypes.array,
+        inputValue: PropTypes.string.isRequired,
+        handleSetSfrInputValue: PropTypes.func.isRequired,
         handleSetSelectedSfrs: PropTypes.func.isRequired,
         handleSetSfrQuery: PropTypes.func,
         sfrQuery: PropTypes.string
     };
 
-    useEffect(() => {
-       
-        if (sessionStorage.getItem("searchToggle") && (JSON.parse(sessionStorage.getItem("searchToggle")) !== searchToggle)) {
-            props.handleSetSfrQuery(null);
-            props.handleSetSelectedSfrs(null);
-        }
-
-
-    }, [searchToggle])
-
-    console.log(props.filteredSfrs);
-
+    /**
+     * Handles the toggle for the type of search
+     */
     const handleToggle = () => {
         setSearchToggle(!searchToggle)
         sessionStorage.setItem("searchToggle", JSON.stringify(!searchToggle))
-
+        props.handleSetSfrQuery(null, []);
+        props.handleSetSelectedSfrs(null);
+        props.handleSetSfrInputValue("");
     }
-
 
     /**
      * Handles the dropdown select for sfrs
      * @param event the event handler
      */
     const handleDropdownSelect = (event, values) => {
-        // if (typeof values == "string") {
-        //     props.handleSetSelectedSfrs([values])
-        // } else {
-        //     props.handleSetSelectedSfrs(values)
-        // }
         if (typeof values == "string") {
             props.handleSetSelectedSfrs([values])
         } else if (typeof values == "object") {
-            console.log(values);
             // when cleared out, becomes null, which is an object; only want to set when there is an actual value
             if (values) {
                 props.handleSetSelectedSfrs([values.sfr]);
             } else {
                 props.handleSetSelectedSfrs(null);
             }
-
-        }
-        else {
+        } else {
             props.handleSetSelectedSfrs(values)
         }
     };
-
-    const handleTextInput = (event, newinputvalue, reason) => {
-        // console.log(event);
-        console.log(newinputvalue);
-        // console.log(reason);
-
-        console.log(props.selections);
-
-        if (props.allSfrs.includes(newinputvalue)) {
-            props.handleSetSelectedSfrs([newinputvalue]);
-        } 
-
-        if (reason === 'reset') {
-            if (props.allSfrs.includes(newinputvalue)) {
-                props.handleSetSelectedSfrs([newinputvalue]);
-            } else if (!props.selections) {
-                props.handleSetSfrQuery(null);
-            }
-        } else {
-            if (newinputvalue.length != 0) {
-                props.handleSetSfrQuery(newinputvalue);
-            } else {
-                props.handleSetSfrQuery(null);
-            }
-        }
-    }
-
 
     // Styling
     const AccentSwitch = styled(Switch)(({ theme }) => {
@@ -113,11 +72,6 @@ function SFRCard(props) {
         });
     });
 
-
-
-
-
-
     /**
      * Display dropdown according to toggle value
      * @returns {JSX.Element|null}
@@ -127,12 +81,13 @@ function SFRCard(props) {
             return (
                 <SearchDropdown
                     label={"SFR Search By String"}
-                    multiselect={false}
-                    options={props.filteredSfrs ? props.filteredSfrs : []}
-                    input={props.sfrQuery}
                     selections={props.selections}
-                    handleDropdownSelect={handleDropdownSelect}
-                    handleTextInput={handleTextInput}
+                    allSfrs={props.allSfrs}
+                    filteredSfrs={props.filteredSfrs}
+                    inputValue={props.inputValue}
+                    handleInputValue={props.handleSetSfrInputValue}
+                    handleSetSelectedSfrs={props.handleSetSelectedSfrs}
+                    handleSetSfrQuery={props.handleSetSfrQuery}
                 />
             )
         } else {
@@ -143,17 +98,10 @@ function SFRCard(props) {
                     options={props.allSfrs}
                     selections={props.selections}
                     handleDropdownSelect={handleDropdownSelect}
-                    handleTextInput={handleTextInput}
                 />
             )
         }
     }
-
-
-
-
-
-
 
     // Return Function
     return (

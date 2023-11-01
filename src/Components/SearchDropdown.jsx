@@ -2,6 +2,8 @@
 import PropTypes from "prop-types";
 import { Autocomplete, TextField } from "@mui/material";
 import { createFilterOptions } from "@mui/material/Autocomplete";
+import * as query from "../utils/query.js";
+import SFRDatabase from "../assets/NIAPDocumentBundle.json";
 
 /**
  * The Dropdown class that displays a card type
@@ -13,37 +15,105 @@ function SearchDropdown(props) {
     // Prop Validation
     SearchDropdown.propTypes = {
         label: PropTypes.string.isRequired,
-        multiselect: PropTypes.bool.isRequired,
-        options: PropTypes.array.isRequired,
         selections: PropTypes.array,
-        handleDropdownSelect: PropTypes.func.isRequired,
-        handleTextInput: PropTypes.func,
-        input: PropTypes.string,
+        filteredSfrs: PropTypes.array.isRequired,
+        inputValue: PropTypes.string.isRequired,
+        handleInputValue: PropTypes.func.isRequired,
+        handleSetSelectedSfrs: PropTypes.func.isRequired,
+        handleSetSfrQuery: PropTypes.func.isRequired,
+        allSfrs: PropTypes.array.isRequired,
     };
 
-    console.log(props.selections);
+    // TODO: check for intersection with all sfrs somewhere
+    //         let intersection = filteredSfrs.filter((x) => {
+    //             // console.log(x)
+    //             // console.log(x.sfr)
+    //             allSfrs.includes(x.sfr);
+    //         });
+    //         console.log("allSFRs", allSfrs)
+    //         console.log("intersection", intersection);
+    //
+    //         setFilteredSfrs(intersection);
+    //         sessionStorage.setItem("filteredSfrs", JSON.stringify(intersection));
 
-
-    // add dbility for options to be filtered on search and sfr keys, in order to search and have dropdown be sfr options
+    /**
+     * Adds ability for options to be filtered on search and sfr keys, in order to search and have dropdown be sfr options
+     * @type {(options: unknown[], state: FilterOptionsState<unknown>) => unknown[]}
+     */
     const filterOptions = createFilterOptions({
         stringify: (option) => option.search + option.sfr
     });
 
+    /**
+     * Handles setting the sfrs
+     * @param value The sfr value
+     */
+    const handleSetSfrQuery = (value) => {
+        let sfrToPP = query.stringToSFR(SFRDatabase, value);
+        if (sfrToPP) {
+            // if there is a result
+            props.handleSetSfrQuery(value, sfrToPP)
+        } else {
+            props.handleSetSfrQuery(value, [])
+        }
+    }
+
+    /**
+     * Handles the dropdown select for sfrs
+     * @param event the event handler
+     * @param values the values selected from the dropdown
+     */
+    const handleDropdownSelect = (event, values) => {
+        if (typeof values == "string") {
+            props.handleSetSelectedSfrs([values])
+        } else if (typeof values == "object") {
+            // when cleared out, becomes null, which is an object; only want to set when there is an actual value
+            if (values) {
+                props.handleSetSelectedSfrs([values.sfr])
+            } else {
+                props.handleSetSelectedSfrs(null)
+            }
+        } else {
+            props.handleSetSelectedSfrs(values)
+        }
+    };
+
+    /**
+     * Handles the text input for the search dropdown
+     * @param event             The current event
+     * @param newInputValue     The new input value
+     */
+    const handleTextInput = (event, newInputValue) => {
+        props.handleInputValue(newInputValue)
+        if (newInputValue) {
+            handleSetSfrQuery(newInputValue);
+        } else {
+            handleSetSfrQuery(null);
+        }
+    }
+
     // Return Function
     return (
         <div className="form-control">
+            {/*Remove After testing*/}
+            {/*<div style={{color: "black"}}>{`value: ${props.selections !== null ? `'${props.selections}'` : 'null'}`}</div>*/}
+            {/*<div style={{color: "black"}}>{`inputValue: '${props.inputValue !== null ? props.inputValue : ''}'`}</div>*/}
             <Autocomplete
-                multiple={props.multiselect}
+                multiple={false}
                 id={props.label}
-                options={props.options}
+                getOptionLabel={(option) => option.sfr || props.inputValue}
+                // Remove after testing
+                // isOptionEqualToValue={(option, value) => option.search === value.search}
                 value={props.selections ? props.selections : []}
-                // value={props.selections}
-                getOptionLabel={(option) => option.sfr || ""}
-                isOptionEqualToValue={(option, value) => option.search === value.search}
+                onChange={(event, newValue) => {
+                    handleDropdownSelect(event, newValue);
+                }}
+                inputValue={props.inputValue}
+                onInputChange={(event, newInputValue, reason) => {
+                    handleTextInput(event, newInputValue, reason);
+                }}
+                options={props.filteredSfrs ? props.filteredSfrs : []}
                 filterOptions={filterOptions}
-                onChange={props.handleDropdownSelect}
-                // freeSolo
-                onInputChange={props.handleTextInput}
                 className={"m-2"}
                 sx={{
                     "root": {
@@ -82,7 +152,7 @@ function SearchDropdown(props) {
                     />
                 )}
             />
-            <h5 className="text-gray-600 dark:text-gray-600 text-[14px] p-2 flex justify-center"> {props.label} Options: {props.options.length}</h5>
+            <h5 className="text-gray-600 dark:text-gray-600 text-[14px] p-2 flex justify-center"> {props.label} Options: {props.filteredSfrs.length}</h5>
         </div>
     )
 }

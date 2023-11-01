@@ -49,7 +49,7 @@ function Dropdown(props) {
                 renderInput={(params) => (
                     <TextField
                         {...params}
-                        label={"Select" + props.label}
+                        label={"Select " + props.label}
                         variant="outlined"
                         size={"medium"}
                         InputLabelProps={{
