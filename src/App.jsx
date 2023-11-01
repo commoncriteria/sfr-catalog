@@ -25,8 +25,6 @@ function App() {
     const [selectedPps, setSelectedPps] = useState(sessionStorage.getItem("selectedPps") ? JSON.parse(sessionStorage.getItem("selectedPps")) : null);
     // Filter Pane Visible Status
     const [filterStatus, setFilterStatus] = useState(sessionStorage.getItem("filterStatus") ? JSON.parse(sessionStorage.getItem("filterStatus")) : true);
-    // Search string for SFR search
-    // const [sfrSearch, setSfrSearch] = useState(sessionStorage.getItem("sfrSearch") ? JSON.parse(sessionStorage.getItem("sfrSearch")) : true);
 
     // Functions
     /**
@@ -101,15 +99,6 @@ function App() {
     }
 
 
-    /**
-    * Handles setting the Filter Pane Status
-    * @param value The selected pps value
-    */
-    // const handleSetSfrSearch = (value) => {
-    //     // Toggle the Filter Pane Visibility
-    //     setSfrSearch(value)
-    //     sessionStorage.setItem("sfrSearch", JSON.stringify(value))
-    // }
 
 
     // Return Function
@@ -133,8 +122,6 @@ function App() {
                                 handleSetSelectedSecurityObjectives={handleSetSelectedSecurityObjectives}
                                 handleSetSelectedSfrs={handleSetSelectedSfrs}
                                 handleSetSelectedPps={handleSetSelectedPps}
-                                // sfrSearch={sfrSearch}
-                                // handleSetSfrSearch={handleSetSfrSearch}
                             /> : null
                             }
                             {filterStatus ?

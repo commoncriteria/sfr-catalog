@@ -266,42 +266,40 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
  * @returns {*} The SFR(s) content
  */
 export function stringToSFR(sfrDB, searchString) {
-    // console.log(searchString);
-    let sfr_obj = {};
+    if (searchString) {
+        let sfr_xml_mapping = {};
+        let sfrs = getSfrs(sfrDB);
 
-    let sfrs = getSfrs(sfrDB);
+        // get sfr:xml mapping for all SFRs
+        sfrs.forEach(sfr => {
+            sfr_xml_mapping[sfr] = getSfrContent(sfrDB, sfr);
+        });
 
-    // get sfr:xml mapping for all SFRs
-    sfrs.forEach(sfr => {
-        sfr_obj[sfr] = getSfrContent(sfrDB, sfr);
-    });
+        let matchedSfrToPP = {};
+        let return_arr = [];
+        let return_obj = {}; // will look like {'search_string': 'abc', 'sfr': 'abc', 'pps': []}
 
-
-    let matchedSfrToPP = {};
-
-    for (const [sfr, ppImplementation] of Object.entries(sfr_obj)) {
-        let pp_arr = [];
-        for (const [pp, value] of Object.entries(ppImplementation[0])) {
-            if ('XML' in value) {
-                // console.log(value);
-                // console.log(value['XML']);
-                if (value['XML'].toLowerCase().includes(searchString.toLowerCase())) {
-                    // matchedSfrToPP[sfr] = pp;
-                    pp_arr.push(pp);
+        for (const [sfr, ppImplementation] of Object.entries(sfr_xml_mapping)) {
+            let pp_arr = [];
+            for (const [pp, value] of Object.entries(ppImplementation[0])) {
+                if ('XML' in value) {
+                    if (value['XML'].toLowerCase().includes(searchString.toLowerCase())) {
+                        pp_arr.push(pp);
+                    }
                 }
-            }   
-        }
-        if (pp_arr.length != 0) {
-            matchedSfrToPP[sfr] = pp_arr;
-        }
-        
+            }
+            if (pp_arr.length != 0) {
+                matchedSfrToPP[sfr] = pp_arr;
+                return_obj["search"] = searchString;
+                return_obj["sfr"] = sfr;
+                return_obj["pp_list"] = pp_arr;
+                return_arr.push(return_obj);
+                return_obj = {};
+            }
+        }        
+
+        return return_arr.sort((a, b) => a.sfr.localeCompare(b.sfr)); // sorted alphabetically by SFR name
+    } else {
+        return false;
     }
-
-    console.log(matchedSfrToPP);
-    
-    // console.log(sfr_obj);
-
-
-
-    return sfr_obj;
 }

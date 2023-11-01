@@ -1,6 +1,7 @@
 // Imports
 import PropTypes from "prop-types";
-import {Autocomplete, TextField} from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
+import { createFilterOptions } from "@mui/material/Autocomplete";
 
 /**
  * The Dropdown class that displays a card type
@@ -8,15 +9,25 @@ import {Autocomplete, TextField} from "@mui/material";
  * @returns {JSX.Element}   the card content
  * @constructor             passes in props to the class
  */
-function Dropdown(props) {
+function SearchDropdown(props) {
     // Prop Validation
-    Dropdown.propTypes = {
+    SearchDropdown.propTypes = {
         label: PropTypes.string.isRequired,
         multiselect: PropTypes.bool.isRequired,
         options: PropTypes.array.isRequired,
         selections: PropTypes.array,
         handleDropdownSelect: PropTypes.func.isRequired,
+        handleTextInput: PropTypes.func,
+        input: PropTypes.string,
     };
+
+    console.log(props.selections);
+
+
+    // add dbility for options to be filtered on search and sfr keys, in order to search and have dropdown be sfr options
+    const filterOptions = createFilterOptions({
+        stringify: (option) => option.search + option.sfr
+    });
 
     // Return Function
     return (
@@ -26,9 +37,13 @@ function Dropdown(props) {
                 id={props.label}
                 options={props.options}
                 value={props.selections ? props.selections : []}
-                getOptionLabel={(option) => option.toString()}
-                isOptionEqualToValue={(option, value) => option == value[0]}
+                // value={props.selections}
+                getOptionLabel={(option) => option.sfr || ""}
+                isOptionEqualToValue={(option, value) => option.search === value.search}
+                filterOptions={filterOptions}
                 onChange={props.handleDropdownSelect}
+                // freeSolo
+                onInputChange={props.handleTextInput}
                 className={"m-2"}
                 sx={{
                     "root": {
@@ -49,7 +64,7 @@ function Dropdown(props) {
                 renderInput={(params) => (
                     <TextField
                         {...params}
-                        label={"Select" + props.label}
+                        label={props.label}
                         variant="outlined"
                         size={"medium"}
                         InputLabelProps={{
@@ -73,4 +88,4 @@ function Dropdown(props) {
 }
 
 // Export Class
-export default Dropdown;
+export default SearchDropdown;
