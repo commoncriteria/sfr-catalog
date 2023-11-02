@@ -18,23 +18,12 @@ function SearchDropdown(props) {
         selections: PropTypes.array,
         filteredSfrs: PropTypes.array.isRequired,
         inputValue: PropTypes.string.isRequired,
+        sfrQuery: PropTypes.string,
         handleInputValue: PropTypes.func.isRequired,
         handleSetSelectedSfrs: PropTypes.func.isRequired,
         handleSetSfrQuery: PropTypes.func.isRequired,
         allSfrs: PropTypes.array.isRequired,
     };
-
-    // TODO: check for intersection with all sfrs somewhere
-    //         let intersection = filteredSfrs.filter((x) => {
-    //             // console.log(x)
-    //             // console.log(x.sfr)
-    //             allSfrs.includes(x.sfr);
-    //         });
-    //         console.log("allSFRs", allSfrs)
-    //         console.log("intersection", intersection);
-    //
-    //         setFilteredSfrs(intersection);
-    //         sessionStorage.setItem("filteredSfrs", JSON.stringify(intersection));
 
     /**
      * Adds ability for options to be filtered on search and sfr keys, in order to search and have dropdown be sfr options
@@ -51,7 +40,6 @@ function SearchDropdown(props) {
     const handleSearchResults = (value) => {
         let sfrToPP = query.stringToSFR(SFRDatabase, value);
         if (sfrToPP) {
-            // if there is a result
             props.handleSetSfrQuery(value, sfrToPP)
         } else {
             props.handleSetSfrQuery(value, [])
@@ -82,11 +70,16 @@ function SearchDropdown(props) {
      * Handles the text input for the search dropdown
      * @param event             The current event
      * @param newInputValue     The new input value
+     * @param reason            The reason for the input (clear, reset or input)
      */
-    const handleTextInput = (event, newInputValue) => {
+    const handleTextInput = (event, newInputValue, reason) => {
         props.handleInputValue(newInputValue)
         if (newInputValue) {
-            handleSearchResults(newInputValue);
+            if (reason === 'reset') {
+                handleSearchResults(props.sfrQuery.valueOf());
+            } else if (reason === 'input') {
+                handleSearchResults(newInputValue);
+            }
         } else {
             handleSearchResults(null);
         }
@@ -96,8 +89,8 @@ function SearchDropdown(props) {
     return (
         <div className="form-control">
             {/*Remove After testing*/}
-            {<div style={{color: "black"}}>{`value: ${props.selections !== null ? `'${props.selections}'` : 'null'}`}</div>}
-            {<div style={{color: "black"}}>{`inputValue: '${props.inputValue !== null ? props.inputValue : ''}'`}</div>}
+            {/*{<div style={{color: "black"}}>{`value: ${props.selections !== null ? `'${props.selections}'` : 'null'}`}</div>}*/}
+            {/*{<div style={{color: "black"}}>{`inputValue: '${props.inputValue !== null ? props.inputValue : ''}'`}</div>}*/}
             <Autocomplete
                 multiple={false}
                 id={props.label}

@@ -21,10 +21,10 @@ function SFRCard(props) {
         filteredSfrs: PropTypes.array,
         selections: PropTypes.array,
         inputValue: PropTypes.string.isRequired,
+        sfrQuery: PropTypes.string,
         handleSetSfrInputValue: PropTypes.func.isRequired,
         handleSetSelectedSfrs: PropTypes.func.isRequired,
         handleSetSfrQuery: PropTypes.func,
-        sfrQuery: PropTypes.string
     };
 
     /**
@@ -41,6 +41,7 @@ function SFRCard(props) {
     /**
      * Handles the dropdown select for sfrs
      * @param event the event handler
+     * @param values the values coming in from the dropdown
      */
     const handleDropdownSelect = (event, values) => {
         if (typeof values == "string") {
@@ -85,6 +86,7 @@ function SFRCard(props) {
                     allSfrs={props.allSfrs}
                     filteredSfrs={props.filteredSfrs}
                     inputValue={props.inputValue}
+                    sfrQuery={props.sfrQuery}
                     handleInputValue={props.handleSetSfrInputValue}
                     handleSetSelectedSfrs={props.handleSetSelectedSfrs}
                     handleSetSfrQuery={props.handleSetSfrQuery}
