@@ -48,7 +48,7 @@ function SearchDropdown(props) {
      * Handles setting the sfrs
      * @param value The sfr value
      */
-    const handleSetSfrQuery = (value) => {
+    const handleSearchResults = (value) => {
         let sfrToPP = query.stringToSFR(SFRDatabase, value);
         if (sfrToPP) {
             // if there is a result
@@ -86,9 +86,9 @@ function SearchDropdown(props) {
     const handleTextInput = (event, newInputValue) => {
         props.handleInputValue(newInputValue)
         if (newInputValue) {
-            handleSetSfrQuery(newInputValue);
+            handleSearchResults(newInputValue);
         } else {
-            handleSetSfrQuery(null);
+            handleSearchResults(null);
         }
     }
 
@@ -96,8 +96,8 @@ function SearchDropdown(props) {
     return (
         <div className="form-control">
             {/*Remove After testing*/}
-            {/*<div style={{color: "black"}}>{`value: ${props.selections !== null ? `'${props.selections}'` : 'null'}`}</div>*/}
-            {/*<div style={{color: "black"}}>{`inputValue: '${props.inputValue !== null ? props.inputValue : ''}'`}</div>*/}
+            {<div style={{color: "black"}}>{`value: ${props.selections !== null ? `'${props.selections}'` : 'null'}`}</div>}
+            {<div style={{color: "black"}}>{`inputValue: '${props.inputValue !== null ? props.inputValue : ''}'`}</div>}
             <Autocomplete
                 multiple={false}
                 id={props.label}

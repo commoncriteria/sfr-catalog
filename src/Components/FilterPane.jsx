@@ -79,6 +79,7 @@ function FilterPane(props) {
      * Use Effect for updating other filter types based on selected sfr update
      */
     useEffect(() => {
+        console.log(props.selectedSfrs);
         // Update dropdowns according to sfr selections
         updateDropdowns("SFR");
     }, [props.selectedSfrs])
@@ -316,6 +317,22 @@ function FilterPane(props) {
         if (JSON.stringify(allSfrs) !== JSON.stringify(value)) {
             setSfrs(value);
             sessionStorage.setItem("allSfrs", JSON.stringify(value));
+
+            
+
+            // if there is an objective or threat selected, set the filtered sfrs to the ones that match the sfrs related to those fields
+            if (props.selectedSecurityObjectives || props.selectedThreats) {
+                // possible race condition where allSfrs is not getting updated in time to use, so using value instead
+                let intersection = filteredSfrs.filter(x => value.includes(x.sfr));
+
+                setFilteredSfrs(intersection);
+                sessionStorage.setItem("filteredSfrs", JSON.stringify(intersection));  
+            } else {
+                // if only sfr is selected, set to the original filtered sfr list
+
+            }
+
+            
         }
     }
 
