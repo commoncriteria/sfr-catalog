@@ -85,7 +85,7 @@ function FilterPane(props) {
 
 
     /**
-    * Use Effect for updating other filter types based on selected sfr update
+    * Use Effect for updating other filter types based on selected sfr + PP update
     */
     useEffect(() => {
         // Update dropdowns according to sfr selections
