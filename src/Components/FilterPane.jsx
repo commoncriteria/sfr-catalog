@@ -8,6 +8,7 @@ import PPCard from "../Filtering/PPCard.jsx";
 import PropTypes from "prop-types";
 import * as query from "../utils/query.js";
 import SFRDatabase from "../assets/NIAPDocumentBundle.json";
+import { TERipple } from "tw-elements-react";
 
 /**
  * The FilterPane class that displays the filtering content sidebar
@@ -36,6 +37,7 @@ function FilterPane(props) {
 
     // Prop Validation
     FilterPane.propTypes = {
+        filterStatus: PropTypes.bool.isRequired,
         selectedThreats: PropTypes.array,
         selectedSecurityObjectives: PropTypes.array,
         selectedSfrs: PropTypes.array,
@@ -44,6 +46,7 @@ function FilterPane(props) {
         handleSetSelectedSecurityObjectives: PropTypes.func.isRequired,
         handleSetSelectedSfrs: PropTypes.func.isRequired,
         handleSetSelectedPps: PropTypes.func.isRequired,
+        handleSetFilterStatus: PropTypes.func.isRequired,
     };
 
     // Use Effects
@@ -399,9 +402,20 @@ function FilterPane(props) {
 
     // Return Function
     return (
-        <div className="h-full w-full rounded-lg mb-4">
-            <div className="border-2 border-gray-400 rounded-xl p-3 bg-base-200 h-16 flex justify-center items-center">
-                <h1 className="text-3xl font-bold text-accent">Filter</h1>
+        <div className="h-full w-full rounded-lg">
+            <div className="border-2 border-gray-400 rounded-xl p-3 bg-base-200 h-16 grid grid-cols-11">
+                <h1 className="text-3xl font-bold text-accent flex justify-center items-center ml-5 col-span-10 ...">Filter</h1>
+                <div className="... flex justify-end items-end mb-[4px] pr-1">
+                    <TERipple rippleColor="light">
+                        {props.filterStatus ?
+                            <svg onClick={() => {props.handleSetFilterStatus(!props.filterStatus)}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#1FB2A6" className="w-7 h-7">
+                                <path fillRule="evenodd" d="M13.28 3.97a.75.75 0 010 1.06L6.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5a.75.75 0 010-1.06l7.5-7.5a.75.75 0 011.06 0zm6 0a.75.75 0 010 1.06L12.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5a.75.75 0 010-1.06l7.5-7.5a.75.75 0 011.06 0z" clipRule="evenodd" />
+                            </svg>
+                            :
+                            null
+                        }
+                    </TERipple>
+                </div>
             </div>
             {/* Threat Filtering Card */}
             <div>
