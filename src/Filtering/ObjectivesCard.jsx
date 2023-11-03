@@ -13,7 +13,8 @@ function ObjectivesCard(props) {
     ObjectivesCard.propTypes = {
         allSecurityObjectives: PropTypes.array.isRequired,
         selections: PropTypes.array,
-        handleSetSelectedSecurityObjectives: PropTypes.func.isRequired
+        handleSetSelectedSecurityObjectives: PropTypes.func.isRequired,
+        sfrQuery: PropTypes.string
     };
 
     /**
@@ -39,6 +40,7 @@ function ObjectivesCard(props) {
                     options={props.allSecurityObjectives}
                     selections={props.selections}
                     handleDropdownSelect={handleDropdownSelect}
+                    disabled={props.sfrQuery && props.sfrQuery.length != 0 ? true : false}
                 />
             }
         />

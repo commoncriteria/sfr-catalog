@@ -83,6 +83,15 @@ function FilterPane(props) {
         updateDropdowns("SFR");
     }, [props.selectedSfrs])
 
+
+    /**
+    * Use Effect for updating other filter types based on selected sfr update
+    */
+    useEffect(() => {
+        // Update dropdowns according to sfr selections
+        updateDropdowns("SFR");
+    }, [allPps])
+
     // Functions
     /**
      * Update dropdowns based on the updated value
@@ -135,7 +144,6 @@ function FilterPane(props) {
                 // set to intersection of PPs returned from other selections (threat/objective) and pp list above
                 props.selectedPps ? handleSetAllPps(query.PPFilter(SFRDatabase, props.selectedThreats, props.selectedSecurityObjectives, props.selectedSfrs).filter((el) => !props.selectedPps.includes(el)).sort()) : handleSetAllPps(query.PPFilter(SFRDatabase, props.selectedThreats, props.selectedSecurityObjectives, props.selectedSfrs).filter(x => pps.includes(x)));
             }
-
         } else {
             // Set PP dropdown options based on selected threat, sfr, and/or objective; check if PP selections have been made, if so remove from the list before setting allPps
             props.selectedPps ? handleSetAllPps(query.PPFilter(SFRDatabase, props.selectedThreats, props.selectedSecurityObjectives, props.selectedSfrs).filter((el) => !props.selectedPps.includes(el)).sort()) : handleSetAllPps(query.PPFilter(SFRDatabase, props.selectedThreats, props.selectedSecurityObjectives, props.selectedSfrs));
@@ -197,7 +205,7 @@ function FilterPane(props) {
             if (props.selectedSfrs || props.selectedThreats) {
                 if (props.selectedSfrs && !props.selectedThreats) { // if objective is selected and threat isn't
                     // set threat list to intersection of threats for selected objective and sfr
-                    query.SFRToThreats(SFRDatabase, props.selectedSfrs[0]) ? handleSetAllThreats(query.SFRToThreats(SFRDatabase, props.selectedSfrs[0]).sort().filter(x => threats.includes(x))) : handleSetAllThreats(threats);
+                    query.SFRToThreats(SFRDatabase, props.selectedSfrs[0]) ? handleSetAllThreats(query.SFRToThreats(SFRDatabase, props.selectedSfrs[0]).filter(x => threats.includes(x))) : handleSetAllThreats(threats);
                     // update sfr list to intersection of previous sfr options and sfrs for the selected objective
                     handleSetAllSfrs(allSfrs.filter(x => sfrs.includes(x)));
                 } else if (!props.selectedSfrs && props.selectedThreats) { // if threat is selected and objective isn't
@@ -207,11 +215,11 @@ function FilterPane(props) {
                     handleSetAllThreats(threats);
                 } else { // all 3 selections are made
                     // set threat list to intersection of threats for selected objective and sfr
-                    query.SFRToThreats(SFRDatabase, props.selectedSfrs[0]) ? handleSetAllThreats(query.SFRToThreats(SFRDatabase, props.selectedSfrs[0]).sort().filter(x => threats.includes(x))) : handleSetAllThreats(threats);
+                    query.SFRToThreats(SFRDatabase, props.selectedSfrs[0]) ? handleSetAllThreats(query.SFRToThreats(SFRDatabase, props.selectedSfrs[0]).filter(x => threats.includes(x))) : handleSetAllThreats(threats);
                     // set sfr list to intersection of sfrs for selected objective and sfr
                     handleSetAllSfrs([...new Set(query.ThreatToSFRs(SFRDatabase, props.selectedThreats[0]))].filter(x => sfrs.includes(x)));
                 }
-            } else { // set sfrs and threats based on threat selected
+            } else { // set sfrs and threats based on objective selected
                 handleSetAllSfrs(sfrs);
                 handleSetAllThreats(threats);
                 handleSetAllSecurityObjectives(query.getSecurityObjectives(SFRDatabase).sort());
@@ -226,9 +234,25 @@ function FilterPane(props) {
      * Filtering down based on SFRs
      */
     const fromSFRs = () => {
+        let objectives = [];
+        let threats = [];
+
         if (props.selectedSfrs) { // if there is a selected sfr
-            let objectives = query.SFRToSecurityObjectives(SFRDatabase, props.selectedSfrs[0]).sort();
-            let threats = query.SFRToThreats(SFRDatabase, props.selectedSfrs[0]) ? query.SFRToThreats(SFRDatabase, props.selectedSfrs[0]).sort() : [];
+            // let objectives = query.SFRToSecurityObjectives(SFRDatabase, props.selectedSfrs[0]).sort();
+            // let threats = query.SFRToThreats(SFRDatabase, props.selectedSfrs[0]) ? query.SFRToThreats(SFRDatabase, props.selectedSfrs[0]).sort() : [];
+            if (sfrQuery) {
+                updatePPFilter();
+                if (allPps) {
+                    // set threats/objectives to the ones only for the PP options available
+                    objectives = query.SFRToSecurityObjectives(SFRDatabase, props.selectedSfrs[0], allPps);
+                    threats = query.SFRToThreats(SFRDatabase, props.selectedSfrs[0], allPps) ? query.SFRToThreats(SFRDatabase, props.selectedSfrs[0], allPps) : [];
+                }
+
+            } else {
+                objectives = query.SFRToSecurityObjectives(SFRDatabase, props.selectedSfrs[0]);
+                threats = query.SFRToThreats(SFRDatabase, props.selectedSfrs[0]) ? query.SFRToThreats(SFRDatabase, props.selectedSfrs[0]) : [];
+            }
+
 
             // check if objectives or threats have been selected
             if (props.selectedSecurityObjectives || props.selectedThreats) {
@@ -250,7 +274,7 @@ function FilterPane(props) {
                     handleSetAllSecurityObjectives(query.ThreatToSecurityObjective(SFRDatabase, props.selectedThreats[0]).sort().filter(x => objectives.includes(x)));
                 }
             }
-            else { // set objectives and sfrs based on threat selected
+            else { // set objectives and threats based on sfr selected
                 // Update objective dropdown options
                 handleSetAllSecurityObjectives(objectives);
                 handleSetAllThreats(threats);
@@ -323,9 +347,11 @@ function FilterPane(props) {
                 let intersection = filteredSfrs.filter(x => value.includes(x.sfr));
 
                 setFilteredSfrs(intersection);
-                sessionStorage.setItem("filteredSfrs", JSON.stringify(intersection));  
+                sessionStorage.setItem("filteredSfrs", JSON.stringify(intersection));
             } else {
                 // if only sfr is selected, set to the original filtered sfr list
+                let sfrToPP = query.stringToSFR(SFRDatabase, sfrQuery);
+                setFilteredSfrs(sfrToPP);
             }
         }
     }
@@ -380,6 +406,7 @@ function FilterPane(props) {
                             allThreats={allThreats}
                             selections={props.selectedThreats}
                             handleSetSelectedThreats={props.handleSetSelectedThreats}
+                            sfrQuery={sfrQuery}
                         />
                         : null
                 }
@@ -393,6 +420,7 @@ function FilterPane(props) {
                             allSecurityObjectives={allSecurityObjectives}
                             selections={props.selectedSecurityObjectives}
                             handleSetSelectedSecurityObjectives={props.handleSetSelectedSecurityObjectives}
+                            sfrQuery={sfrQuery}
                         />
                         : null
                 }

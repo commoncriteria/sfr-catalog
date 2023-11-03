@@ -1,6 +1,6 @@
 // Imports
 import PropTypes from "prop-types";
-import {Autocomplete, TextField} from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 
 /**
  * The Dropdown class that displays a card type
@@ -16,6 +16,7 @@ function Dropdown(props) {
         options: PropTypes.array.isRequired,
         selections: PropTypes.array,
         handleDropdownSelect: PropTypes.func.isRequired,
+        // disabled: PropTypes.bool.isRequired,
     };
 
     // Return Function
@@ -23,6 +24,7 @@ function Dropdown(props) {
         <div className="form-control">
             <Autocomplete
                 multiple={props.multiselect}
+                // disabled={props.disabled}
                 id={props.label}
                 options={props.options}
                 value={props.selections ? props.selections : []}
@@ -68,6 +70,7 @@ function Dropdown(props) {
                 )}
             />
             <h5 className="text-gray-600 dark:text-gray-600 text-[14px] p-2 flex justify-center"> {props.label} Options: {props.options.length}</h5>
+            {/* <h5 className="text-gray-600 dark:text-gray-600 text-[14px] p-2 flex justify-center"> {props.disabled ? "" : props.label + "Options:" + props.options.length}</h5> */}
         </div>
     )
 }

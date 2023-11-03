@@ -14,7 +14,8 @@ function ThreatCard(props) {
     ThreatCard.propTypes = {
         allThreats: PropTypes.array.isRequired,
         selections: PropTypes.array,
-        handleSetSelectedThreats: PropTypes.func.isRequired
+        handleSetSelectedThreats: PropTypes.func.isRequired,
+        sfrQuery: PropTypes.string
     };
 
     /**
@@ -41,6 +42,7 @@ function ThreatCard(props) {
                         options={props.allThreats}
                         selections={props.selections}
                         handleDropdownSelect={handleDropdownSelect}
+                        disabled={props.sfrQuery && props.sfrQuery.length != 0 ? true : false}
                     />
                 }
             />
