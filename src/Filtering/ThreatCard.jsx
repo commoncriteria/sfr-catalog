@@ -42,7 +42,6 @@ function ThreatCard(props) {
                         options={props.allThreats}
                         selections={props.selections}
                         handleDropdownSelect={handleDropdownSelect}
-                        disabled={props.sfrQuery && props.sfrQuery.length != 0 ? true : false}
                     />
                 }
             />

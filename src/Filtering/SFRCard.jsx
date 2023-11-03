@@ -81,7 +81,7 @@ function SFRCard(props) {
         if (searchToggle) {
             return (
                 <SearchDropdown
-                    label={"SFR Search By String"}
+                    label={"SFR Search by Content"}
                     selections={props.selections}
                     allSfrs={props.allSfrs}
                     filteredSfrs={props.filteredSfrs}

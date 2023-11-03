@@ -90,14 +90,14 @@ function FilterPane(props) {
     * Use Effect for updating other filter types based on selected sfr + PP update
     */
     useEffect(() => {
-        // Update dropdowns according to sfr selections
+        // Update dropdowns according to sfr selections and PP options
         updateDropdowns("SFR");
     }, [masterPPList])
 
     // Functions
     /**
      * Update dropdowns based on the updated value
-     * @param type          The initial type to filter from
+     * @param type  The initial type to filter from
      */
     const updateDropdowns = (type) => {
         // Filter down associated lists based on types
@@ -243,8 +243,6 @@ function FilterPane(props) {
         let threats = [];
 
         if (props.selectedSfrs) { // if there is a selected sfr
-            // let objectives = query.SFRToSecurityObjectives(SFRDatabase, props.selectedSfrs[0]).sort();
-            // let threats = query.SFRToThreats(SFRDatabase, props.selectedSfrs[0]) ? query.SFRToThreats(SFRDatabase, props.selectedSfrs[0]).sort() : [];
             // if sfr has been selected from a content search, need to update PP filter then update the threats and objectives
             if (sfrQuery) {
                 // updatePPFilter();

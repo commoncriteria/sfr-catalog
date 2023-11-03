@@ -145,7 +145,7 @@ function SearchDropdown(props) {
                     />
                 )}
             />
-            <h5 className="text-gray-600 dark:text-gray-600 text-[14px] p-2 flex justify-center"> {props.label} Options: {props.filteredSfrs.length}</h5>
+            <h5 className="text-gray-600 dark:text-gray-600 text-[14px] p-2 flex justify-center"> SFR Options: {props.filteredSfrs.length}</h5>
         </div>
     )
 }

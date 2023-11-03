@@ -91,7 +91,6 @@ export function getSecurityObjectiveContent(sfrDB, objective) {
  * @param pps       The pps to filter on (only for sfr content search)
  * @returns {*}     The objectives based on filtered sfrs(s)
  */
-// export function SFRToSecurityObjectives(sfrDB, sfr) {
 export function SFRToSecurityObjectives(sfrDB, sfr, pps = []) {
     if (pps.length != 0) {
         // get all objectives mapped to the SFR
@@ -105,8 +104,6 @@ export function SFRToSecurityObjectives(sfrDB, sfr, pps = []) {
     } else {
         return jmespath.search(sfrDB, `Security_Objectives[?contains(SFRs,'${sfr}')].Name`).sort();
     }
-
-    // return jmespath.search(sfrDB, `Security_Objectives[?contains(SFRs,'${sfr}')].Name`);
 }
 
 /**
@@ -116,7 +113,6 @@ export function SFRToSecurityObjectives(sfrDB, sfr, pps = []) {
  * @param pps       The pps to filter on (only for sfr content search)
  * @returns {*}     The objectives based on filtered sfrs(s)
  */
-// export function SFRToThreats(sfrDB, sfr) {
 export function SFRToThreats(sfrDB, sfr, pps = []) {
     let objectives = SFRToSecurityObjectives(sfrDB, sfr);
 
@@ -141,22 +137,6 @@ export function SFRToThreats(sfrDB, sfr, pps = []) {
     } else {
         return false;
     }
-
-
-
-
-    // let objectives = SFRToSecurityObjectives(sfrDB, sfr);
-
-    // if (objectives.length != 0) {
-    //     let filter_str = '';
-    //     for (let i = 0; i < objectives.length; i++) {
-    //         filter_str = i == objectives.length - 1 ? filter_str += `contains(Security_Objectives,'${objectives[i]}')` : filter_str += `contains(Security_Objectives,'${objectives[i]}') || `;
-    //     }
-
-    //     return jmespath.search(sfrDB, `Threats[?${filter_str}].Name`).sort();
-    // } else {
-    //     return false;
-    // }
 }
 
 /**

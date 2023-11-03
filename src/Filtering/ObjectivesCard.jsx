@@ -40,7 +40,6 @@ function ObjectivesCard(props) {
                     options={props.allSecurityObjectives}
                     selections={props.selections}
                     handleDropdownSelect={handleDropdownSelect}
-                    disabled={props.sfrQuery && props.sfrQuery.length != 0 ? true : false}
                 />
             }
         />
