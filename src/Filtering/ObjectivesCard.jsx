@@ -13,8 +13,7 @@ function ObjectivesCard(props) {
     ObjectivesCard.propTypes = {
         allSecurityObjectives: PropTypes.array.isRequired,
         selections: PropTypes.array,
-        handleSetSelectedSecurityObjectives: PropTypes.func.isRequired,
-        sfrQuery: PropTypes.string
+        handleSetSelectedSecurityObjectives: PropTypes.func.isRequired
     };
 
     /**

@@ -14,8 +14,7 @@ function ThreatCard(props) {
     ThreatCard.propTypes = {
         allThreats: PropTypes.array.isRequired,
         selections: PropTypes.array,
-        handleSetSelectedThreats: PropTypes.func.isRequired,
-        sfrQuery: PropTypes.string
+        handleSetSelectedThreats: PropTypes.func.isRequired
     };
 
     /**

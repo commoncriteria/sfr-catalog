@@ -426,7 +426,6 @@ function FilterPane(props) {
                             allThreats={allThreats}
                             selections={props.selectedThreats}
                             handleSetSelectedThreats={props.handleSetSelectedThreats}
-                            sfrQuery={sfrQuery}
                         />
                         : null
                 }
@@ -440,7 +439,6 @@ function FilterPane(props) {
                             allSecurityObjectives={allSecurityObjectives}
                             selections={props.selectedSecurityObjectives}
                             handleSetSelectedSecurityObjectives={props.handleSetSelectedSecurityObjectives}
-                            sfrQuery={sfrQuery}
                         />
                         : null
                 }
