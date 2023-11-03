@@ -32,7 +32,7 @@ function FilterPane(props) {
     // PPs
     const [allPps, setPps] = useState(sessionStorage.getItem("allPps") ? JSON.parse(sessionStorage.getItem("allPps")) : null);
     // All PP options (using this since allPps gets altered when PPs are selected and need a variable with all the PPs to be used in the useEffect)
-    const [masterPPList, setMasterPPList] = allPps ? allPps.concat(props.selectedPps) : [];
+    const [masterPPList] = allPps ? allPps.concat(props.selectedPps) : [];
 
     // Prop Validation
     FilterPane.propTypes = {
