@@ -88,19 +88,32 @@ export function getSecurityObjectiveContent(sfrDB, objective) {
  * Gets the Objectives based on given SFR
  * @param sfrDB     The SFRDatabase
  * @param sfr       The sfr to filter on
+ * @param pps       The pps to filter on (only for sfr content search)
  * @returns {*}     The objectives based on filtered sfrs(s)
  */
-export function SFRToSecurityObjectives(sfrDB, sfr) {
-    return jmespath.search(sfrDB, `Security_Objectives[?contains(SFRs,'${sfr}')].Name`);
+export function SFRToSecurityObjectives(sfrDB, sfr, pps = []) {
+    if (pps.length != 0) {
+        // get all objectives mapped to the SFR
+        let objectives = jmespath.search(sfrDB, `Security_Objectives[?contains(SFRs,'${sfr}')]`);
+        // filter down the objectives to only the ones for the PPs passed in
+        let filtered_objectives_objects = objectives.filter(objective => Object.keys(objective.PP_Specific_Implementations).every(x => x.includes(pps)));
+        // pull out names
+        let filtered_objectives = filtered_objectives_objects.map(objective => objective.Name);
+
+        return filtered_objectives.sort();
+    } else {
+        return jmespath.search(sfrDB, `Security_Objectives[?contains(SFRs,'${sfr}')].Name`).sort();
+    }
 }
 
 /**
  * Gets the Threats based on given SFR
  * @param sfrDB     The SFRDatabase
  * @param sfr       The sfr to filter on
+ * @param pps       The pps to filter on (only for sfr content search)
  * @returns {*}     The objectives based on filtered sfrs(s)
  */
-export function SFRToThreats(sfrDB, sfr) {
+export function SFRToThreats(sfrDB, sfr, pps = []) {
     let objectives = SFRToSecurityObjectives(sfrDB, sfr);
 
     if (objectives.length != 0) {
@@ -109,7 +122,18 @@ export function SFRToThreats(sfrDB, sfr) {
             filter_str = i == objectives.length - 1 ? filter_str += `contains(Security_Objectives,'${objectives[i]}')` : filter_str += `contains(Security_Objectives,'${objectives[i]}') || `;
         }
 
-        return jmespath.search(sfrDB, `Threats[?${filter_str}].Name`);
+        if (pps.length != 0) {
+            // get all threats mapped to the SFR
+            let threats = jmespath.search(sfrDB, `Threats[?${filter_str}]`);
+            // filter down the threats to only the ones for the PPs passed in
+            let filtered_threats_objects = threats.filter(threat => Object.keys(threat.Threat_Implementations).every(x => x.includes(pps)));
+            // pull out names
+            let filtered_threats = filtered_threats_objects.map(threat => threat.Name);
+
+            return filtered_threats.sort();
+        } else {
+            return jmespath.search(sfrDB, `Threats[?${filter_str}].Name`).sort();
+        }
     } else {
         return false;
     }
@@ -168,7 +192,6 @@ export function sfrToTD(sfrDB, sfr, pps) {
         // create array of TD's based on the user selections
         let td_number = [];
         for (const [ppName, ppMeta] of Object.entries(filtered_pp_implementations)) {
-            // console.log(`${ppName}: ${ppMeta}`);
             for (const [ppMetaKey, ppMetaValue] of Object.entries(ppMeta)) {
                 if (ppMetaKey == 'TD_List') {
                     ppMeta[ppMetaKey].forEach(td => {
@@ -256,5 +279,63 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
     // if all selections are made
     if (threat && objective && sfr) {
         return threatPPs.filter(x => objectivePPs.includes(x)).filter(y => sfrPPs.includes(y));
+    }
+}
+
+
+/**
+ * Gets the SFR content from the SFRDatabase
+ * @param sfrDB The SFRDatabase
+ * @returns {*} The SFR(s) content
+ */
+export function stringToSFR(sfrDB, searchString) {
+    if (searchString) {
+        let sfr_xml_mapping = {};
+        let sfrs = getSfrs(sfrDB);
+
+        // get sfr:xml mapping for all SFRs
+        sfrs.forEach(sfr => {
+            sfr_xml_mapping[sfr] = getSfrContent(sfrDB, sfr);
+        });
+
+        let matchedSfrToPP = {};
+        let return_arr = [];
+        let return_obj = {}; // will look like {'search': 'abc', 'sfr': 'abc', 'pps': []}
+
+        for (const [sfr, ppImplementation] of Object.entries(sfr_xml_mapping)) {
+            let pp_arr = [];
+            for (const [pp, value] of Object.entries(ppImplementation[0])) {
+                if ('XML' in value) {
+                    if (value['XML'].toLowerCase().includes(searchString.toLowerCase())) {
+                        pp_arr.push(pp);
+                    }
+                }
+            }
+            if (pp_arr.length != 0) {
+                matchedSfrToPP[sfr] = pp_arr;
+                return_obj["search"] = searchString;
+                return_obj["sfr"] = sfr;
+                return_obj["pp_list"] = pp_arr;
+                return_arr.push(return_obj);
+                return_obj = {};
+            }
+        }
+
+        // if search is the sfr name itself, get that sfr (mainly for iterations, since they dont show up as a single string in the XML)
+        // check if it is already in the object (for non-iteration sfrs it will already be there)
+        let sfr = jmespath.search(sfrDB, `SFRs[?Name == '${searchString.toUpperCase()}']`);
+
+        if (sfr.length != 0) {
+            let sfr_modified_object = { "search": searchString, "sfr": searchString.toUpperCase(), "pp_list": Object.keys(sfr[0].PP_Specific_Implementations) }
+
+            // only add if it is not already there
+            if (!return_arr.some(elem => elem.sfr == sfr[0].Component)) {
+                return_arr.push(sfr_modified_object);
+            }
+        }
+
+        return return_arr.sort((a, b) => a.sfr.localeCompare(b.sfr)); // sorted alphabetically by SFR name
+    } else {
+        return false;
     }
 }

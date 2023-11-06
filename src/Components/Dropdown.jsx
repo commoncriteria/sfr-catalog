@@ -1,6 +1,6 @@
 // Imports
 import PropTypes from "prop-types";
-import {Autocomplete, TextField} from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 
 /**
  * The Dropdown class that displays a card type
@@ -15,7 +15,7 @@ function Dropdown(props) {
         multiselect: PropTypes.bool.isRequired,
         options: PropTypes.array.isRequired,
         selections: PropTypes.array,
-        handleDropdownSelect: PropTypes.func.isRequired,
+        handleDropdownSelect: PropTypes.func.isRequired
     };
 
     // Return Function

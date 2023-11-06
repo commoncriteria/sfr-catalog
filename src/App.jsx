@@ -91,13 +91,16 @@ function App() {
 
     /**
      * Handles setting the Filter Pane Status
-     * @param value The selected pps value
+     * @param value The filter status value
      */
-         const handleSetFilterStatus = (value) => {
-            // Toggle the Filter Pane Visibility
-                setFilterStatus(value)
-                sessionStorage.setItem("filterStatus", JSON.stringify(value))
-        }
+    const handleSetFilterStatus = (value) => {
+        // Toggle the Filter Pane Visibility
+        setFilterStatus(value)
+        sessionStorage.setItem("filterStatus", JSON.stringify(value))
+    }
+
+
+
 
     // Return Function
     return (
