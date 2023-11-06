@@ -14,7 +14,8 @@ function PPCard(props) {
     PPCard.propTypes = {
         allPps: PropTypes.array.isRequired,
         selections: PropTypes.array,
-        handleSetSelectedPps: PropTypes.func.isRequired
+        handleSetSelectedPps: PropTypes.func.isRequired,
+        handleSetAllPps: PropTypes.func.isRequired
     };
 
     /**
@@ -22,22 +23,19 @@ function PPCard(props) {
      * @param event the event handler
      */
     const handleDropdownSelect = (event, values) => {
-        if (values.length != 0) {
-            if (values && Object.keys(values).length === 0) {
-                if (props.allPps && Object.keys(props.allPps).length === 1) {
-                    props.handleSetSelectedPps(props.allPps.valueOf())
-                } else {
-                    props.handleSetSelectedPps(null)
-                }
-            } else {
-                if (values && Object.keys(values).length !== 0) {
-                    let filtered = (values.filter((item, index) => values.indexOf(item) === index)).sort()
-                    props.handleSetSelectedPps(filtered)
-                } else {
-                    props.handleSetSelectedPps(values)
+        if (values.length != 0) { // if PP has been selected, remove from list of possible selections (all Pps)
+            props.handleSetSelectedPps(values);
+            // remove selected PPs from the list
+            props.handleSetAllPps(props.allPps.filter((el) => !values.includes(el)));
+
+            // if a selection has been removed, add it back to the list of possible selections (all Pps)
+            if (props.selections) {
+                if (values.length < props.selections.length) {
+                    props.handleSetAllPps(props.allPps.concat(props.selections.filter(x => !values.includes(x))).sort());
                 }
             }
-        } else { // if selection is cleared out, set to null
+        } else { // if selection is cleared out, set to null and set all Pps to the original list
+            props.handleSetAllPps(props.allPps.concat(props.selections).sort());
             props.handleSetSelectedPps(null);
         }
     };

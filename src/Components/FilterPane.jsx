@@ -126,8 +126,8 @@ function FilterPane(props) {
      * The update pp filter method that updates pp dropdown and pp selections, based on all other selections
      */
     const updatePPFilter = () => {
-        // Set PP dropdown options based on selected threat, sfr, and/or objective
-        handleSetAllPps(query.PPFilter(SFRDatabase, props.selectedThreats, props.selectedSecurityObjectives, props.selectedSfrs));
+        // Set PP dropdown options based on selected threat, sfr, and/or objective; check if PP selections have been made, if so remove from the list before setting allPps
+        props.selectedPps ? handleSetAllPps(query.PPFilter(SFRDatabase, props.selectedThreats, props.selectedSecurityObjectives, props.selectedSfrs).filter((el) => !props.selectedPps.includes(el)).sort()) : handleSetAllPps(query.PPFilter(SFRDatabase, props.selectedThreats, props.selectedSecurityObjectives, props.selectedSfrs));
     }
 
     /**
@@ -382,6 +382,7 @@ function FilterPane(props) {
                             allPps={allPps}
                             selections={props.selectedPps}
                             handleSetSelectedPps={props.handleSetSelectedPps}
+                            handleSetAllPps={handleSetAllPps}
                         />
                         : null
                 }
