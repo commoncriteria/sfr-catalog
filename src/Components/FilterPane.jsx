@@ -146,7 +146,6 @@ function FilterPane(props) {
             if (props.selectedSfrs) {
                 // pps associated with sfr that has been identified to contain text that user entered in the query
                 let pps = filteredSfrs.find(o => o.sfr === props.selectedSfrs[0])["pp_list"];
-                console.log(pps);
                 // set to intersection of PPs returned from other selections (threat/objective) and pp list above
                 props.selectedPps ? handleSetAllPps(query.PPFilter(SFRDatabase, props.selectedThreats, props.selectedSecurityObjectives, props.selectedSfrs).filter((el) => !props.selectedPps.includes(el)).sort()) : handleSetAllPps(query.PPFilter(SFRDatabase, props.selectedThreats, props.selectedSecurityObjectives, props.selectedSfrs).filter(x => pps.includes(x)));
             }
@@ -248,10 +247,7 @@ function FilterPane(props) {
         if (props.selectedSfrs) { // if there is a selected sfr
             // if sfr has been selected from a content search, need to update PP filter then update the threats and objectives
             if (sfrQuery) {
-                // updatePPFilter();
-                // console.log(props.selectedPps);
                 if (allPps && !props.selectedPps) {
-                    console.log(allPps);
                     // set threats/objectives to the ones only for the PP options available
                     objectives = query.SFRToSecurityObjectives(SFRDatabase, props.selectedSfrs[0], allPps);
                     threats = query.SFRToThreats(SFRDatabase, props.selectedSfrs[0], allPps) ? query.SFRToThreats(SFRDatabase, props.selectedSfrs[0], allPps) : [];

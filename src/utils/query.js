@@ -96,7 +96,7 @@ export function SFRToSecurityObjectives(sfrDB, sfr, pps = []) {
         // get all objectives mapped to the SFR
         let objectives = jmespath.search(sfrDB, `Security_Objectives[?contains(SFRs,'${sfr}')]`);
         // filter down the objectives to only the ones for the PPs passed in
-        let filtered_objectives_objects = objectives.filter(objective => Object.keys(objective.PP_Specific_Implementations).every(x => x.includes(pps)));
+        let filtered_objectives_objects = objectives.filter(objective => Object.keys(objective.PP_Specific_Implementations).filter(x => x.includes(pps)));
         // pull out names
         let filtered_objectives = filtered_objectives_objects.map(objective => objective.Name);
 
@@ -126,7 +126,7 @@ export function SFRToThreats(sfrDB, sfr, pps = []) {
             // get all threats mapped to the SFR
             let threats = jmespath.search(sfrDB, `Threats[?${filter_str}]`);
             // filter down the threats to only the ones for the PPs passed in
-            let filtered_threats_objects = threats.filter(threat => Object.keys(threat.Threat_Implementations).every(x => x.includes(pps)));
+            let filtered_threats_objects = threats.filter(threat => Object.keys(threat.Threat_Implementations).filter(x => x.includes(pps)));
             // pull out names
             let filtered_threats = filtered_threats_objects.map(threat => threat.Name);
 
