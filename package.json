@@ -1,6 +1,6 @@
 {
-  "name": "SFR-Catalog",
-  "homepage": "https://NIAP-Automation.github.io/SFR-Catalog/",
+  "name": "sfr-catalog",
+  "homepage": "https://niap-automation.github.io/sfr-catalog/",
   "private": true,
   "version": "0.1.0",
   "type": "module",
