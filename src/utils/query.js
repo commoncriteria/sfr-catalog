@@ -288,8 +288,13 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
  * @param sfrDB The SFRDatabase
  * @returns {*} The SFR(s) content
  */
-export function stringToSFR(sfrDB, searchString) {
-    if (searchString) {
+export function stringToSFR(sfrDB, searchString) {    
+    if (searchString || searchString == '') {
+        if (searchString == '') {
+
+        } else {
+
+        }
         let sfr_xml_mapping = {};
         let sfrs = getSfrs(sfrDB);
 
@@ -306,9 +311,16 @@ export function stringToSFR(sfrDB, searchString) {
             let pp_arr = [];
             for (const [pp, value] of Object.entries(ppImplementation[0])) {
                 if ('XML' in value) {
-                    if (value['XML'].toLowerCase().includes(searchString.toLowerCase())) {
+                    if (searchString == '') {
                         pp_arr.push(pp);
+                    } else {
+                        if (value['XML'].toLowerCase().includes(searchString.toLowerCase())) {
+                            pp_arr.push(pp);
+                        }
                     }
+                    // if (value['XML'].toLowerCase().includes(searchString.toLowerCase())) {
+                    //     pp_arr.push(pp);
+                    // }
                 }
             }
             if (pp_arr.length != 0) {
@@ -321,19 +333,36 @@ export function stringToSFR(sfrDB, searchString) {
             }
         }
 
-        // if search is the sfr name itself, get that sfr (mainly for iterations, since they dont show up as a single string in the XML)
-        // check if it is already in the object (for non-iteration sfrs it will already be there)
-        let sfr = jmespath.search(sfrDB, `SFRs[?Name == '${searchString.toUpperCase()}']`);
+        if (searchString != '') {
 
-        if (sfr.length != 0) {
-            let sfr_modified_object = { "search": searchString, "sfr": searchString.toUpperCase(), "pp_list": Object.keys(sfr[0].PP_Specific_Implementations) }
+            // if search is the sfr name itself, get that sfr (mainly for iterations, since they dont show up as a single string in the XML)
+            // check if it is already in the object (for non-iteration sfrs it will already be there)
+            let sfr = jmespath.search(sfrDB, `SFRs[?Name == '${searchString.toUpperCase()}']`);
 
-            // only add if it is not already there
-            if (!return_arr.some(elem => elem.sfr == sfr[0].Component)) {
-                return_arr.push(sfr_modified_object);
+            if (sfr.length != 0) {
+                let sfr_modified_object = { "search": searchString, "sfr": searchString.toUpperCase(), "pp_list": Object.keys(sfr[0].PP_Specific_Implementations) }
+
+                // only add if it is not already there
+                if (!return_arr.some(elem => elem.sfr == sfr[0].Component)) {
+                    return_arr.push(sfr_modified_object);
+                }
             }
+
         }
 
+        // // if search is the sfr name itself, get that sfr (mainly for iterations, since they dont show up as a single string in the XML)
+        // // check if it is already in the object (for non-iteration sfrs it will already be there)
+        // let sfr = jmespath.search(sfrDB, `SFRs[?Name == '${searchString.toUpperCase()}']`);
+
+        // if (sfr.length != 0) {
+        //     let sfr_modified_object = { "search": searchString, "sfr": searchString.toUpperCase(), "pp_list": Object.keys(sfr[0].PP_Specific_Implementations) }
+
+        //     // only add if it is not already there
+        //     if (!return_arr.some(elem => elem.sfr == sfr[0].Component)) {
+        //         return_arr.push(sfr_modified_object);
+        //     }
+        // }
+        
         return return_arr.sort((a, b) => a.sfr.localeCompare(b.sfr)); // sorted alphabetically by SFR name
     } else {
         return false;

@@ -34,6 +34,8 @@ function FilterPane(props) {
     const [allPps, setPps] = useState(sessionStorage.getItem("allPps") ? JSON.parse(sessionStorage.getItem("allPps")) : null);
     // All PP options (using this since allPps gets altered when PPs are selected and need a variable with all the PPs to be used in the useEffect)
     const [masterPPList] = allPps ? allPps.concat(props.selectedPps) : [];
+    // Search Toggle for SFR type search
+    const [searchToggle, setSearchToggle] = useState(sessionStorage.getItem("searchToggle") ? JSON.parse(sessionStorage.getItem("searchToggle")) : false); // default is false to search by SFR
 
     // Prop Validation
     FilterPane.propTypes = {
@@ -288,6 +290,7 @@ function FilterPane(props) {
         } else { // if no sfr is selected/cleared out
             // update threats
             fromThreats();
+
         }
     }
 
@@ -308,7 +311,8 @@ function FilterPane(props) {
         props.handleSetSelectedSecurityObjectives(null);
         props.handleSetSelectedSfrs(null);
         props.handleSetSelectedPps(null);
-        handleSetSfrQuery(null, []);
+        // handleSetSfrQuery(null, []);
+        handleSetSfrQuery(null, query.stringToSFR(SFRDatabase, ''));
         handleSetSfrInputValue("");
     }
 
@@ -337,6 +341,19 @@ function FilterPane(props) {
     }
 
     /**
+    * Handles setting the filtered sfrs (for SFR filter bt search content)
+    * @param value The sfr value
+    */
+    const handleSetAllFilteredSfrs = (value) => {
+        // If sfrs were updated, set state
+        if (JSON.stringify(filteredSfrs) !== JSON.stringify(value)) {
+            console.log(value);
+            setFilteredSfrs(value);
+            sessionStorage.setItem("filteredSfrs", JSON.stringify(value));
+        }
+    }
+
+    /**
      * Handles setting the sfrs
      * @param value The sfr value
      */
@@ -346,18 +363,44 @@ function FilterPane(props) {
             setSfrs(value);
             sessionStorage.setItem("allSfrs", JSON.stringify(value));
 
-            // if there is an objective or threat selected, set the filtered sfrs to the ones that match the sfrs related to those fields
-            if (props.selectedSecurityObjectives || props.selectedThreats) {
-                // possible race condition where allSfrs is not getting updated in time to use, so using value instead
-                let intersection = filteredSfrs.filter(x => value.includes(x.sfr));
+            // if filter SFR is set to search by content
+            if (searchToggle) {
+                // if there is an objective or threat selected, set the filtered sfrs to the ones that match the sfrs related to those fields
+                if (props.selectedSecurityObjectives || props.selectedThreats) {
+                    if (filteredSfrs.length != 0) {
+                        // possible race condition where allSfrs is not getting updated in time to use, so using value instead
+                        let intersection = filteredSfrs.filter(x => value.includes(x.sfr));
 
-                setFilteredSfrs(intersection);
-                sessionStorage.setItem("filteredSfrs", JSON.stringify(intersection));
-            } else {
-                // if only sfr is selected, set to the original filtered sfr list
-                let sfrToPP = query.stringToSFR(SFRDatabase, sfrQuery);
-                setFilteredSfrs(sfrToPP);
+                        setFilteredSfrs(intersection);
+                        sessionStorage.setItem("filteredSfrs", JSON.stringify(intersection));
+                    } else {
+                        // set filteredSFRs to the SFRs mapped to the threat/objective combination
+                        let sfrToPP = query.stringToSFR(SFRDatabase, '');
+                        let intersection = sfrToPP.filter(x => value.includes(x.sfr));
+
+                        setFilteredSfrs(intersection);
+                        sessionStorage.setItem("filteredSfrs", JSON.stringify(intersection));
+                    }
+                } else {
+                    // if only sfr is selected, set to the original filtered sfr list
+                    let sfrToPP = query.stringToSFR(SFRDatabase, sfrQuery);
+                    setFilteredSfrs(sfrToPP);
+                }
+
             }
+
+            // if there is an objective or threat selected, set the filtered sfrs to the ones that match the sfrs related to those fields
+            // if (props.selectedSecurityObjectives || props.selectedThreats) {
+            //     // possible race condition where allSfrs is not getting updated in time to use, so using value instead
+            //     let intersection = filteredSfrs.filter(x => value.includes(x.sfr));
+
+            //     setFilteredSfrs(intersection);
+            //     sessionStorage.setItem("filteredSfrs", JSON.stringify(intersection));
+            // } else {
+            //     // if only sfr is selected, set to the original filtered sfr list
+            //     let sfrToPP = query.stringToSFR(SFRDatabase, sfrQuery);
+            //     setFilteredSfrs(sfrToPP);
+            // }
         }
     }
 
@@ -404,7 +447,7 @@ function FilterPane(props) {
                 <div className="... flex justify-end items-end mb-[4px] pr-1">
                     <TERipple rippleColor="light">
                         {props.filterStatus ?
-                            <svg onClick={() => {props.handleSetFilterStatus(!props.filterStatus)}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#1FB2A6" className="w-7 h-7">
+                            <svg onClick={() => { props.handleSetFilterStatus(!props.filterStatus) }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#1FB2A6" className="w-7 h-7">
                                 <path fillRule="evenodd" d="M13.28 3.97a.75.75 0 010 1.06L6.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5a.75.75 0 010-1.06l7.5-7.5a.75.75 0 011.06 0zm6 0a.75.75 0 010 1.06L12.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5a.75.75 0 010-1.06l7.5-7.5a.75.75 0 011.06 0z" clipRule="evenodd" />
                             </svg>
                             :
@@ -453,6 +496,8 @@ function FilterPane(props) {
                             handleSetSfrInputValue={handleSetSfrInputValue}
                             handleSetSelectedSfrs={props.handleSetSelectedSfrs}
                             handleSetSfrQuery={handleSetSfrQuery}
+                            searchToggle={searchToggle}
+                            setSearchToggle={setSearchToggle}
                         />
                         : null
                 }
