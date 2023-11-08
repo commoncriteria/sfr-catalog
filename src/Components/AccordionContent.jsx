@@ -94,9 +94,9 @@ function AccordionContent(props) {
                     // check if text exists, else pull from the XML
                     if (Object.keys(query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][ppName]).includes("Text")) {
                         sfr_content_html = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][ppName]["Text"];
-                    } else {
-                        sfr_content_xml = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][ppName]["XML"];
                     }
+
+                    sfr_content_xml = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][ppName]["XML"];
                 }
             } catch (e) {
                 console.log(e);
