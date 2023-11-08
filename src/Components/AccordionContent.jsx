@@ -30,6 +30,7 @@ function AccordionContent(props) {
         selectedSecurityObjectives: PropTypes.array,
         selectedSfrs: PropTypes.array,
         tds: PropTypes.array,
+        sfrFamily: PropTypes.string.isRequired,
     };
 
     // Styling
@@ -84,7 +85,13 @@ function AccordionContent(props) {
         if (props.selectedSfrs) {
             // try catch as there may be a race condition since the pp filter is reactive in many places and content might be undefined on first render
             try {
-                sfr_content = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][ppName]["XML"];
+                // for CC Part 2 SFRs, only html version exists
+                if (ppName.includes("CC Part 2")) {
+                    let base_component = props.sfrFamily+ ".1";
+                    sfr_content = query.getSfrContent(SFRDatabase, base_component)[0][ppName]["Text"];
+                } else {
+                    sfr_content = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][ppName]["XML"];
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -122,18 +129,25 @@ function AccordionContent(props) {
                 }
             }
             case "SFRs": {
-                if (toggle) {
+                // for CC Part 2 SFRs, only html version exists
+                if (ppName.includes("CC Part 2")) {
                     return (
-                        <div className="mx-3 my-2">
-                            <XMLViewer xml={sfr_content} theme={customTheme} collapsible />
-                        </div>
+                        <div className="mx-3 my-2" dangerouslySetInnerHTML={{ __html: sfr_content }} />
                     )
                 } else {
-                    return (
-                        <div className="mx-3 my-2">
-                            <p>{sfr_content}</p>
-                        </div>
-                    )
+                    if (toggle) {
+                        return (
+                            <div className="mx-3 my-2">
+                                <XMLViewer xml={sfr_content} theme={customTheme} collapsible />
+                            </div>
+                        )
+                    } else {
+                        return (
+                            <div className="mx-3 my-2">
+                                <p>{sfr_content}</p>
+                            </div>
+                        )
+                    }
                 }
             }
             default:
@@ -205,7 +219,12 @@ function AccordionContent(props) {
             }
             case "SFRs": {
                 try {
-                    content = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][props.ppName]["XML"];
+                    // for CC Part 2 SFRs, only html version exists
+                    if (props.ppName.includes("CC Part 2")) {
+                        content = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][props.ppName]["Text"];
+                    } else {
+                        content = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][props.ppName]["XML"];
+                    }
 
                     navigator.clipboard.writeText(content);
                     toast.success("Copied to Clipboard");
@@ -275,12 +294,17 @@ function AccordionContent(props) {
                 <AccordionBody className={"px-4 bg-gray-200"}>
                     <div className={props.type == "SFRs" ? "flex flex-col h-fit" : "flex flex-col h-fit"}>
                         <div>
-                            <Stack direction="row" component="label" alignItems="center" justifyContent="center">
-                                <Typography>String</Typography>
-                                <AccentSwitch checked={props.toggle} inputProps={{ 'aria-label': 'controlled' }} size="medium"
-                                    onChange={() => handleUpdates("toggle")} />
-                                <Typography>XML</Typography>
-                            </Stack>
+                            {
+                                !props.ppName.includes("CC Part 2") ?
+                                    <Stack direction="row" component="label" alignItems="center" justifyContent="center">
+                                        <Typography>String</Typography>
+                                        <AccentSwitch checked={props.toggle} inputProps={{ 'aria-label': 'controlled' }} size="medium"
+                                            onChange={() => handleUpdates("toggle")} />
+                                        <Typography>XML</Typography>
+                                    </Stack>
+                                    :
+                                    null
+                            }
                             <div className="flex justify-center items-center"
                                 onClick={() => copyToClipboard(props.type)}
                             >
