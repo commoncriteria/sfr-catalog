@@ -17,6 +17,7 @@ function Results(props) {
         selectedSecurityObjectives: PropTypes.array,
         selectedSfrs: PropTypes.array,
         selectedPps: PropTypes.array,
+        sfrFamily: PropTypes.string.isRequired,
     }
 
     // Constants
@@ -29,7 +30,7 @@ function Results(props) {
 
     useEffect(() => {
         if (props.selectedSfrs) {
-            sfr_accordion_object = { name: props.selectedSfrs[0], isOpen: false, toggle: true, type: "SFRs" };
+            sfr_accordion_object = { name: props.selectedSfrs[0], family: props.sfrFamily, isOpen: false, toggle: true, type: "SFRs" };
         }
 
         if (props.selectedThreats) {
@@ -92,6 +93,7 @@ function Results(props) {
                                                             selectedSecurityObjectives={props.selectedSecurityObjectives}
                                                             selectedSfrs={props.selectedSfrs}
                                                             tds={tds == undefined ? [] : tds}
+                                                            sfrFamily={item.family}
                                                         />
                                                     </div>
                                                 )
