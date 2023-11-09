@@ -39,10 +39,16 @@ function SearchDropdown(props) {
      */
     const handleSearchResults = (value) => {
         let sfrToPP = query.stringToSFR(SFRDatabase, value);
+
         if (sfrToPP) {
-            props.handleSetSfrQuery(value, sfrToPP)
+            // set sfr dropdown options(filteredSfrs) to intersection of results from string query and the pre-existing options (allSfrs)
+            props.handleSetSfrQuery(value, sfrToPP.filter(e => props.allSfrs.includes(e.sfr)));
+
         } else {
-            props.handleSetSfrQuery(value, [])
+            // set filteredSFRs to allSFRs (using query call since allSFRs is array of strings and filteredSFRs is array of objects)
+            let sfrToPP = query.stringToSFR(SFRDatabase, '');
+            let intersection = sfrToPP.filter(x => props.allSfrs.includes(x.sfr));
+            props.handleSetSfrQuery(value, intersection)
         }
     }
 
@@ -73,7 +79,8 @@ function SearchDropdown(props) {
      * @param reason            The reason for the input (clear, reset or input)
      */
     const handleTextInput = (event, newInputValue, reason) => {
-        props.handleInputValue(newInputValue)
+        props.handleInputValue(newInputValue);
+
         if (newInputValue) {
             if (reason === 'reset') {
                 handleSearchResults(props.sfrQuery.valueOf());
@@ -88,15 +95,10 @@ function SearchDropdown(props) {
     // Return Function
     return (
         <div className="form-control">
-            {/*Remove After testing*/}
-            {/*{<div style={{color: "black"}}>{`value: ${props.selections !== null ? `'${props.selections}'` : 'null'}`}</div>}*/}
-            {/*{<div style={{color: "black"}}>{`inputValue: '${props.inputValue !== null ? props.inputValue : ''}'`}</div>}*/}
             <Autocomplete
                 multiple={false}
                 id={props.label}
                 getOptionLabel={(option) => option.sfr || props.inputValue}
-                // Remove after testing
-                // isOptionEqualToValue={(option, value) => option.search === value.search}
                 value={props.selections ? props.selections : []}
                 onChange={(event, newValue) => {
                     handleDropdownSelect(event, newValue);
