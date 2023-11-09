@@ -29,6 +29,15 @@ export function getSfrs(sfrDB) {
 }
 
 /**
+ * Gets the SFR family from the SFRDatabase
+ * @param sfrDB The SFRDatabase
+ * @returns {*} The SFR family
+ */
+export function getSfrFamily(sfrDB, sfr) {
+    return jmespath.search(sfrDB, `SFRs[?Name == '${sfr}'].Family`);
+}
+
+/**
  * Gets the PPs from the SFRDatabase
  * @param sfrDB The SFRDatabase
  * @returns {*} The PPs
@@ -244,6 +253,19 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
 
     if (sfr) {
         sfrPPs = jmespath.search(sfrDB, `SFRs[?Name == '${sfr}'].PP_Specific_Implementations | keys([0])`);
+
+        // need to also pull in PPs for CC part 2 if they exist
+        // only add if it is not already accounted for
+        if (!sfrPPs.includes("CC Part 2 [2022]")) {
+            let base_component = jmespath.search(sfrDB, `SFRs[?Name == '${sfr}'].Family`)[0] + ".1";
+            // check if base component is in the CC part 2 PP
+            let has_cc_part2 = jmespath.search(sfrDB, `Protection_Profiles[?Name == 'CC Part 2 [2022]'].SFRs[]`).includes(base_component);
+
+            // if there is a CC part 2 base component (which has html), add it to the list of PPs
+            if (has_cc_part2) {
+                sfrPPs.push("CC Part 2 [2022]");
+            }
+        }
     }
 
     // if only threat is selected
@@ -273,7 +295,7 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
 
     // if only sfr is selected
     if (sfr && !threat && !objective) {
-        return sfrPPs;
+        return sfrPPs.sort();
     }
 
     // if all selections are made

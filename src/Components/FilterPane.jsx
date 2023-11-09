@@ -49,6 +49,8 @@ function FilterPane(props) {
         handleSetSelectedSfrs: PropTypes.func.isRequired,
         handleSetSelectedPps: PropTypes.func.isRequired,
         handleSetFilterStatus: PropTypes.func.isRequired,
+        sfrFamily: PropTypes.string.isRequired,
+        setSfrFamily: PropTypes.func.isRequired,
     };
 
     // Use Effects
@@ -208,7 +210,7 @@ function FilterPane(props) {
     const fromObjectives = () => {
         if (props.selectedSecurityObjectives) { // if there is a selected security objective
             let sfrs = query.SecurityObjectiveToSFR(SFRDatabase, props.selectedSecurityObjectives[0]).sort();
-            let threats = query.SecurityObjectiveToThreats(SFRDatabase, props.selectedSecurityObjectives[0]).sort();
+            let threats = query.SecurityObjectiveToThreats(SFRDatabase, props.selectedSecurityObjectives[0]).sort();            
 
             // check if sfrs or threats have been selected
             if (props.selectedSfrs || props.selectedThreats) {
@@ -247,6 +249,9 @@ function FilterPane(props) {
         let threats = [];
 
         if (props.selectedSfrs) { // if there is a selected sfr
+            // set the family - needed for CC part 2 content
+            props.setSfrFamily(query.getSfrFamily(SFRDatabase, props.selectedSfrs[0])[0]);
+
             // if sfr has been selected from a content search, need to update PP filter then update the threats and objectives
             if (sfrQuery) {
                 if (allPps && !props.selectedPps) {

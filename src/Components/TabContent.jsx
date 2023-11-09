@@ -21,6 +21,7 @@ function TabContent(props) {
         selectedSecurityObjectives: PropTypes.array,
         selectedSfrs: PropTypes.array,
         selectedPps: PropTypes.array,
+        sfrFamily: PropTypes.string.isRequired,
     };
 
     // Functions
@@ -81,6 +82,7 @@ function TabContent(props) {
                             selectedSecurityObjectives={props.selectedSecurityObjectives}
                             selectedSfrs={props.selectedSfrs}
                             selectedPps={props.selectedPps}
+                            sfrFamily={props.sfrFamily}
                         />
                         :
                         null

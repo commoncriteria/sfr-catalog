@@ -27,6 +27,8 @@ function App() {
     const [selectedPps, setSelectedPps] = useState(sessionStorage.getItem("selectedPps") ? JSON.parse(sessionStorage.getItem("selectedPps")) : null);
     // Filter Pane Visible Status
     const [filterStatus, setFilterStatus] = useState(sessionStorage.getItem("filterStatus") ? JSON.parse(sessionStorage.getItem("filterStatus")) : true);
+    // SFR family
+    const [sfrFamily, setSfrFamily] = useState("");
 
     // Functions
     /**
@@ -142,6 +144,8 @@ function App() {
                                         handleSetSelectedSfrs={handleSetSelectedSfrs}
                                         handleSetSelectedPps={handleSetSelectedPps}
                                         handleSetFilterStatus={handleSetFilterStatus}
+                                        setSfrFamily={setSfrFamily}
+                                        sfrFamily={sfrFamily}
                                     />
                                 </div>
                         }
@@ -153,6 +157,7 @@ function App() {
                                     selectedSecurityObjectives={selectedSecurityObjectives}
                                     selectedSfrs={selectedSfrs}
                                     selectedPps={selectedPps}
+                                    sfrFamily={sfrFamily}
                         />
                     </div>
                 </Box>
