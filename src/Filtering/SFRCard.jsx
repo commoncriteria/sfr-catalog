@@ -14,8 +14,6 @@ import SFRDatabase from "../assets/NIAPDocumentBundle.json";
  * @constructor             passes in props to the class
  */
 function SFRCard(props) {
-    // const [searchToggle, setSearchToggle] = useState(sessionStorage.getItem("searchToggle") ? JSON.parse(sessionStorage.getItem("searchToggle")) : false); // default is false to search by SFR
-
     // Prop Validation
     SFRCard.propTypes = {
         allSfrs: PropTypes.array,
@@ -36,16 +34,13 @@ function SFRCard(props) {
     const handleToggle = () => {
         // setSearchToggle(!searchToggle)
         props.setSearchToggle(!props.searchToggle)
-        // sessionStorage.setItem("searchToggle", JSON.stringify(!searchToggle))
         sessionStorage.setItem("searchToggle", JSON.stringify(!props.searchToggle))
-        // props.handleSetSfrQuery(null, []);
 
 
         // set filteredSFRs to allSFRs (using query call since allSFRs is array of strings and filteredSFRs is array of objects)
         let sfrToPP = query.stringToSFR(SFRDatabase, '');
         let intersection = sfrToPP.filter(x => props.allSfrs.includes(x.sfr));
         props.handleSetSfrQuery(null, intersection)
-
         props.handleSetSelectedSfrs(null);
         props.handleSetSfrInputValue("");
     }
@@ -56,7 +51,6 @@ function SFRCard(props) {
      * @param values the values coming in from the dropdown
      */
     const handleDropdownSelect = (event, values) => {
-        console.log(values);
         if (typeof values == "string") {
             props.handleSetSelectedSfrs([values])
         } else if (typeof values == "object") {
@@ -91,7 +85,6 @@ function SFRCard(props) {
      * @returns {JSX.Element|null}
      */
     const generateCard = () => {
-        // if (searchToggle) {
         if (props.searchToggle) {
             return (
                 <SearchDropdown
@@ -129,7 +122,6 @@ function SFRCard(props) {
                         <h3 className="flex justify-center">Search By</h3>
                         <Stack direction="row" component="label" alignItems="center" justifyContent="center">
                             <Typography>SFR Name</Typography>
-                            {/* <AccentSwitch checked={searchToggle} inputProps={{ 'aria-label': 'controlled' }} size="medium" */}
                             <AccentSwitch checked={props.searchToggle} inputProps={{ 'aria-label': 'controlled' }} size="medium"
                                 onChange={() => (handleToggle())} />
                             <Typography>SFR Content</Typography>

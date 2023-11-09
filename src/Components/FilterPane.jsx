@@ -311,7 +311,7 @@ function FilterPane(props) {
         props.handleSetSelectedSecurityObjectives(null);
         props.handleSetSelectedSfrs(null);
         props.handleSetSelectedPps(null);
-        // handleSetSfrQuery(null, []);
+
         handleSetSfrQuery(null, query.stringToSFR(SFRDatabase, ''));
         handleSetSfrInputValue("");
     }
@@ -337,19 +337,6 @@ function FilterPane(props) {
         if (JSON.stringify(allSecurityObjectives) !== JSON.stringify(value)) {
             setSecurityObjectives(value);
             sessionStorage.setItem("allSecurityObjectives", JSON.stringify(value));
-        }
-    }
-
-    /**
-    * Handles setting the filtered sfrs (for SFR filter bt search content)
-    * @param value The sfr value
-    */
-    const handleSetAllFilteredSfrs = (value) => {
-        // If sfrs were updated, set state
-        if (JSON.stringify(filteredSfrs) !== JSON.stringify(value)) {
-            console.log(value);
-            setFilteredSfrs(value);
-            sessionStorage.setItem("filteredSfrs", JSON.stringify(value));
         }
     }
 
@@ -388,19 +375,6 @@ function FilterPane(props) {
                 }
 
             }
-
-            // if there is an objective or threat selected, set the filtered sfrs to the ones that match the sfrs related to those fields
-            // if (props.selectedSecurityObjectives || props.selectedThreats) {
-            //     // possible race condition where allSfrs is not getting updated in time to use, so using value instead
-            //     let intersection = filteredSfrs.filter(x => value.includes(x.sfr));
-
-            //     setFilteredSfrs(intersection);
-            //     sessionStorage.setItem("filteredSfrs", JSON.stringify(intersection));
-            // } else {
-            //     // if only sfr is selected, set to the original filtered sfr list
-            //     let sfrToPP = query.stringToSFR(SFRDatabase, sfrQuery);
-            //     setFilteredSfrs(sfrToPP);
-            // }
         }
     }
 

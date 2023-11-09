@@ -85,7 +85,7 @@ export function getSecurityObjectiveContent(sfrDB, objective) {
 }
 
 /**
- * Gets the Objectives based on given SFR
+ * Gets the Objectives based on given SFR and optional PP list
  * @param sfrDB     The SFRDatabase
  * @param sfr       The sfr to filter on
  * @param pps       The pps to filter on (only for sfr content search)
@@ -107,11 +107,11 @@ export function SFRToSecurityObjectives(sfrDB, sfr, pps = []) {
 }
 
 /**
- * Gets the Threats based on given SFR
+ * Gets the Threats based on given SFR and optional PP list
  * @param sfrDB     The SFRDatabase
  * @param sfr       The sfr to filter on
  * @param pps       The pps to filter on (only for sfr content search)
- * @returns {*}     The objectives based on filtered sfrs(s)
+ * @returns {*}     The threats based on filtered sfrs(s)
  */
 export function SFRToThreats(sfrDB, sfr, pps = []) {
     let objectives = SFRToSecurityObjectives(sfrDB, sfr);
@@ -143,7 +143,7 @@ export function SFRToThreats(sfrDB, sfr, pps = []) {
  * Gets the SFRs based on given Threat
  * @param sfrDB     The SFRDatabase
  * @param threat    The threat to filter on
- * @returns {*}     The objectives based on filtered sfrs(s)
+ * @returns {*}     The sfrs based on filtered threat(s)
  */
 export function ThreatToSFRs(sfrDB, threat) {
     // convert threat to objectives
@@ -166,7 +166,7 @@ export function ThreatToSFRs(sfrDB, threat) {
  * Gets the Threats based on a given Objective
  * @param sfrDB         The SFRDatabase
  * @param objective     The Objective to filter on
- * @returns {*}         The SFRs based on filtered Objectives(s)
+ * @returns {*}         The threats based on filtered Objective(s)
  */
 export function SecurityObjectiveToThreats(sfrDB, objective) {
     return jmespath.search(sfrDB, `Threats[?contains(Security_Objectives,'${objective}')].Name`);
@@ -286,15 +286,10 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
 /**
  * Gets the SFR content from the SFRDatabase
  * @param sfrDB The SFRDatabase
- * @returns {*} The SFR(s) content
+ * @returns {*} The array of objects containing search term, sfr, and pps associated ({'search': 'network', 'sfr': 'FCS_CKM.1', 'pps': [GPOS]})
  */
 export function stringToSFR(sfrDB, searchString) {    
     if (searchString || searchString == '') {
-        if (searchString == '') {
-
-        } else {
-
-        }
         let sfr_xml_mapping = {};
         let sfrs = getSfrs(sfrDB);
 
@@ -312,15 +307,13 @@ export function stringToSFR(sfrDB, searchString) {
             for (const [pp, value] of Object.entries(ppImplementation[0])) {
                 if ('XML' in value) {
                     if (searchString == '') {
+                        // for default case, just want all the PPs
                         pp_arr.push(pp);
                     } else {
                         if (value['XML'].toLowerCase().includes(searchString.toLowerCase())) {
                             pp_arr.push(pp);
                         }
                     }
-                    // if (value['XML'].toLowerCase().includes(searchString.toLowerCase())) {
-                    //     pp_arr.push(pp);
-                    // }
                 }
             }
             if (pp_arr.length != 0) {
@@ -334,7 +327,6 @@ export function stringToSFR(sfrDB, searchString) {
         }
 
         if (searchString != '') {
-
             // if search is the sfr name itself, get that sfr (mainly for iterations, since they dont show up as a single string in the XML)
             // check if it is already in the object (for non-iteration sfrs it will already be there)
             let sfr = jmespath.search(sfrDB, `SFRs[?Name == '${searchString.toUpperCase()}']`);
@@ -347,22 +339,8 @@ export function stringToSFR(sfrDB, searchString) {
                     return_arr.push(sfr_modified_object);
                 }
             }
-
         }
 
-        // // if search is the sfr name itself, get that sfr (mainly for iterations, since they dont show up as a single string in the XML)
-        // // check if it is already in the object (for non-iteration sfrs it will already be there)
-        // let sfr = jmespath.search(sfrDB, `SFRs[?Name == '${searchString.toUpperCase()}']`);
-
-        // if (sfr.length != 0) {
-        //     let sfr_modified_object = { "search": searchString, "sfr": searchString.toUpperCase(), "pp_list": Object.keys(sfr[0].PP_Specific_Implementations) }
-
-        //     // only add if it is not already there
-        //     if (!return_arr.some(elem => elem.sfr == sfr[0].Component)) {
-        //         return_arr.push(sfr_modified_object);
-        //     }
-        // }
-        
         return return_arr.sort((a, b) => a.sfr.localeCompare(b.sfr)); // sorted alphabetically by SFR name
     } else {
         return false;
