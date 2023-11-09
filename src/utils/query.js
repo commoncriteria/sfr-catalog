@@ -29,6 +29,15 @@ export function getSfrs(sfrDB) {
 }
 
 /**
+ * Gets the SFR family from the SFRDatabase
+ * @param sfrDB The SFRDatabase
+ * @returns {*} The SFR family
+ */
+export function getSfrFamily(sfrDB, sfr) {
+    return jmespath.search(sfrDB, `SFRs[?Name == '${sfr}'].Family`);
+}
+
+/**
  * Gets the PPs from the SFRDatabase
  * @param sfrDB The SFRDatabase
  * @returns {*} The PPs
@@ -96,7 +105,7 @@ export function SFRToSecurityObjectives(sfrDB, sfr, pps = []) {
         // get all objectives mapped to the SFR
         let objectives = jmespath.search(sfrDB, `Security_Objectives[?contains(SFRs,'${sfr}')]`);
         // filter down the objectives to only the ones for the PPs passed in
-        let filtered_objectives_objects = objectives.filter(objective => Object.keys(objective.PP_Specific_Implementations).every(x => x.includes(pps)));
+        let filtered_objectives_objects = objectives.filter(objective => Object.keys(objective.PP_Specific_Implementations).filter(x => x.includes(pps)));
         // pull out names
         let filtered_objectives = filtered_objectives_objects.map(objective => objective.Name);
 
@@ -126,7 +135,7 @@ export function SFRToThreats(sfrDB, sfr, pps = []) {
             // get all threats mapped to the SFR
             let threats = jmespath.search(sfrDB, `Threats[?${filter_str}]`);
             // filter down the threats to only the ones for the PPs passed in
-            let filtered_threats_objects = threats.filter(threat => Object.keys(threat.Threat_Implementations).every(x => x.includes(pps)));
+            let filtered_threats_objects = threats.filter(threat => Object.keys(threat.Threat_Implementations).filter(x => x.includes(pps)));
             // pull out names
             let filtered_threats = filtered_threats_objects.map(threat => threat.Name);
 
@@ -244,6 +253,19 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
 
     if (sfr) {
         sfrPPs = jmespath.search(sfrDB, `SFRs[?Name == '${sfr}'].PP_Specific_Implementations | keys([0])`);
+
+        // need to also pull in PPs for CC part 2 if they exist
+        // only add if it is not already accounted for
+        if (!sfrPPs.includes("CC Part 2 [2022]")) {
+            let base_component = jmespath.search(sfrDB, `SFRs[?Name == '${sfr}'].Family`)[0] + ".1";
+            // check if base component is in the CC part 2 PP
+            let has_cc_part2 = jmespath.search(sfrDB, `Protection_Profiles[?Name == 'CC Part 2 [2022]'].SFRs[]`).includes(base_component);
+
+            // if there is a CC part 2 base component (which has html), add it to the list of PPs
+            if (has_cc_part2) {
+                sfrPPs.push("CC Part 2 [2022]");
+            }
+        }
     }
 
     // if only threat is selected
@@ -273,7 +295,7 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
 
     // if only sfr is selected
     if (sfr && !threat && !objective) {
-        return sfrPPs;
+        return sfrPPs.sort();
     }
 
     // if all selections are made
