@@ -1,3 +1,9 @@
+// This software was produced for the U.S.Government under Basic Contract No.W56KGU - 18 - D-0004,
+//   and is subject to the Rights in Noncommercial Computer Software and Noncommercial Computer Software
+//   Documentation Clause 252.227 - 7014(FEB 2014)
+
+//   © 2023 The MITRE Corporation.
+
 import { Accordion, AccordionHeader, AccordionBody, Tooltip } from "@material-tailwind/react";
 import { alpha, Stack, styled, Switch, Typography } from "@mui/material";
 import PropTypes from "prop-types";
@@ -235,7 +241,13 @@ function AccordionContent(props) {
                     if (props.ppName.includes("CC Part 2")) {
                         content = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][props.ppName]["Text"];
                     } else {
+                        // pull XML by default
                         content = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][props.ppName]["XML"];
+
+                        // if text exists, pull that instead
+                        if (Object.keys(query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][props.ppName]).includes("Text")) {
+                            content = query.getSfrContent(SFRDatabase, props.selectedSfrs[0])[0][props.ppName]["Text"];
+                        }
                     }
 
                     navigator.clipboard.writeText(content);

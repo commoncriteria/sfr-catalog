@@ -1,3 +1,9 @@
+// This software was produced for the U.S.Government under Basic Contract No.W56KGU - 18 - D-0004,
+//   and is subject to the Rights in Noncommercial Computer Software and Noncommercial Computer Software
+//   Documentation Clause 252.227 - 7014(FEB 2014)
+
+//   © 2023 The MITRE Corporation.
+
 // Imports
 import jmespath from 'jmespath';
 
@@ -310,7 +316,7 @@ export function PPFilter(sfrDB, threat, objective, sfr) {
  * @param sfrDB The SFRDatabase
  * @returns {*} The array of objects containing search term, sfr, and pps associated ({'search': 'network', 'sfr': 'FCS_CKM.1', 'pps': [GPOS]})
  */
-export function stringToSFR(sfrDB, searchString) {    
+export function stringToSFR(sfrDB, searchString) {
     if (searchString || searchString == '') {
         let sfr_xml_mapping = {};
         let sfrs = getSfrs(sfrDB);
