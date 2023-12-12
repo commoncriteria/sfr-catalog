@@ -1,3 +1,9 @@
+// This software was produced for the U.S.Government under Basic Contract No.W56KGU - 18 - D-0004,
+//   and is subject to the Rights in Noncommercial Computer Software and Noncommercial Computer Software
+//   Documentation Clause 252.227 - 7014(FEB 2014)
+
+//   © 2023 The MITRE Corporation.
+
 // Imports
 import PropTypes from "prop-types";
 
@@ -35,7 +41,7 @@ function Search(props) {
                     <input
                         type="text"
                         placeholder="Search"
-                        onChange={event=>{
+                        onChange={event => {
                             setTimeout(() => props.handleQuery(event.target.value), "150");
                         }}
                         className="w-full py-3 pl-12 pr-4 input input-bordered input-white border-2 text-gray-600 rounded-3xl bg-gray-200"

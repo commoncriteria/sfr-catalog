@@ -1,3 +1,9 @@
+// This software was produced for the U.S.Government under Basic Contract No.W56KGU - 18 - D-0004,
+//   and is subject to the Rights in Noncommercial Computer Software and Noncommercial Computer Software
+//   Documentation Clause 252.227 - 7014(FEB 2014)
+
+//   © 2023 The MITRE Corporation.
+
 // Imports
 import { useEffect, useState } from "react";
 import { Button } from "@material-tailwind/react";
@@ -210,7 +216,7 @@ function FilterPane(props) {
     const fromObjectives = () => {
         if (props.selectedSecurityObjectives) { // if there is a selected security objective
             let sfrs = query.SecurityObjectiveToSFR(SFRDatabase, props.selectedSecurityObjectives[0]).sort();
-            let threats = query.SecurityObjectiveToThreats(SFRDatabase, props.selectedSecurityObjectives[0]).sort();            
+            let threats = query.SecurityObjectiveToThreats(SFRDatabase, props.selectedSecurityObjectives[0]).sort();
 
             // check if sfrs or threats have been selected
             if (props.selectedSfrs || props.selectedThreats) {

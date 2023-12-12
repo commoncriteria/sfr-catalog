@@ -1,3 +1,9 @@
+// This software was produced for the U.S.Government under Basic Contract No.W56KGU - 18 - D-0004,
+//   and is subject to the Rights in Noncommercial Computer Software and Noncommercial Computer Software
+//   Documentation Clause 252.227 - 7014(FEB 2014)
+
+//   © 2023 The MITRE Corporation.
+
 // Imports
 import { useState } from "react";
 import FilterPane from "./Components/FilterPane.jsx";
@@ -5,8 +11,8 @@ import NavBar from "./Components/NavBar.jsx";
 import TabContent from "./Components/TabContent.jsx";
 import "tw-elements-react/dist/css/tw-elements-react.min.css";
 import "./index.css"
-import {TERipple} from "tw-elements-react";
-import {Box} from "@mui/material";
+import { TERipple } from "tw-elements-react";
+import { Box } from "@mui/material";
 
 /**
  * The App class that runs the Catalog project
@@ -126,7 +132,7 @@ function App() {
                             !filterStatus ?
                                 <div className="border-2 border-gray-400 rounded-xl p-3 bg-base-200 h-16 pt-4">
                                     <TERipple rippleColor="light">
-                                        <svg onClick={() => {handleSetFilterStatus(!filterStatus)}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#1FB2A6" className="w-7 h-7">
+                                        <svg onClick={() => { handleSetFilterStatus(!filterStatus) }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#1FB2A6" className="w-7 h-7">
                                             <path fillRule="evenodd" d="M4.72 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L11.69 12 4.72 5.03a.75.75 0 010-1.06zm6 0a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06L17.69 12l-6.97-6.97a.75.75 0 010-1.06z" clipRule="evenodd" />
                                         </svg>
                                     </TERipple>
@@ -153,11 +159,11 @@ function App() {
                     {/* The Tab Content Pane */}
                     <div className={"bg-neutral border-2 border-gray-500 rounded-lg p-4 ml-2 w-full overflow-x-hidden min-h-full min-w-[475px]"}>
                         <TabContent activeTab={activeTab}
-                                    selectedThreats={selectedThreats}
-                                    selectedSecurityObjectives={selectedSecurityObjectives}
-                                    selectedSfrs={selectedSfrs}
-                                    selectedPps={selectedPps}
-                                    sfrFamily={sfrFamily}
+                            selectedThreats={selectedThreats}
+                            selectedSecurityObjectives={selectedSecurityObjectives}
+                            selectedSfrs={selectedSfrs}
+                            selectedPps={selectedPps}
+                            sfrFamily={sfrFamily}
                         />
                     </div>
                 </Box>

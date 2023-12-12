@@ -1,5 +1,11 @@
+// This software was produced for the U.S.Government under Basic Contract No.W56KGU - 18 - D-0004,
+//   and is subject to the Rights in Noncommercial Computer Software and Noncommercial Computer Software
+//   Documentation Clause 252.227 - 7014(FEB 2014)
+
+//   © 2023 The MITRE Corporation.
+
 import AccordionContent from "../Components/AccordionContent.jsx";
-import {useMemo, useState} from "react";
+import { useMemo, useState } from "react";
 import Card from "../Components/Card.jsx";
 
 /**
@@ -16,35 +22,35 @@ function Threats() {
                 {
                     name: "Application Software",
                     values: [
-                        {name: "T.NETWORK_ATTACK", isOpen: true, toggle: true, type: "Threats"},
-                        {name: "O.INTEGRITY", isOpen: true, toggle: true, type: "SecurityObjectives"},
-                        {name: "fdp_dec_ext.1.1", isOpen: true, toggle: true, type: "SFRs"},
+                        { name: "T.NETWORK_ATTACK", isOpen: true, toggle: true, type: "Threats" },
+                        { name: "O.INTEGRITY", isOpen: true, toggle: true, type: "SecurityObjectives" },
+                        { name: "fdp_dec_ext.1.1", isOpen: true, toggle: true, type: "SFRs" },
                     ]
                 },
                 {
                     name: "Mobile Device",
                     values: [
-                        {name: "T.NETWORK_EAVESDROP", isOpen: true, toggle: true, type: "Threats"},
+                        { name: "T.NETWORK_EAVESDROP", isOpen: true, toggle: true, type: "Threats" },
                     ]
                 },
                 {
                     name: "General-Purpose Computing Platforms",
                     values: [
-                        {name: "fau_stg.4.1", isOpen: true, toggle: true, type: "SFRs"},
+                        { name: "fau_stg.4.1", isOpen: true, toggle: true, type: "SFRs" },
                     ]
                 },
                 {
                     name: "General Purpose Operating System",
                     values: [
-                        {name: "O.PROTECTED_COMMS", isOpen: true, toggle: true, type: "SecurityObjectives"},
-                        {name: "fcs_cop.1.1/ENCRYPT", isOpen: true, toggle: true, type: "SFRs"},
+                        { name: "O.PROTECTED_COMMS", isOpen: true, toggle: true, type: "SecurityObjectives" },
+                        { name: "fcs_cop.1.1/ENCRYPT", isOpen: true, toggle: true, type: "SFRs" },
                     ]
                 },
                 {
                     name: "Virtualization System",
                     values: [
-                        {name: "T.WEAK_CRYPTO", isOpen: true, toggle: true, type: "Threats"},
-                        {name: "O.VM_ENTROPY", isOpen: true, toggle: true, type: "SecurityObjectives"},
+                        { name: "T.WEAK_CRYPTO", isOpen: true, toggle: true, type: "Threats" },
+                        { name: "O.VM_ENTROPY", isOpen: true, toggle: true, type: "SecurityObjectives" },
                     ]
                 },
             ]);
@@ -75,18 +81,18 @@ function Threats() {
                                                 return (
                                                     <div className={"my-2"} key={item.name}>
                                                         <AccordionContent name={item.name}
-                                                                          ppName={ppName}
-                                                                          type = {item.type}
-                                                                          toggle={item.toggle}
-                                                                          isOpen={item.isOpen}
-                                                                          accordionHeader={item.name}
-                                                                          ppContent={currentPPContent}
-                                                                          handleSetPPContent={handleSetPPContent}
+                                                            ppName={ppName}
+                                                            type={item.type}
+                                                            toggle={item.toggle}
+                                                            isOpen={item.isOpen}
+                                                            accordionHeader={item.name}
+                                                            ppContent={currentPPContent}
+                                                            handleSetPPContent={handleSetPPContent}
                                                         />
                                                     </div>
                                                 )
                                             })
-                                        : null
+                                            : null
                                     }
                                 </div>
                             )}
