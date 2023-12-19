@@ -31,10 +31,13 @@ Currently, two official plugins are available:
 •	**Switch between Text and XML:** This is controlled by the toggle on each content pane. If the associated item has a text representation, it will show up as text, otherwise, it will appear as an unformatted XML string.
 
 **Considerations:** (As of Dec 2023)
+
 •	This tool is a proof-of-concept, and there are currently no plans to develop it further:
+
 •	This tool currently refers to a JSON document that has ingested the following documents:
 
 PPs:
+
 Application 1.4
 MDF 3.3
 GPCP 1.0
@@ -42,6 +45,7 @@ GPOS 4.3
 Virtualization 1.1
 
 Mods:
+
 Bluetooth 1.0
 MACSEC 1.0
 SBC 1.0
@@ -54,6 +58,7 @@ WLAN Access 1.0
 WLAN Client 1.0
 
 FPs:
+
 SSH 1.0
 TLS 1.0
 
