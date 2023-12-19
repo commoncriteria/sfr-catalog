@@ -31,8 +31,9 @@ Currently, two official plugins are available:
 •	**Switch between Text and XML:** This is controlled by the toggle on each content pane. If the associated item has a text representation, it will show up as text, otherwise, it will appear as an unformatted XML string.
 
 **Considerations:** (As of Dec 2023)
-•	This tool is a proof-of-concept, and there are currently no plans to develop it further.
+•	This tool is a proof-of-concept, and there are currently no plans to develop it further:
 •	This tool currently refers to a JSON document that has ingested the following documents:
+
 PPs:
 Application 1.4
 MDF 3.3
