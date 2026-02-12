@@ -20,7 +20,7 @@ Currently, two official plugins are available:
   o	The PP filter card will not appear until a selection of either Threat, Objective, or SFR has been made.
   o	Threats and Assumptions are in the same filter card, and so are Objectives and Environmental Objectives. These are not related to any SFRs.
   o	Multiple PPs can be selected by ctrl-clicking items in the dropdown.
-  o	The CC Part 2 [2022] SFR information is only available in text format, and appears as an option when selecting an SFR family that appears in the CC Part 2 [2022].
+  o	~~The CC Part 2 [2022] SFR information is only available in text format, and appears as an option when selecting an SFR family that appears in the CC Part 2 [2022].~~
 
 •	**Threat/Objective Search:** Select a Threat or Objective from the dropdown or begin to type in the name of either. The Filter Card will autocomplete a list and you may select the item you wish to view. Then select one or more PPs from the PP filter card that appears.
 
@@ -42,29 +42,44 @@ Currently, two official plugins are available:
 
 PPs:
 
-Application 1.4
-MDF 3.3
-GPCP 1.0
-GPOS 4.3
-Virtualization 1.1
+- Application 1.4
+- Application 2.0
+- MDF 3.3
+- MDM 4.0
+- GPCP 1.0
+- GPOS 4.3
+- Virtualization 1.1
 
 Mods:
 
-Bluetooth 1.0
-MACSEC 1.0
-SBC 1.0
-Virtualization (Client) 2.4
-Virtualization (Server 1.1
-VPN CLient 2.4
-VPN Gateway 1.3
-WIDS 1.0
-WLAN Access 1.0
-WLAN Client 1.0
+- Bluetooth 1.0
+- Email Client 1.0
+- ESM-EDR 2.0
+- ESM-HA 2.0
+- FE 2.0
+- FEEM 2.0
+- MACSEC 1.0
+- MDM Agent 1.0
+- SBC 1.0
+- Virtualization (Client) 1.1
+- Virtualization (Server) 1.1
+- VPN CLient 2.4
+- VPN CLient 3.0
+- VPN Gateway 1.3
+- VPN Gateway 2.0
+- Webbrowser 1.0
+- WIDS 1.0
+- WIDS 3.0
+- WLAN Access 1.0
+- WLAN Client 1.0
 
 FPs:
 
-SSH 1.0
-TLS 1.0
+- SSH 1.0
+- SSH 2.0
+- TLS 1.1
+- TLS 2.1
+- X509 1.0
 
 **Please provide any feedback you have to the issues board associated with this repo.
 Your feedback will help this tool or any that comes after it and is greatly appreciated!**
